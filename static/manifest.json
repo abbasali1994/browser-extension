@@ -11,7 +11,7 @@
     },
     "default_popup": "popup.html"
   },
-  "author": "https://rainbow.me",
+  "author": "https://portal.me",
   "background": {
     "service_worker": "background.js"
   },
@@ -57,7 +57,7 @@
   },
   "manifest_version": 3,
   "minimum_chrome_version": "88",
-  "name": "Rainbow DEVELOPMENT BUILD",
+  "name": "Portal DEVELOPMENT BUILD",
   "permissions": [
     "activeTab",
     "clipboardWrite",
@@ -67,7 +67,7 @@
     "unlimitedStorage",
     "notifications"
   ],
-  "short_name": "Rainbow",
+  "short_name": "Portal",
   "version": "1.4.45",
   "web_accessible_resources": [
     {
@@ -90,7 +90,7 @@
         "chromeos": "Alt+Shift+R",
         "linux": "Alt+Shift+R"
       },
-      "description": "Open the Rainbow Wallet extension"
+      "description": "Open the Portal Wallet extension"
     }
   }
 }

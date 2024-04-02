@@ -12,13 +12,7 @@ export type LogoWithLettersProps = {
   height?: number;
 };
 
-export function LogoWithLetters({
-  color = 'label',
-  width = 162,
-  height = 40,
-}: LogoWithLettersProps) {
-  const colorForTheme =
-    color === 'accent' ? accentColorAsHsl : foregroundColorVars[color];
+export function LogoWithLetters() {
   return (
     <svg width="255" height="57" viewBox="0 0 255 57" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0.923645 49.1095V8.8562H23.3984C33.0784 8.8562 38.4455 13.4566 38.4455 22.3698C38.4455 31.2351 33.3659 35.8834 23.3984 35.8834H7.68046V49.1095H0.923645ZM7.68046 29.7975H22.9671C29.0531 29.7975 31.497 27.5452 31.497 22.274C31.497 17.1465 29.0531 14.9421 22.9671 14.9421H7.68046V29.7975Z" fill="white" />

@@ -6,7 +6,7 @@
     "toggle": "Toggle"
   },
   "permissions": {
-    "firefox_permission_denied": "Rainbow needs permission to access all websites to work properly. Please grant permission in order to continue."
+    "firefox_permission_denied": "Portal needs permission to access all websites to work properly. Please grant permission in order to continue."
   },
   "wallet": {
     "rename": "Rename Wallet",
@@ -71,9 +71,9 @@
   },
   "settings": {
     "title": "Settings",
-    "use_rainbow_as_default_wallet": "Use Rainbow as default wallet",
+    "use_rainbow_as_default_wallet": "Use Portal as default wallet",
     "sounds": "Sounds",
-    "default_wallet_description": "Allow apps to prioritize Rainbow when looking for an extension to connect with.",
+    "default_wallet_description": "Allow apps to prioritize Portal when looking for an extension to connect with.",
     "contacts": "Contacts",
     "guides_and_support": "Guides & Support",
     "learn_about_ethereum": "Learn About Ethereum",
@@ -98,7 +98,7 @@
       "disabled": "Disabled",
       "enable": "Enable",
       "enabled": "Network Enabled",
-      "description": "Choose which networks and tokens to display. You can connect to any networks supported by Rainbow, even if they’re unchecked.",
+      "description": "Choose which networks and tokens to display. You can connect to any networks supported by Portal, even if they’re unchecked.",
       "developer_tools": {
         "title": "Enable Developer Tools",
         "toggle_explainer": "Enables the Testnet Mode shortcut (T) and adds a toggle to the home screen’s top-right menu."
@@ -127,8 +127,8 @@
         "tokens": "Tokens",
         "cant_connect": "Can't connect to this RPC endpoint",
         "rpc_not_responding": "The provided RPC endpoint is not responding",
-        "rainbow_default_rpc": "Rainbow",
-        "rainbow_default": "Rainbow"
+        "rainbow_default_rpc": "Portal",
+        "rainbow_default": "Portal"
       },
       "rpc_endpoints": "RPC Endpoints",
       "watch_asset": {
@@ -138,9 +138,9 @@
     "privacy_and_security": {
       "title": "Privacy & Security",
       "analytics": "Analytics",
-      "analytics_description": "Help Rainbow improve its products and services by allowing analytics of usage data. Collected data is not associated with you or your account.",
+      "analytics_description": "Help Portal improve its products and services by allowing analytics of usage data. Collected data is not associated with you or your account.",
       "hide_asset_balances": "Hide asset balances",
-      "hide_asset_balances_description": "With this turned on Rainbow will obfuscate token balances accross the app.",
+      "hide_asset_balances_description": "With this turned on Portal will obfuscate token balances accross the app.",
       "auto_hide_balances_under_1": "Auto-hide balances under $1",
       "view_private_key": "View Private Key",
       "view_secret_recovery_phrase": "View Secret Recovery Phrase",
@@ -208,7 +208,7 @@
           "warning_1": "Never share your Private Key or enter it into any apps.",
           "warning_2": "Make sure nobody can view your screen when viewing your Private Key.",
           "warning_3": "Anyone with your Private Key can access your entire wallet.",
-          "warning_4": "Rainbow Support will never ask you for your Private Key.",
+          "warning_4": "Portal Support will never ask you for your Private Key.",
           "show": "Show Private Key",
           "copied": "Private Key Copied"
         },
@@ -219,34 +219,34 @@
           "warning_1": "Never share your Secret Recovery Phrase or enter it into any apps.",
           "warning_2": "Make sure nobody can view your screen when viewing your Secret Recovery Phrase.",
           "warning_3": "Anyone with your Secret Recovery Phrase can access your entire wallet.",
-          "warning_4": "Rainbow Support will never ask you for your Secret Recovery Phrase.",
+          "warning_4": "Portal Support will never ask you for your Secret Recovery Phrase.",
           "show": "Show Recovery Phrase",
           "copied": "Recovery Phrase Copied"
         },
         "wipe_wallets": {
-          "delete": "Reset Rainbow",
+          "delete": "Reset Portal",
           "acknowlegement": "I have read and acknowledge the above info.",
-          "warning_one": "Resetting Rainbow will reset your password, & remove all wallets.",
-          "warning_two": "This will also erase all data & settings in Rainbow.",
+          "warning_one": "Resetting Portal will reset your password, & remove all wallets.",
+          "warning_two": "This will also erase all data & settings in Portal.",
           "warning_three": "Ensure your Secret Recovery Phrase is secure before proceeding. ",
           "warning_four": "Your assets & funds are accessible with the correct recovery information.",
-          "button_wipe": "Reset Rainbow",
+          "button_wipe": "Reset Portal",
           "button_complete": "Complete Check Above",
-          "wipe_confirmation": "Reset Rainbow",
-          "wipe_confirmation_desc": "Are you sure you want to reset the Rainbow browser extension?",
+          "wipe_confirmation": "Reset Portal",
+          "wipe_confirmation_desc": "Are you sure you want to reset the Portal browser extension?",
           "wipe_confirmation_button": "Reset",
           "wipe_confirmation_cancel": "Cancel"
         },
         "wipe_wallet_group": {
           "delete": "Remove Wallet Group",
           "acknowlegement": "I have backed up my Secret Recovery Phrase.",
-          "warning_one": "Removing your Wallet Group will delete the Recovery Phrase from Rainbow.",
+          "warning_one": "Removing your Wallet Group will delete the Recovery Phrase from Portal.",
           "warning_two": "Your assets & funds are recoverable with the correct wallet recovery information.",
           "warning_three": "Ensure your Secret Recovery Phrase is backed up before proceeding. ",
-          "button_wipe": "Reset Rainbow",
+          "button_wipe": "Reset Portal",
           "button_complete": "Complete Check Above",
           "wipe_confirmation": "Remove Wallet Group",
-          "wipe_confirmation_desc": "Are you sure you want to remove your Secret Recovery Phrase from Rainbow?",
+          "wipe_confirmation_desc": "Are you sure you want to remove your Secret Recovery Phrase from Portal?",
           "wipe_confirmation_button": "Remove",
           "wipe_confirmation_cancel": "Cancel"
         },
@@ -439,9 +439,9 @@
         "my_nfts": "My NFTs",
         "my_nfts_watched": "NFTs",
         "copy_address": "Copy Address",
-        "view_profile": "View Rainbow Profile",
+        "view_profile": "View Portal Profile",
         "add_wallet": "Add a Wallet",
-        "lock": "Lock Rainbow",
+        "lock": "Lock Portal",
         "connected_apps": "Connected Apps",
         "developer_tools": "Toggle Developer Tools",
         "developer_tools_disabled": "Enable Developer Tools",
@@ -699,7 +699,7 @@
       }
     },
     "aggregators": {
-      "rainbow": "Auto"
+      "portal": "Auto"
     },
     "settings": {
       "title": "%{Action} Settings",
@@ -734,7 +734,7 @@
         },
         "routing": {
           "title": "%{Action} Routing",
-          "description": "By default, Rainbow chooses the cheapest route possible for your %{action}. If you prefer to specifically use either 0x or 1inch, you can do that too.",
+          "description": "By default, Portal chooses the cheapest route possible for your %{action}. If you prefer to specifically use either 0x or 1inch, you can do that too.",
           "read_more": {
             "open_text": "Still curious? ",
             "link_text": "Read more",
@@ -758,7 +758,7 @@
       "flashbots_on": "On",
       "minimum_received": "Minimum received",
       "via": "%{Actioning} via",
-      "included_fee": "Included Rainbow fee",
+      "included_fee": "Included Portal fee",
       "use_flashbots": "Use Flashbots",
       "exchange_rate": "Exchange rate",
       "asset_contract": "%{symbol} contract",
@@ -794,7 +794,7 @@
       },
       "fee_on_transfer_token": {
         "title": "Fee on Transfer Token",
-        "description": "This %{action} will fail in Rainbow because the %{tokenName} contract adds extra fees.",
+        "description": "This %{action} will fail in Portal because the %{tokenName} contract adds extra fees.",
         "action_label": "Got it",
         "footer_text": {
           "open_text": "Read ",
@@ -808,8 +808,8 @@
         "action_label": "Got it"
       },
       "fee": {
-        "title": "Rainbow Fee",
-        "description": "Rainbow takes a %{feePercentage} fee from %{actions}. It’s part of what enables us to give you the best Ethereum experience possible.",
+        "title": "Portal Fee",
+        "description": "Portal takes a %{feePercentage} fee from %{actions}. It’s part of what enables us to give you the best Ethereum experience possible.",
         "action_label": "Got it"
       }
     }
@@ -856,19 +856,19 @@
   },
   "unlock": {
     "welcome_back": "Welcome back",
-    "enter_password": "Enter your password to unlock Rainbow.",
+    "enter_password": "Enter your password to unlock Portal.",
     "unlock": "Unlock",
     "having_trouble": "Having trouble?",
     "contact": "Contact",
-    "rainbow_support": "Rainbow Support"
+    "rainbow_support": "Portal Support"
   },
   "onboard_before_connect": {
     "before_connect": "Before you can connect",
-    "almost_done": "You’re almost done. Quickly finish setting up your wallet with Rainbow.",
+    "almost_done": "You’re almost done. Quickly finish setting up your wallet with Portal.",
     "setup_wallet": "Set up your wallet"
   },
   "welcome": {
-    "title": "Rainbow",
+    "title": "Portal",
     "subtitle_1": "Bitcoin Defi.",
     "subtitle_2": "Trust Minimized.",
     "create_wallet": "Create wallet",
@@ -912,7 +912,7 @@
   },
   "import_wallet_via_private_key": {
     "title": "Import Your Wallet",
-    "explanation": "Enter your 64-character Private Key from Rainbow or any Ethereum wallet.",
+    "explanation": "Enter your 64-character Private Key from Portal or any Ethereum wallet.",
     "placeholder": "Paste your Private Key from another wallet",
     "import_wallet": "Import wallet"
   },
@@ -929,9 +929,9 @@
   "import_wallet_selection": {
     "title": "Your wallets",
     "description": {
-      "zero": "Rainbow detected 1 wallet. You can add more at any time.",
-      "one": "Rainbow detected 1 wallet that have been used recently. You can add more at any time.",
-      "other": "Rainbow detected %{count} wallets that have been used recently. You can edit or add more at any time."
+      "zero": "Portal detected 1 wallet. You can add more at any time.",
+      "one": "Portal detected 1 wallet that have been used recently. You can add more at any time.",
+      "other": "Portal detected %{count} wallets that have been used recently. You can edit or add more at any time."
     },
     "add_wallets": "Add wallets",
     "edit_wallets": "Edit wallets",
@@ -955,7 +955,7 @@
   },
   "import_wallet": {
     "title": "Import your wallet",
-    "description": "Enter your Secret Recovery Phrase or a Private Key from Rainbow or any Ethereum wallet.",
+    "description": "Enter your Secret Recovery Phrase or a Private Key from Portal or any Ethereum wallet.",
     "too_many_words": "Too many words",
     "too_many_chars": "Too many characters",
     "add_another": "Add another",
@@ -1013,10 +1013,10 @@
     "home_header_right": {
       "settings": "Settings",
       "qr_code": "My QR Code",
-      "rainbow_profile": "Rainbow Profile",
+      "rainbow_profile": "Portal Profile",
       "guides_and_support": "Guides & Support",
       "share_feedback": "Share Feedback",
-      "lock_rainbow": "Lock Rainbow",
+      "lock_rainbow": "Lock Portal",
       "testnet_mode": "Testnet Mode",
       "testnet_mode_off": "Off",
       "testnet_mode_on": "On"
@@ -1068,8 +1068,8 @@
     "allow_to_add_asset": "wants to suggest a token",
     "wallet_info_title": "wants to connect to your wallet",
     "wallet_info_description": "Allow %{appName} to view your wallets address, balance, activity and request approval for transactions.",
-    "add_chain_info_description": "If you approve it, this network could be used within the Rainbow Browser Extension.",
-    "watch_asset_info_description": "If you approve it, this asset could be used within the Rainbow Browser Extension.",
+    "add_chain_info_description": "If you approve it, this network could be used within the Portal Browser Extension.",
+    "watch_asset_info_description": "If you approve it, this asset could be used within the Portal Browser Extension.",
     "wallet": "Wallet",
     "network": "Network",
     "switch_networks": "Switch Networks",
@@ -1351,14 +1351,14 @@
   },
   "points": {
     "check_back_soon_header": "Check Back Soon",
-    "check_back_soon_description": "Points are currently unavailable.\nCheck back soon to continue using Rainbow Points.",
+    "check_back_soon_description": "Points are currently unavailable.\nCheck back soon to continue using Portal Points.",
     "your_rank": "Your Rank",
     "unranked": "Unranked",
     "points_to_rank": "%{rank_cutoff} points to rank",
     "next_drop": "Next Drop",
     "leaderboard": "Leaderboard",
     "referral_code": "Referral Code",
-    "referral_code_description": "Earn points for referring friends once they swap $100 through Rainbow",
+    "referral_code_description": "Earn points for referring friends once they swap $100 through Portal",
     "copied_referral_code": "Referral code copied!",
     "copied_referral_link": "Referral link copied!",
     "out_of_current_total_points": "Out of %{total} current total points",
@@ -1374,16 +1374,16 @@
       "sign_in_with_your_wallet": "Sign in with your wallet",
       "access_granted": "Access granted",
       "calculating_points": "Calculating points",
-      "rainbow_swaps": "Rainbow Swaps:",
-      "rainbow_nfts_owned": "Rainbow NFTs Owned:",
+      "rainbow_swaps": "Portal Swaps:",
+      "rainbow_nfts_owned": "Portal NFTs Owned:",
       "wallet_balance": "Wallet Balance:",
       "metamask_swaps": "MetaMask Swaps:",
       "bonus_reward": "Bonus Reward:",
       "calculation_complete": "Calculation complete",
       "points_earned": "Points Earned:",
       "bonus_points": "Bonus Points:",
-      "claim_description_buy": "To claim the rest of your bonus points, get some ETH through Rainbow.",
-      "claim_description_swap": "To claim the rest of your bonus points, swap at least $100 through Rainbow.",
+      "claim_description_buy": "To claim the rest of your bonus points, get some ETH through Portal.",
+      "claim_description_swap": "To claim the rest of your bonus points, swap at least $100 through Portal.",
       "account": "Account:",
       "sign_in": "Sign In",
       "get_eth": "Get some ETH",
@@ -1392,12 +1392,12 @@
       "share_and_earn": "Tweet your referral link and get an extra 250 points",
       "plus_percent_of_refers": "Plus you’ll earn 10% of the points earned by anyone you refer",
       "share": "Share to X",
-      "share_tweet": "I just had %{points} Rainbow Points dropped into my wallet\nEverybody has at least 100 points waiting for them, but you might have more!\n\nClaim your drop: https://rainbow.me/points?ref=%{referralCode}",
-      "share_tweet_with_metamask_bonus": "I just had %{points} Rainbow Points dropped into my wallet — and an extra %{metamaskBonus} Points as a bonus for migrating my MetaMask wallet into Rainbow 🦊 🔫\n\nEverybody has at least 100 points waiting for them, but you might have more! Claim your drop: https://rainbow.me/points?ref=%{referralCode}",
+      "share_tweet": "I just had %{points} Portal Points dropped into my wallet\nEverybody has at least 100 points waiting for them, but you might have more!\n\nClaim your drop: https://portal.me/points?ref=%{referralCode}",
+      "share_tweet_with_metamask_bonus": "I just had %{points} Portal Points dropped into my wallet — and an extra %{metamaskBonus} Points as a bonus for migrating my MetaMask wallet into Portal 🦊 🔫\n\nEverybody has at least 100 points waiting for them, but you might have more! Claim your drop: https://portal.me/points?ref=%{referralCode}",
       "registration_complete": "Registration complete",
       "all_set": "You’re all set!",
       "keep_earning_by": "Keep earning points by swapping, bridging, minting, referring friends, and more",
-      "the_more_you_use": "The more you use Rainbow, the more you’ll be rewarded",
+      "the_more_you_use": "The more you use Portal, the more you’ll be rewarded",
       "balance_required": "Wallet balance required",
       "ensure_you_have_a_balance_on": "To continue, ensure you have an ETH balance on one of the following networks:",
       "or_alternatively_balance_on": "Or alternatively, a MATIC balance on Polygon or a BNB balance on BSC",
@@ -1508,14 +1508,14 @@
     }
   },
   "wallet_ready": {
-    "title": "Rainbow is ready to use",
-    "subtitle": "To access your wallet, just click Rainbow from the Extensions drop-down, or use the speedy keyboard shortcut",
-    "open": "Open Rainbow",
-    "get_started_with_rainbow": "Get started with Rainbow",
-    "get_started_with_rainbow_desc": "Welcome to Rainbow! We're so glad you're here. We’ve created this guide to help with the basics of Rainbow.",
+    "title": "Portal is ready to use",
+    "subtitle": "To access your wallet, just click Portal from the Extensions drop-down, or use the speedy keyboard shortcut",
+    "open": "Open Portal",
+    "get_started_with_rainbow": "Get started with Portal",
+    "get_started_with_rainbow_desc": "Welcome to Portal! We're so glad you're here. We’ve created this guide to help with the basics of Portal.",
     "discover_shortcuts": "Discover shortcuts",
     "discover_shortcuts_desc": "Looking to discover more shortcuts? Check out this helpful guide we’ve put together for you.",
-    "pin_rainbow_to_your_toolbar": "Pin Rainbow to your toolbar"
+    "pin_rainbow_to_your_toolbar": "Pin Portal to your toolbar"
   },
   "wallet_header": {
     "buy": "Buy",
@@ -1532,7 +1532,7 @@
       "on_other_networks": "On other networks",
       "bridge": "Bridge"
     },
-    "verified_by_rainbow": "Verified by Rainbow"
+    "verified_by_rainbow": "Verified by Portal"
   },
   "explainers": {
     "sidechains": {
@@ -1619,7 +1619,7 @@
     "ledger_support": "Supports Ledger Nano S, Nano S Plus, Nano X, and Stax devices.",
     "trezor_support": "Supports Model One or Model T devices.",
     "connect_ledger_title": "Connect your Ledger",
-    "connect_ledger_description": "Connect your Ledger to Rainbow by plugging it into your computer using the USB-C cable.",
+    "connect_ledger_description": "Connect your Ledger to Portal by plugging it into your computer using the USB-C cable.",
     "unlock_ledger_title": "Unlock Ledger",
     "unlock_ledger_description": "The Ethereum app needs to be open on your Ledger to continue.",
     "unlock_ledger_description_2": "Enter your passcode to unlock your Ledger. Once unlocked, open the Ethereum app by pressing both buttons at once.",
@@ -1630,7 +1630,7 @@
     "needs_app_ledger_description": "The Ethereum app needs to be open on your Ledger to proced with the transaction.",
     "needs_app_ledger_description_2": "Enter your passcode to unlock your Ledger. Once unlocked, open the Ethereum app by pressing both buttons at once.",
     "connect_trezor_title": "Complete your Trezor set up",
-    "connect_trezor_description": "Continue to connect your Trezor to Rainbow through the web interface.",
+    "connect_trezor_description": "Continue to connect your Trezor to Portal through the web interface.",
     "learn_more": "Learn more.",
     "connect_wallets_title": "Connect your wallets",
     "connect_wallets_found": "We’ve found %{count} wallets on your %{vendor} with a balance or activity. Select which to connect.",
@@ -1666,10 +1666,10 @@
   },
   "unsupported_browser": {
     "title": "Unsupported Browser",
-    "description": "Your browser is not currently supported. Rainbow is currently available for Android and iOS on mobile, and Chrome, Brave, Arc, and Edge on desktop devices.",
+    "description": "Your browser is not currently supported. Portal is currently available for Android and iOS on mobile, and Chrome, Brave, Arc, and Edge on desktop devices.",
     "download_the_app": "Download the App",
     "link_text": {
-      "highlighted": "Contact Rainbow",
+      "highlighted": "Contact Portal",
       "after": " to request more."
     }
   },
