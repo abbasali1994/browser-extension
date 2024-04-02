@@ -12,7 +12,7 @@ import { Form } from '~/entries/popup/components/Form/Form';
 import { FormInput } from '~/entries/popup/components/Form/FormInput';
 import { maskInput } from '~/entries/popup/components/InputMask/utils';
 import usePrevious from '~/entries/popup/hooks/usePrevious';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 
 const INITIAL_ASSET = {
   name: '',
@@ -39,7 +39,7 @@ export function AddAsset() {
     symbol: true,
   });
 
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const chainId = state?.chainId;
   const savedDraft = customTokenDrafts[chainId];
   const initialAsset = {

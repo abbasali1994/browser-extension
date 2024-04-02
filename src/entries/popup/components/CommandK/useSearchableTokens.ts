@@ -12,7 +12,7 @@ import { useCurrentAddressStore, useCurrentCurrencyStore } from '~/core/state';
 import { useHideSmallBalancesStore } from '~/core/state/currentSettings/hideSmallBalances';
 import { ParsedUserAsset } from '~/core/types/assets';
 
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 import { SearchItemType, TokenSearchItem } from './SearchItems';
@@ -23,7 +23,7 @@ export const useSearchableTokens = () => {
   const { currentAddress: address } = useCurrentAddressStore();
   const { currentCurrency: currency } = useCurrentCurrencyStore();
   const { hideSmallBalances } = useHideSmallBalancesStore();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   const { data: assets = [] } = useUserAssets(
     {

@@ -34,11 +34,11 @@ import {
   setImportWalletSecrets,
 } from '../../handlers/importWalletSecrets';
 import * as wallet from '../../handlers/wallet';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 const ImportWalletViaPrivateKey = () => {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const location = useLocation();
   const onboarding = document.location.href.search('onboarding') !== -1;
   const [isValid, setIsValid] = useState(false);

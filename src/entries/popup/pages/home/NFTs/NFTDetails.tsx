@@ -76,7 +76,7 @@ import {
 import { useDominantColor } from '~/entries/popup/hooks/useDominantColor';
 import { useEns } from '~/entries/popup/hooks/useEns';
 import { useNftShortcuts } from '~/entries/popup/hooks/useNftShortcuts';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { useUserChains } from '~/entries/popup/hooks/useUserChains';
 import { ROUTES } from '~/entries/popup/urls';
 import chunkLinks from '~/entries/popup/utils/chunkLinks';
@@ -95,7 +95,7 @@ export default function NFTDetails() {
   const { testnetMode } = useTestnetModeStore();
   const { chains: userChains } = useUserChains();
   const { data } = useNfts({ address, testnetMode, userChains });
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { setSelectedNft } = useSelectedNftStore();
   const collections = selectNftCollections(data);
   const nft = useMemo(() => {

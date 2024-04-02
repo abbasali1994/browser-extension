@@ -7,7 +7,7 @@ import { Account } from '~/entries/popup/hooks/useAccounts';
 
 import { getWallets } from '../../handlers/wallet';
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 import { triggerToast } from '../Toast/Toast';
 
@@ -236,7 +236,7 @@ export function useCommandExecution(
   setSelectedCommand: React.Dispatch<React.SetStateAction<SearchItem | null>>,
 ) {
   const { closeCommandK } = useCommandKStatus();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   const handleExecuteCommand = React.useCallback(
     (command: SearchItem | null, e?: KeyboardEvent) => {

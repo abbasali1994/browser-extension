@@ -39,7 +39,7 @@ import { Navbar } from '~/entries/popup/components/Navbar/Navbar';
 import { Spinner } from '~/entries/popup/components/Spinner/Spinner';
 import { useCurrentWalletTypeAndVendor } from '~/entries/popup/hooks/useCurrentWalletType';
 import { useDebounce } from '~/entries/popup/hooks/useDebounce';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { useWalletName } from '~/entries/popup/hooks/useWalletName';
 import { ROUTES } from '~/entries/popup/urls';
 import { zIndexes } from '~/entries/popup/utils/zIndexes';
@@ -315,7 +315,7 @@ const doneRows = [
 ];
 
 export const PointsOnboardingSheet = () => {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { currentAddress } = useCurrentAddressStore();
   const { displayName } = useWalletName({ address: currentAddress });
   const { state } = useLocation();

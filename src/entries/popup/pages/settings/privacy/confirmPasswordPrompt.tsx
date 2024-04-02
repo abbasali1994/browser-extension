@@ -16,7 +16,7 @@ import {
 import { Prompt } from '~/design-system/components/Prompt/Prompt';
 import { PasswordInput } from '~/entries/popup/components/PasswordInput/PasswordInput';
 import { verifyPassword } from '~/entries/popup/handlers/wallet';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 
 export const ConfirmPasswordPrompt = ({
   show,
@@ -31,7 +31,7 @@ export const ConfirmPasswordPrompt = ({
   redirect?: string;
   onSuccess?: () => void;
 }) => {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [visible, setVisible] = useState(false);

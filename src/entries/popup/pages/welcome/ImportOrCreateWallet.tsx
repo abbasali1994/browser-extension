@@ -16,11 +16,11 @@ import {
 } from '../../handlers/importWalletSecrets';
 import * as wallet from '../../handlers/wallet';
 import { useBrowser } from '../../hooks/useBrowser';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 export function ImportOrCreateWallet() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const [loading, setLoading] = useState(false);
   const { isFirefox } = useBrowser();
 

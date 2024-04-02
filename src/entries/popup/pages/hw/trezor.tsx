@@ -8,11 +8,11 @@ import { TextLink } from '~/design-system/components/TextLink/TextLink';
 
 import { FullScreenContainer } from '../../components/FullScreen/FullScreenContainer';
 import * as wallet from '../../handlers/wallet';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 export function ConnectTrezor() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   useEffect(() => {
     setTimeout(async () => {
       const res = await wallet.connectTrezor();

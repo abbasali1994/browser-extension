@@ -5,7 +5,7 @@ import { useNfts } from '~/core/resources/nfts';
 import { useCurrentAddressStore } from '~/core/state';
 import { useTestnetModeStore } from '~/core/state/currentSettings/testnetMode';
 
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { useUserChains } from '../../hooks/useUserChains';
 import { ROUTES } from '../../urls';
 
@@ -22,7 +22,7 @@ export const parseNftName = (name: string, id: string) => {
 
 export const useSearchableNFTs = () => {
   const { currentAddress: address } = useCurrentAddressStore();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { testnetMode } = useTestnetModeStore();
   const { chains: userChains } = useUserChains();
 

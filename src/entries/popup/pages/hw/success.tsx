@@ -21,7 +21,7 @@ import { FullScreenContainer } from '../../components/FullScreen/FullScreenConta
 import { WalletAvatar } from '../../components/WalletAvatar/WalletAvatar';
 import { useAuth } from '../../hooks/useAuth';
 import { useIsFullScreen } from '../../hooks/useIsFullScreen';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 const AVATAR_MARGIN_LEFT = '-2.26px';
@@ -107,7 +107,7 @@ const PyramidAvatar = ({ accounts }: { accounts: Address[] }) => {
 };
 
 export function SuccessHW() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const isFullScreen = useIsFullScreen();
   const { state } = useLocation();
   const { accounts, vendor } = state;

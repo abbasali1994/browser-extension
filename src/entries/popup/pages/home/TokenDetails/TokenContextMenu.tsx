@@ -28,7 +28,7 @@ import {
 } from '../../../components/ContextMenu/ContextMenu';
 import { DetailsMenuWrapper } from '../../../components/DetailsMenu';
 import { useNavigateToSwaps } from '../../../hooks/useNavigateToSwaps';
-import { useRainbowNavigate } from '../../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../../hooks/useExtensionNavigate';
 import { useWallets } from '../../../hooks/useWallets';
 import { ROUTES } from '../../../urls';
 
@@ -55,7 +55,7 @@ export function TokenContextMenu({ children, token }: TokenContextMenuProps) {
     setSelectedToken(open || isNavigating ? token : undefined);
   };
 
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const navigateToSwaps = useNavigateToSwaps();
 
   const allowSwap =

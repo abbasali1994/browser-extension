@@ -6,7 +6,7 @@ import trezorLogo from 'static/assets/hw/trezor-logo.png';
 import { i18n } from '~/core/languages';
 import { POPUP_URL, goToNewTab } from '~/core/utils/tabs';
 import { Box } from '~/design-system';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 
 import { OnboardMenu } from '../../components/OnboardMenu/OnboardMenu';
 import { useIsFullScreen } from '../../hooks/useIsFullScreen';
@@ -14,7 +14,7 @@ import { ROUTES } from '../../urls';
 
 export function ChooseHW() {
   const { state } = useLocation();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const isFullScreen = useIsFullScreen();
 
   const handleLedgerChoice = useCallback(() => {

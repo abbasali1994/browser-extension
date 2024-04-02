@@ -4,11 +4,11 @@ import { useLocation } from 'react-router-dom';
 import { SessionStorage } from '~/core/storage';
 import { Box } from '~/design-system';
 import { SeedVerifyQuiz } from '~/entries/popup/components/SeedVerifyQuiz/SeedVerifyQuiz';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { ROUTES } from '~/entries/popup/urls';
 
 export function RecoveryPhraseVerify() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { state } = useLocation();
 
   const goBackToChooseGroup = useCallback(async () => {

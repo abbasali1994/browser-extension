@@ -32,7 +32,6 @@ export const getOriginalRpcEndpoint = (chain: Chain) => {
   if (chain.id === ChainId.hardhat || chain.id === ChainId.hardhatOptimism) {
     return { http: chain.rpcUrls.default.http[0] };
   }
-
   return getDefaultRPC(chain.id);
 };
 

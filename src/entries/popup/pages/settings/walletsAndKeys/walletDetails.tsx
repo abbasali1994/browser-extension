@@ -26,7 +26,7 @@ import {
 } from '~/entries/popup/components/MoreInfoButton/MoreInfoButton';
 import { triggerToast } from '~/entries/popup/components/Toast/Toast';
 import { add, getWallet, remove, wipe } from '~/entries/popup/handlers/wallet';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { useWallets } from '~/entries/popup/hooks/useWallets';
 import { ROUTES } from '~/entries/popup/urls';
 
@@ -122,7 +122,7 @@ const InfoButtonOptions = ({
 };
 
 export function WalletDetails() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { state } = useLocation();
   const [renameAccount, setRenameAccount] = useState<Address | undefined>();
   const [removeAccount, setRemoveAccount] = useState<Address | undefined>();

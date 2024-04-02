@@ -19,13 +19,13 @@ import { FullScreenContainer } from '../../components/FullScreen/FullScreenConta
 import { PasswordInput } from '../../components/PasswordInput/PasswordInput';
 import { removeImportWalletSecrets } from '../../handlers/importWalletSecrets';
 import { updatePassword } from '../../handlers/wallet';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 import { getPasswordStrength, strengthMeta } from '../../utils/passwords';
 import { OnboardBeforeConnectSheet } from '../welcome/OnboardBeforeConnectSheet';
 
 export function CreatePassword() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const [newPassword, setNewPassword] = useState('');
   const [strength, setStrength] = useState<number | null>(null);
   const [confirmNewPassword, setConfirmNewPassword] = useState('');

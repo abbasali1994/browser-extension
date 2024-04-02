@@ -30,7 +30,7 @@ import { ShortcutHint } from '../../components/ShortcutHint/ShortcutHint';
 import { WalletAvatar } from '../../components/WalletAvatar/WalletAvatar';
 
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 import { CreateWalletPrompt } from './createWalletPrompt';
@@ -242,7 +242,7 @@ const WalletGroups = ({
 };
 
 const ChooseWalletGroup = () => {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { state } = useLocation();
   const [wallets, setWallets] = useState<KeychainWallet[]>([]);
   const goHomeOnWalletCreation = state?.goHomeOnWalletCreation;

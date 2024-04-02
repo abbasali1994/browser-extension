@@ -15,7 +15,7 @@ import { Box, Inline, Stack, Symbol, Text } from '~/design-system';
 
 import { useAppSession } from '../../hooks/useAppSession';
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 import { appConnectionSwitchWalletsPromptIsActive } from '../../utils/activeElement';
 import { triggerWalletSwitcher } from '../AppConnection/AppConnectionWalletSwitcher';
@@ -65,7 +65,7 @@ export const AppConnectionMenu = ({
   
   const { currentAddress } = useCurrentAddressStore();
   const { data } = useDappMetadata({ url });
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const dropdownMenuRef = useRef<HTMLDivElement | null>(null);
   const pressingNetworkShortcut = useRef<boolean>(false);
 

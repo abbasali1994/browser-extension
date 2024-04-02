@@ -12,14 +12,14 @@ import { ROUTES } from '../urls';
 
 import { useCurrentWalletTypeAndVendor } from './useCurrentWalletType';
 import { useIsFullScreen } from './useIsFullScreen';
-import { useRainbowNavigate } from './useRainbowNavigate';
+import { useExtensionNavigate } from './useExtensionNavigate';
 import { useWallets } from './useWallets';
 
 export const useNavigateToSwaps = () => {
   const { type } = useCurrentWalletTypeAndVendor();
   const isFullScreen = useIsFullScreen();
   const { isWatchingWallet } = useWallets();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { featureFlags } = useFeatureFlagsStore();
   const { testnetMode } = useTestnetModeStore();
 

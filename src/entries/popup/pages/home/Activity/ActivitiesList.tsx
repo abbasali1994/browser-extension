@@ -34,7 +34,7 @@ import { useWallets } from '~/entries/popup/hooks/useWallets';
 import { simulateContextClick } from '~/entries/popup/utils/simulateClick';
 
 import { useActivityShortcuts } from '../../../hooks/useActivityShortcuts';
-import { useRainbowNavigate } from '../../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../../urls';
 import { triggerRevokeApproval } from '../Approvals/utils';
 import { ActivitySkeleton } from '../Skeletons';
@@ -220,7 +220,7 @@ function ActivityRow({
   transaction: RainbowTransaction;
   onRevokeTransaction?: () => void;
 }) {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const ref = useRef<HTMLDivElement>(null);
 
   return (

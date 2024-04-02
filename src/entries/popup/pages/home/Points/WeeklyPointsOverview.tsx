@@ -16,7 +16,7 @@ import {
 import { rainbowColors } from '~/design-system/components/AnimatedText/AnimatedText';
 import { BottomSheet } from '~/design-system/components/BottomSheet/BottomSheet';
 import { TextProps } from '~/design-system/components/Text/Text';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { useWalletName } from '~/entries/popup/hooks/useWalletName';
 import { ROUTES } from '~/entries/popup/urls';
 import { zIndexes } from '~/entries/popup/utils/zIndexes';
@@ -90,7 +90,7 @@ const getEarningTypeLabel = (type: WeeklyEarning['type']) => {
 };
 
 export function PointsWeeklyOverview() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { currentAddress } = useCurrentAddressStore();
   const { displayName } = useWalletName({ address: currentAddress });
 

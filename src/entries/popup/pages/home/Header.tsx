@@ -25,7 +25,7 @@ import { useAvatar } from '../../hooks/useAvatar';
 import { useCurrentWalletTypeAndVendor } from '../../hooks/useCurrentWalletType';
 import { useIsFullScreen } from '../../hooks/useIsFullScreen';
 import { useNavigateToSwaps } from '../../hooks/useNavigateToSwaps';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { useScroll } from '../../hooks/useScroll';
 import { useWallets } from '../../hooks/useWallets';
 import { ROUTES } from '../../urls';
@@ -139,7 +139,7 @@ function ActionButtonsSection() {
 
   const { isWatchingWallet } = useWallets();
   const { featureFlags } = useFeatureFlagsStore();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const navigateToSwaps = useNavigateToSwaps();
 
   const handleCopy = React.useCallback(() => {

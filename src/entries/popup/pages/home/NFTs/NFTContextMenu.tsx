@@ -22,7 +22,7 @@ import {
 } from '~/entries/popup/components/ContextMenu/ContextMenu';
 import { DetailsMenuWrapper } from '~/entries/popup/components/DetailsMenu';
 import { triggerToast } from '~/entries/popup/components/Toast/Toast';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { ROUTES } from '~/entries/popup/urls';
 
 import { getOpenseaUrl } from './utils';
@@ -39,7 +39,7 @@ export default function NFTContextMenu({
   const { currentAddress: address } = useCurrentAddressStore();
   const { hidden, toggleHideNFT } = useNftsStore();
   const { selectedNft, setSelectedNft } = useSelectedNftStore();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const hiddenNftsForAddress = hidden[address] || {};
   const nftToFocus = selectedNft ?? nft;
   const hasContractAddress = !!nftToFocus?.asset_contract.address;

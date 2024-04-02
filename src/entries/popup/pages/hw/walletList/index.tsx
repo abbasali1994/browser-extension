@@ -26,7 +26,7 @@ import { FullScreenContainer } from '../../../components/FullScreen/FullScreenCo
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { WalletAvatar } from '../../../components/WalletAvatar/WalletAvatar';
 import * as wallet from '../../../handlers/wallet';
-import { useRainbowNavigate } from '../../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../../hooks/useExtensionNavigate';
 import { useWalletsSummary } from '../../../hooks/useWalletsSummary';
 import { ROUTES } from '../../../urls';
 import { AddByIndexSheet } from '../addByIndexSheet';
@@ -38,7 +38,7 @@ type Vendor = 'Ledger' | 'Trezor';
 const WalletListHW = () => {
   const [showAddByIndexSheet, setShowAddByIndexSheet] =
     useState<boolean>(false);
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { state } = useLocation();
   const [accountsIgnored, setAccountsIgnored] = useState<Address[]>([]);
   const [isLoading, setIsLoading] = useState(false);

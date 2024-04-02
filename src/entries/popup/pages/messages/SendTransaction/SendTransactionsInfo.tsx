@@ -36,7 +36,7 @@ import { Tag } from '~/entries/popup/components/Tag';
 import { triggerToast } from '~/entries/popup/components/Toast/Toast';
 import { useAppSession } from '~/entries/popup/hooks/useAppSession';
 import { useNativeAsset } from '~/entries/popup/hooks/useNativeAsset';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { ROUTES } from '~/entries/popup/urls';
 
 import {
@@ -404,7 +404,7 @@ function InsuficientGasFunds({
     TestnetFaucet[chainId] ||
     'https://www.alchemy.com/list-of/crypto-faucets-on-ethereum';
 
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   const setSelectedToken = useSelectedTokenStore((s) => s.setSelectedToken);
 

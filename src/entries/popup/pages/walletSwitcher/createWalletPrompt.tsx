@@ -20,7 +20,7 @@ import {
 } from '~/design-system';
 import { Input } from '~/design-system/components/Input/Input';
 import { Prompt } from '~/design-system/components/Prompt/Prompt';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { ROUTES } from '~/entries/popup/urls';
 
 import { WalletAvatar } from '../../components/WalletAvatar/WalletAvatar';
@@ -39,7 +39,7 @@ export const CreateWalletPrompt = ({
   onCancel?: () => void;
   fromChooseGroup?: boolean;
 }) => {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { state } = useLocation();
   const [walletName, setWalletName] = useState('');
   const [error, setError] = useState<string | null>(null);

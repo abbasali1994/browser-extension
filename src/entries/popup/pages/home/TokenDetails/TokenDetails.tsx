@@ -59,7 +59,7 @@ import {
 import { Navbar } from '~/entries/popup/components/Navbar/Navbar';
 import { SideChainExplainerSheet } from '~/entries/popup/components/SideChainExplainer';
 import { useCustomNetworkAsset } from '~/entries/popup/hooks/useCustomNetworkAsset';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { useUserAsset } from '~/entries/popup/hooks/useUserAsset';
 import { useWallets } from '~/entries/popup/hooks/useWallets';
 import { ROUTES } from '~/entries/popup/urls';
@@ -149,7 +149,7 @@ function SwapSend({
   token: ParsedUserAsset;
   isSwappable: boolean;
 }) {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { setSelectedToken } = useSelectedTokenStore();
   const selectTokenAndNavigate = (to: To) => {
     setSelectedToken(token);
@@ -420,7 +420,7 @@ export function TokenDetails() {
 
   const { isWatchingWallet } = useWallets();
 
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const token = userAsset || customAsset;
 
   const { data: approvals } = useApprovals(

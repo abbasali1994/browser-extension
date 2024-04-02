@@ -8,12 +8,12 @@ import SeedPhraseTable from '~/entries/popup/components/SeedPhraseTable/SeedPhra
 import ViewSecret from '~/entries/popup/components/ViewSecret/ViewSecret';
 import { setImportWalletSecrets } from '~/entries/popup/handlers/importWalletSecrets';
 import { exportWallet } from '~/entries/popup/handlers/wallet';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { ROUTES } from '~/entries/popup/urls';
 
 export function RecoveryPhrase() {
   const { state } = useLocation();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { setWalletBackedUp } = useWalletBackupsStore();
 
   const [seed, setSeed] = useState('');

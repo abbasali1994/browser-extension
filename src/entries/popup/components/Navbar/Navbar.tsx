@@ -11,7 +11,7 @@ import { zIndexes } from '~/entries/popup/utils/zIndexes';
 
 
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import {
   getActiveModal,
   getInputIsFocused,
@@ -186,7 +186,7 @@ function NavbarButtonWithBack({
 }) {
   const { state } = useLocation();
   
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   useKeyboardShortcut({
     handler: (e: KeyboardEvent) => {

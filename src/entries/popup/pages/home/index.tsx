@@ -36,7 +36,7 @@ import { useHomeShortcuts } from '../../hooks/useHomeShortcuts';
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import { usePendingTransactionWatcher } from '../../hooks/usePendingTransactionWatcher';
 import usePrevious from '../../hooks/usePrevious';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import useRestoreNavigation from '../../hooks/useRestoreNavigation';
 import { useScroll } from '../../hooks/useScroll';
 import { useSwitchWalletShortcuts } from '../../hooks/useSwitchWalletShortcuts';
@@ -154,7 +154,7 @@ export const Home = memo(function Home() {
   const { data: avatar } = useAvatar({ addressOrName: currentAddress });
   const { currentHomeSheet, isDisplayingSheet } = useCurrentHomeSheet();
   const { error, setError } = useErrorStore();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { pendingRequests } = usePendingRequestStore();
   const prevPendingRequest = usePrevious(pendingRequests?.[0]);
   const { selectedTab, setSelectedTab } = useTabNavigation();

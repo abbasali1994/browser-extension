@@ -9,13 +9,13 @@ import { ROUTES } from '../urls';
 
 
 import { useKeyboardShortcut } from './useKeyboardShortcut';
-import { useRainbowNavigate } from './useRainbowNavigate';
+import { useExtensionNavigate } from './useExtensionNavigate';
 
 export function useCurrentHomeSheet() {
   const { setCurrentHomeSheet, sheet } = useCurrentHomeSheetStore();
   const { selectedTransaction } = useSelectedTransactionStore();
   
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   const closeSheet = useCallback(() => {
     setCurrentHomeSheet('none');

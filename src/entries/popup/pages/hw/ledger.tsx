@@ -12,7 +12,7 @@ import { TextLink } from '~/design-system/components/TextLink/TextLink';
 
 import { FullScreenContainer } from '../../components/FullScreen/FullScreenContainer';
 import * as wallet from '../../handlers/wallet';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 const ConnectingToLedger = () => {
@@ -200,7 +200,7 @@ export function ConnectLedger() {
     'needs_connect' | 'needs_unlock' | 'needs_app' | 'needs_exclusivity'
   >('needs_connect');
 
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { state } = useLocation();
   const timer = useRef<NodeJS.Timeout>();
 

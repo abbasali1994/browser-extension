@@ -4,11 +4,11 @@ import { useCurrentAddressStore } from '~/core/state';
 
 import { FullScreenContainer } from '../../components/FullScreen/FullScreenContainer';
 import { SeedVerifyQuiz } from '../../components/SeedVerifyQuiz/SeedVerifyQuiz';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 export function SeedVerify() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { currentAddress } = useCurrentAddressStore();
   const goToCreatePassword = useCallback(
     () =>

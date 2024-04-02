@@ -24,14 +24,14 @@ import { HomeMenuRow } from '../../components/HomeMenuRow/HomeMenuRow';
 import { MenuItem } from '../../components/Menu/MenuItem';
 import { ShortcutHint } from '../../components/ShortcutHint/ShortcutHint';
 import * as wallet from '../../handlers/wallet';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 import playSound from '../../utils/playSound';
 
 export const MoreMenu = ({ children }: { children: React.ReactNode }) => {
   const { address } = useAccount();
   const { data: ensName } = useEnsName({ address });
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { testnetMode, setTestnetMode } = useTestnetModeStore();
   const { developerToolsEnabled } = useDeveloperToolsEnabledStore();
 

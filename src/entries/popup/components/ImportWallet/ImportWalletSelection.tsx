@@ -18,7 +18,7 @@ import {
 import { removeImportWalletSecrets } from '../../handlers/importWalletSecrets';
 import * as wallet from '../../handlers/wallet';
 import { deriveAccountsFromSecret } from '../../handlers/wallet';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { useWalletsSummary } from '../../hooks/useWalletsSummary';
 import { ROUTES } from '../../urls';
 import { Spinner } from '../Spinner/Spinner';
@@ -105,7 +105,7 @@ export const useImportWalletsFromSecrets = () => {
 };
 
 export const ImportWalletSelection = ({ onboarding = false }) => {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { setCurrentAddress } = useCurrentAddressStore();
 
   const secrets = useImportWalletSessionSecrets();

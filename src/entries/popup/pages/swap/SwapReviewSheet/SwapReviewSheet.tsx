@@ -50,7 +50,7 @@ import {
   useSwapValidations,
 } from '~/entries/popup/hooks/swap';
 import { getNetworkNativeAssetUniqueId } from '~/entries/popup/hooks/useNativeAssetForNetwork';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { useTranslationContext } from '~/entries/popup/hooks/useTranslationContext';
 import { useUserAsset } from '~/entries/popup/hooks/useUserAsset';
 import { ROUTES } from '~/entries/popup/urls';
@@ -214,7 +214,7 @@ const SwapReviewSheetWithQuote = ({
   flashbotsEnabled,
   hideSwapReview,
 }: SwapReviewSheetWithQuoteProps) => {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   const [showMoreDetails, setShowDetails] = useState(false);
   const [sendingSwap, setSendingSwap] = useState(false);

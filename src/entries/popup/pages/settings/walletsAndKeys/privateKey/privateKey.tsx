@@ -6,12 +6,12 @@ import { copy } from '~/core/utils/copy';
 import { Box, Text } from '~/design-system';
 import ViewSecret from '~/entries/popup/components/ViewSecret/ViewSecret';
 import { exportAccount } from '~/entries/popup/handlers/wallet';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { ROUTES } from '~/entries/popup/urls';
 
 export function PrivateKey() {
   const { state } = useLocation();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   const [privKey, setPrivKey] = useState('');
 

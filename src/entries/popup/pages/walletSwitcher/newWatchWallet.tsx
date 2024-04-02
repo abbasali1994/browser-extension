@@ -5,10 +5,10 @@ import { Box } from '~/design-system';
 
 import { NAVBAR_HEIGHT } from '../../components/Navbar/Navbar';
 import { WatchWallet } from '../../components/WatchWallet/WatchWallet';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 
 const NewWatchWallet = () => {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   const onFinishImporting = useCallback(async () => {
     navigate(-2);

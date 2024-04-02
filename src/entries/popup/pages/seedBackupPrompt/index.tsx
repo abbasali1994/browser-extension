@@ -16,7 +16,7 @@ import {
   IconAndCopyItem,
   IconAndCopyList,
 } from '../../components/IconAndCopyList.tsx/IconAndCopyList';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 const iconAndCopyList: IconAndCopyItem[] = [
@@ -44,7 +44,7 @@ const iconAndCopyList: IconAndCopyItem[] = [
 ];
 
 export function SeedBackupPrompt() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   const handleShowRecoveryPhraseClick = React.useCallback(() => {
     navigate(ROUTES.SEED_REVEAL);

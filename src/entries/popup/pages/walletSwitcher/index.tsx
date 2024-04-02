@@ -43,7 +43,7 @@ import { useAvatar } from '../../hooks/useAvatar';
 import { useBrowser } from '../../hooks/useBrowser';
 
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { useSwitchWalletShortcuts } from '../../hooks/useSwitchWalletShortcuts';
 import { AddressAndType, useWallets } from '../../hooks/useWallets';
 import { ROUTES } from '../../urls';
@@ -192,7 +192,7 @@ export function WalletSwitcher() {
   const { currentAddress, setCurrentAddress } = useCurrentAddressStore();
   const { hideWallet, unhideWallet } = useHiddenWalletsStore();
   const [searchQuery, setSearchQuery] = useState('');
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { visibleWallets: accounts, fetchWallets } = useWallets();
   const { data: avatar } = useAvatar({ addressOrName: currentAddress });
   const { featureFlags } = useFeatureFlagsStore();

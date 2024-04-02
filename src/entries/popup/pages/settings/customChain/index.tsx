@@ -19,7 +19,7 @@ import { FormInput } from '~/entries/popup/components/Form/FormInput';
 import { triggerToast } from '~/entries/popup/components/Toast/Toast';
 import { useDebounce } from '~/entries/popup/hooks/useDebounce';
 import usePrevious from '~/entries/popup/hooks/usePrevious';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 
 import { Checkbox } from '../../../components/Checkbox/Checkbox';
 import { maskInput } from '../../../components/InputMask/utils';
@@ -410,7 +410,7 @@ export function SettingsCustomChain() {
     state: { chain },
   }: { state: { chain?: Chain } } = useLocation();
   const { addCustomRPC, setActiveRPC } = useRainbowChainsStore();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { addUserChain } = useUserChainsStore();
   const { customNetworkDrafts, saveCustomNetworkDraft } =
     usePopupInstanceStore();

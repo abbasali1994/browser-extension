@@ -30,7 +30,7 @@ import { UnsupportedBrowserSheet } from './components/UnsupportedBrowserSheet';
 import { WindowStroke } from './components/WindowStroke/WindowStroke';
 import { useCommandKShortcuts } from './hooks/useCommandKShortcuts';
 import { useKeyboardShortcut } from './hooks/useKeyboardShortcut';
-import { useRainbowNavigate } from './hooks/useRainbowNavigate';
+import { useExtensionNavigate } from './hooks/useExtensionNavigate';
 import { Buy } from './pages/buy';
 import { CreatePassword } from './pages/createPassword';
 import { Home } from './pages/home';
@@ -1042,7 +1042,7 @@ const useGlobalShortcuts = () => {
 
 function Rerouter() {
   const error = useRouteError() as Error;
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { setError } = useErrorStore();
 
   React.useEffect(() => {

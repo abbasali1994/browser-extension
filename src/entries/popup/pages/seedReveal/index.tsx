@@ -20,11 +20,11 @@ import { FullScreenContainer } from '../../components/FullScreen/FullScreenConta
 import SeedPhraseTable from '../../components/SeedPhraseTable/SeedPhraseTable';
 import { triggerToast } from '../../components/Toast/Toast';
 import { getImportWalletSecrets } from '../../handlers/importWalletSecrets';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 export function SeedReveal() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { setWalletBackedUp } = useWalletBackupsStore();
   const [seed, setSeed] = useState('');
   const { currentAddress } = useCurrentAddressStore();

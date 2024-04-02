@@ -4,7 +4,7 @@ import { useNavRestorationStore } from '~/core/state/navRestoration';
 
 import { ROUTES } from '../urls';
 
-import { useRainbowNavigate } from './useRainbowNavigate';
+import { useExtensionNavigate } from './useExtensionNavigate';
 
 const RESTORE_NAV_MAP: Record<string, string[]> = {
   [ROUTES.ADD_WALLET]: [ROUTES.WALLET_SWITCHER, ROUTES.ADD_WALLET],
@@ -123,7 +123,7 @@ const RESTORE_NAV_MAP: Record<string, string[]> = {
 const MODAL_ROUTES = ['home/activity-details'];
 
 export default function useRestoreNavigation() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const {
     setShouldRestoreNavigation,
     shouldRestoreNavigation,

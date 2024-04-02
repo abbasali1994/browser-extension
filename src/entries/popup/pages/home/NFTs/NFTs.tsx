@@ -32,7 +32,7 @@ import { Skeleton } from '~/design-system/components/Skeleton/Skeleton';
 import { useCoolMode } from '~/entries/popup/hooks/useCoolMode';
 import { useKeyboardShortcut } from '~/entries/popup/hooks/useKeyboardShortcut';
 import { useNftShortcuts } from '~/entries/popup/hooks/useNftShortcuts';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { useUserChains } from '~/entries/popup/hooks/useUserChains';
 import { ROUTES } from '~/entries/popup/urls';
 
@@ -64,7 +64,7 @@ export function NFTs() {
     refetch,
   } = useNfts({ address, testnetMode, userChains });
   const sortedSections = selectSortedNftCollections(sort, data);
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const containerRef = useContainerRef();
   const groupedAssets = sortedSections
     .map((section) => section.assets)

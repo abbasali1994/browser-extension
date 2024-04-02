@@ -34,7 +34,7 @@ import { useActiveTab } from './useActiveTab';
 import { useAppSession } from './useAppSession';
 import { useKeyboardShortcut } from './useKeyboardShortcut';
 import { useNavigateToSwaps } from './useNavigateToSwaps';
-import { useRainbowNavigate } from './useRainbowNavigate';
+import { useExtensionNavigate } from './useExtensionNavigate';
 import { useWallets } from './useWallets';
 
 export function useHomeShortcuts() {
@@ -96,7 +96,7 @@ export function useHomeShortcuts() {
     }
   }, [setTestnetMode, testnetMode, developerToolsEnabled]);
 
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const handleHomeShortcuts = useCallback(
     (e: KeyboardEvent) => {
       const activeAppConnectionMenu = appConnectionMenuIsActive();

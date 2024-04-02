@@ -29,7 +29,7 @@ import {
 } from '../../components/ContextMenu/ContextMenu';
 import { DraggableContext, DraggableItem } from '../../components/Draggable';
 import { QuickPromo } from '../../components/QuickPromo/QuickPromo';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 const chainLabel = ({
@@ -51,7 +51,7 @@ const chainLabel = ({
 };
 
 export function SettingsNetworks() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const mainChains = useMainChains();
   const { seenPromos, setSeenPromo } = useQuickPromoStore();
   const { developerToolsEnabled, setDeveloperToolsEnabled } =

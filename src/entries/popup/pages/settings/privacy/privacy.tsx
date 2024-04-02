@@ -11,13 +11,13 @@ import { Toggle } from '~/design-system/components/Toggle/Toggle';
 import { Menu } from '~/entries/popup/components/Menu/Menu';
 import { MenuContainer } from '~/entries/popup/components/Menu/MenuContainer';
 import { MenuItem } from '~/entries/popup/components/Menu/MenuItem';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { ROUTES } from '~/entries/popup/urls';
 
 import { ConfirmPasswordPrompt } from './confirmPasswordPrompt';
 
 export function Privacy() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { analyticsDisabled, setAnalyticsDisabled } =
     useAnalyticsDisabledStore();
   const { hideAssetBalances, setHideAssetBalances } =

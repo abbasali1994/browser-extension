@@ -23,7 +23,7 @@ import { ICON_SIZE } from '../../../components/Tabs/TabBar';
 import PointsSelectedIcon from '../../../components/Tabs/TabIcons/PointsSelected';
 import { useAvatar } from '../../../hooks/useAvatar';
 import { useCoolMode } from '../../../hooks/useCoolMode';
-import { useRainbowNavigate } from '../../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../../urls';
 
 import { PointsDashboard } from './PointsDashboard';
@@ -114,7 +114,7 @@ const PointsContentPlaceholder = () => {
 };
 
 const PointsContent = () => {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { isWatchingWallet } = useWallets();
   const { featureFlags } = useFeatureFlagsStore();
 

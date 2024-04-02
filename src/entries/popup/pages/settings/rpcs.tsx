@@ -53,7 +53,7 @@ import {
   MoreInfoButton,
   MoreInfoOption,
 } from '../../components/MoreInfoButton/MoreInfoButton';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 const isDefaultRPC = (chain: Chain) => {
@@ -94,7 +94,7 @@ export function SettingsNetworksRPCs() {
     [chainId, customNetworkAssets],
   );
 
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { developerToolsEnabled } = useDeveloperToolsEnabledStore();
   const { rainbowChains, setActiveRPC, removeCustomRPC } =
     useRainbowChainsStore();

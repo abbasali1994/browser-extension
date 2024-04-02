@@ -20,7 +20,7 @@ import {
 } from '~/design-system';
 import { Prompt } from '~/design-system/components/Prompt/Prompt';
 import { getAccounts, remove, wipe } from '~/entries/popup/handlers/wallet';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { ROUTES } from '~/entries/popup/urls';
 
 const t = (s: string) =>
@@ -47,7 +47,7 @@ export const WipeWalletGroupPrompt = ({
   onClose: () => void;
 }) => {
   const { currentAddress, setCurrentAddress } = useCurrentAddressStore();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   const handleDeleteWalletGroup = useCallback(async () => {
     const groupAccounts = (await getSettingWallets()).accounts;

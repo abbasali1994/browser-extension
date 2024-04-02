@@ -9,14 +9,14 @@ import { FlyingRainbows } from '../../components/FlyingRainbows/FlyingRainbows';
 import { PasswordInput } from '../../components/PasswordInput/PasswordInput';
 import { Spinner } from '../../components/Spinner/Spinner';
 import * as wallet from '../../handlers/wallet';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 import playSound from '../../utils/playSound';
 import { AvatarSection } from '../home/Header';
 
 export function Unlock() {
   const [password, setPassword] = useState('');
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');

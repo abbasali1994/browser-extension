@@ -11,11 +11,11 @@ import { FullScreenContainer } from '../../components/FullScreen/FullScreenConta
 import { OnboardMenu } from '../../components/OnboardMenu/OnboardMenu';
 import { removeImportWalletSecrets } from '../../handlers/importWalletSecrets';
 import { useBrowser } from '../../hooks/useBrowser';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 export function ImportOrConnect() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { isFirefox } = useBrowser();
   const { featureFlags } = useFeatureFlagsStore();
 

@@ -7,7 +7,7 @@ import { Box, Column, Columns, Symbol, TextOverflow } from '~/design-system';
 import { Lens } from '~/design-system/components/Lens/Lens';
 import { transformScales } from '~/design-system/styles/designTokens';
 
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { useWalletName } from '../../hooks/useWalletName';
 import { ROUTES } from '../../urls';
 
@@ -37,7 +37,7 @@ export function AccountName({
 }: AccountNameProps) {
   const { address } = useAccount();
   const { displayName } = useWalletName({ address: address || '0x' });
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const [hover, setHover] = useState(false);
 
   const handleClick = useCallback(() => {

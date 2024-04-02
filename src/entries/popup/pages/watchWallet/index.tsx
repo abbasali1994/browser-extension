@@ -3,11 +3,11 @@ import { useCallback } from 'react';
 
 import { FullScreenContainer } from '../../components/FullScreen/FullScreenContainer';
 import { WatchWallet as WatchWalletStep } from '../../components/WatchWallet/WatchWallet';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 export function WatchWallet() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   const onFinishImporting = useCallback(async () => {
     // workaround for a deeper issue where the keychain status

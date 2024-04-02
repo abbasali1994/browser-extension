@@ -26,7 +26,7 @@ import { Navbar } from '~/entries/popup/components/Navbar/Navbar';
 import { ICON_SIZE } from '~/entries/popup/components/Tabs/TabBar';
 import PointsSelectedIcon from '~/entries/popup/components/Tabs/TabIcons/PointsSelected';
 import { useAvatar } from '~/entries/popup/hooks/useAvatar';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { ROUTES } from '~/entries/popup/urls';
 import { zIndexes } from '~/entries/popup/utils/zIndexes';
 
@@ -46,7 +46,7 @@ const maskAsciiInput = (inputValue: string): string => {
 };
 
 export const PointsReferralSheet = () => {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { currentAddress } = useCurrentAddressStore();
   const { data: avatar } = useAvatar({ addressOrName: currentAddress });
   const { currentTheme } = useCurrentThemeStore();

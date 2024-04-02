@@ -29,7 +29,7 @@ import { MenuContainer } from '~/entries/popup/components/Menu/MenuContainer';
 import { MenuItem } from '~/entries/popup/components/Menu/MenuItem';
 import { TrezorIcon } from '~/entries/popup/components/TrezorIcon/TrezorIcon';
 import { add, getWallets, remove } from '~/entries/popup/handlers/wallet';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { ROUTES } from '~/entries/popup/urls';
 
 import { CreateWalletPrompt } from '../../walletSwitcher/createWalletPrompt';
@@ -60,7 +60,7 @@ function WalletsAndKeysContextMenu({
   children,
   wallet,
 }: PropsWithChildren<{ wallet: KeychainWallet }>) {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   const { isOpen, address, createWithSibling, close, cancel } =
     useCreateWalletPrompt();
@@ -135,7 +135,7 @@ function WalletsAndKeysContextMenu({
 }
 
 export const WalletsAndKeys = () => {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const [wallets, setWallets] = useState<KeychainWallet[]>([]);
   const { getWalletBackup } = useWalletBackupsStore();
   const firstNotBackedUpRef = useRef<HTMLDivElement>(null);

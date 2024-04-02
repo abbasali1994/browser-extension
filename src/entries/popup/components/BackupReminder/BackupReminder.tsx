@@ -13,7 +13,7 @@ import {
 } from '~/design-system';
 import { BottomSheet } from '~/design-system/components/BottomSheet/BottomSheet';
 
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { useWalletBackups } from '../../hooks/useWalletBackups';
 import { ROUTES } from '../../urls';
 import { zIndexes } from '../../utils/zIndexes';
@@ -21,7 +21,7 @@ import { Navbar } from '../Navbar/Navbar';
 
 export const BackupReminder = () => {
   const { showWalletBackupReminder, closeBackupReminder } = useWalletBackups();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   return (
     <BottomSheet

@@ -21,7 +21,7 @@ import {
 } from '~/design-system';
 import { Prompt } from '~/design-system/components/Prompt/Prompt';
 import { getAccounts, remove, wipe } from '~/entries/popup/handlers/wallet';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { ROUTES } from '~/entries/popup/urls';
 import { RainbowError, logger } from '~/logger';
 
@@ -46,7 +46,7 @@ export const HardwareWalletWipePrompt = ({
   onClose: () => void;
 }) => {
   const { currentAddress, setCurrentAddress } = useCurrentAddressStore();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const [wallet, setWallet] = useState<KeychainWallet | null>();
 
   useEffect(() => {

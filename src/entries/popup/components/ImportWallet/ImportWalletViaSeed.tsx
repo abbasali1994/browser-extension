@@ -36,7 +36,7 @@ import {
   removeImportWalletSecrets,
   setImportWalletSecrets,
 } from '../../handlers/importWalletSecrets';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 const getEvenWordIndex = (index: number) => {
@@ -167,7 +167,7 @@ const secretsReducer = (
 };
 
 const ImportWalletViaSeed = () => {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const location = useLocation();
   const onboarding = document.location.href.search('onboarding') !== -1;
   const [isValid, setIsValid] = useState(false);

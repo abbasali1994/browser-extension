@@ -48,7 +48,7 @@ import {
 } from '~/entries/popup/components/DropdownMenu/DropdownMenu';
 import { Navbar } from '~/entries/popup/components/Navbar/Navbar';
 import { useRainbowChains } from '~/entries/popup/hooks/useRainbowChains';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { useWallets } from '~/entries/popup/hooks/useWallets';
 import { ROUTES } from '~/entries/popup/urls';
 import { zIndexes } from '~/entries/popup/utils/zIndexes';
@@ -266,7 +266,7 @@ const SpeedUpOrCancel = ({
   transaction: RainbowTransaction;
 }) => {
   const { sheet, setCurrentHomeSheet } = useCurrentHomeSheetStore();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   return (
     <Box display="flex" flexDirection="column" gap="8px">
@@ -510,7 +510,7 @@ export function ActivityDetails() {
     hash,
     chainId: Number(chainId),
   });
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   const { data: approvals } = useApprovals(
     {

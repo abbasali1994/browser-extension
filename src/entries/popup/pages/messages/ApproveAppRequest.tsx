@@ -9,7 +9,7 @@ import { TESTNET_MODE_BAR_HEIGHT } from '~/core/utils/dimensions';
 import { Box } from '~/design-system';
 
 import { TestnetModeWatcher } from '../../components/TestnetMode/TestnetModeWatcher/TestnetModeWatcher';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 import { isExternalPopup } from '../../utils/windows';
 
@@ -63,7 +63,7 @@ export const ApproveAppRequest = () => {
 
   const pendingRequest = filteredRequests?.[0];
 
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   useEffect(() => {
     if (pendingRequests.length < 1 && !isExternalPopup) {

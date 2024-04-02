@@ -27,7 +27,7 @@ import { simulateClick } from '../utils/simulateClick';
 
 import { useKeyboardShortcut } from './useKeyboardShortcut';
 import { useNavigateToSwaps } from './useNavigateToSwaps';
-import { useRainbowNavigate } from './useRainbowNavigate';
+import { useExtensionNavigate } from './useExtensionNavigate';
 import { useWallets } from './useWallets';
 
 export function useTokensShortcuts() {
@@ -35,7 +35,7 @@ export function useTokensShortcuts() {
   const { featureFlags } = useFeatureFlagsStore();
   const { selectedToken, setSelectedToken } = useSelectedTokenStore();
   
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const navigateToSwaps = useNavigateToSwaps();
 
   const containerRef = useContainerRef();

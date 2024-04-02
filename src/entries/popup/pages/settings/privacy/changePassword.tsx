@@ -16,14 +16,14 @@ import {
 import { SymbolName, TextColor } from '~/design-system/styles/designTokens';
 import { PasswordInput } from '~/entries/popup/components/PasswordInput/PasswordInput';
 import { updatePassword } from '~/entries/popup/handlers/wallet';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import {
   getPasswordStrength,
   strengthMeta,
 } from '~/entries/popup/utils/passwords';
 
 export function ChangePassword() {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { state } = useLocation();
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');

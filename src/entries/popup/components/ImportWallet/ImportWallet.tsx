@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { NavigateOptions } from 'react-router-dom';
 
 import { i18n } from '~/core/languages';
@@ -8,11 +8,11 @@ import { Box, Separator, Stack, Text } from '~/design-system';
 import { FullScreenContainer } from '../../components/FullScreen/FullScreenContainer';
 import { OnboardMenu } from '../../components/OnboardMenu/OnboardMenu';
 import { removeImportWalletSecrets } from '../../handlers/importWalletSecrets';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 export function ImportWallet({ onboarding }: { onboarding?: boolean }) {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
   const navigateTo = useCallback(

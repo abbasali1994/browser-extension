@@ -76,7 +76,7 @@ import { useSendValidations } from '../../hooks/send/useSendValidations';
 
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import usePrevious from '../../hooks/usePrevious';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { useWallets } from '../../hooks/useWallets';
 import { ROUTES } from '../../urls';
 import { clickHeaderRight } from '../../utils/clickHeader';
@@ -104,7 +104,7 @@ export function Send() {
   }>({ show: false, action: 'save' });
   const [toAddressDropdownOpen, setToAddressDropdownOpen] = useState(false);
 
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
 
   const { isContact } = useContactsStore();
   const { allWallets } = useWallets();

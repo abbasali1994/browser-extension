@@ -9,11 +9,11 @@ import { triggerAlert } from '~/design-system/components/Alert/Alert';
 import { OnboardMenu } from '../../components/OnboardMenu/OnboardMenu';
 import { removeImportWalletSecrets } from '../../handlers/importWalletSecrets';
 import { useBrowser } from '../../hooks/useBrowser';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 const AddWallet = () => {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { isFirefox } = useBrowser();
   const { featureFlags } = useFeatureFlagsStore();
 

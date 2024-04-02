@@ -31,7 +31,7 @@ import {
 import { HomeMenuRow } from '~/entries/popup/components/HomeMenuRow/HomeMenuRow';
 import { ShortcutHint } from '~/entries/popup/components/ShortcutHint/ShortcutHint';
 import { triggerToast } from '~/entries/popup/components/Toast/Toast';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { ROUTES } from '~/entries/popup/urls';
 
 import { getOpenseaUrl } from './utils';
@@ -46,7 +46,7 @@ export default function NFTDropdownMenu({
   const { currentAddress: address } = useCurrentAddressStore();
   const { hidden, toggleHideNFT } = useNftsStore();
   const { setSelectedNft } = useSelectedNftStore();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const hiddenNftsForAddress = hidden[address] || {};
   const displayed = !hiddenNftsForAddress[nft?.uniqueId || ''];
   const hasContractAddress = !!nft?.asset_contract.address;

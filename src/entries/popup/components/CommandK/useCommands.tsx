@@ -27,7 +27,7 @@ import { triggerAlert } from '~/design-system/components/Alert/Alert';
 import * as wallet from '~/entries/popup/handlers/wallet';
 import { useAccounts } from '~/entries/popup/hooks/useAccounts';
 import { useNavigateToSwaps } from '~/entries/popup/hooks/useNavigateToSwaps';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { useWallets } from '~/entries/popup/hooks/useWallets';
 import { ROUTES } from '~/entries/popup/urls';
 
@@ -513,7 +513,7 @@ export const useCommands = (
   const { data: ensName } = useEnsName({ address });
   const { featureFlags } = useFeatureFlagsStore();
   const isFullScreen = useIsFullScreen();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const navigateToSwaps = useNavigateToSwaps();
   const { isWatchingWallet } = useWallets();
   const { save } = useSavedEnsNames();

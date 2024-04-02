@@ -56,7 +56,7 @@ import { isLedgerConnectionError } from '~/entries/popup/handlers/ledger';
 import { getWallet, sendTransaction } from '~/entries/popup/handlers/wallet';
 import { useKeyboardShortcut } from '~/entries/popup/hooks/useKeyboardShortcut';
 import usePrevious from '~/entries/popup/hooks/usePrevious';
-import { useRainbowNavigate } from '~/entries/popup/hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { ROUTES } from '~/entries/popup/urls';
 import { zIndexes } from '~/entries/popup/utils/zIndexes';
 import { RainbowError, logger } from '~/logger';
@@ -90,7 +90,7 @@ export const RevokeApprovalSheet = ({
 
   const [waitingForDevice, setWaitingForDevice] = useState(false);
   const { clearCustomGasModified, selectedGas } = useGasStore();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { currentCurrency } = useCurrentCurrencyStore();
 
   const { approvalChainId, assetAddress, spenderAddress, assetType } =

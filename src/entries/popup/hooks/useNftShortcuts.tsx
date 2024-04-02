@@ -12,14 +12,14 @@ import { ROUTES } from '../urls';
 
 
 import { useKeyboardShortcut } from './useKeyboardShortcut';
-import { useRainbowNavigate } from './useRainbowNavigate';
+import { useExtensionNavigate } from './useExtensionNavigate';
 
 export function useNftShortcuts(nft?: UniqueAsset | null) {
   const { currentAddress: address } = useCurrentAddressStore();
   const { selectedNft, setSelectedNft } = useSelectedNftStore();
   
   const { toggleHideNFT } = useNftsStore();
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const nftToFocus = nft ?? selectedNft;
   const getNftIsSelected = useCallback(() => !!nftToFocus, [nftToFocus]);
   const downloadLink = useRef<HTMLAnchorElement>(null);

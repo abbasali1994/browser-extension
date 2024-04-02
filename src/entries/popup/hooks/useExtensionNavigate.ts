@@ -10,7 +10,7 @@ import { useTabNavigation } from '~/core/state/currentSettings/tabNavigation';
 import { isValidTab } from '../components/Tabs/TabBar';
 import { ROUTES } from '../urls';
 
-export function useRainbowNavigate() {
+export function useExtensionNavigate() {
   const location = useLocation();
   const navigate = useNavigate();
   const { setSelectedTab } = useTabNavigation();

@@ -8,7 +8,7 @@ import { minus } from '~/core/utils/numbers';
 import { Box, Button, Stack, Text } from '~/design-system';
 
 import { Spinner } from '../../components/Spinner/Spinner';
-import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import {
   WalletSummary,
   useWalletsSummary,
@@ -59,7 +59,7 @@ const addOrRemoveAddy = (addresses: Address[], address: Address) => {
 
 const emptyArray: unknown[] = [];
 export function ImportWalletSelectionEdit({ onboarding = false }) {
-  const navigate = useRainbowNavigate();
+  const navigate = useExtensionNavigate();
   const { setCurrentAddress } = useCurrentAddressStore();
 
   const { state } = useLocation();

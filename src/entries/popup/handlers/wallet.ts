@@ -44,7 +44,6 @@ import {
   signTransactionFromTrezor,
 } from './trezor';
 import { walletAction } from './walletAction';
-import { HARDWARE_WALLETS } from './walletVariables';
 
 const signMessageByType = async (
   msgData: string | Bytes,
@@ -370,9 +369,6 @@ export const importAccountAtIndex = async (
 };
 
 export const connectTrezor = async () => {
-  if (process.env.IS_TESTING === 'true') {
-    return HARDWARE_WALLETS.MOCK_ACCOUNT;
-  }
   try {
     // We don't want the index to be part of the path
     // because we need the public key
@@ -436,9 +432,6 @@ export const connectTrezor = async () => {
 };
 
 export const connectLedger = async () => {
-  if (process.env.IS_TESTING === 'true') {
-    return HARDWARE_WALLETS.MOCK_ACCOUNT;
-  }
   let transport;
   try {
     transport = await TransportWebHID.create();
