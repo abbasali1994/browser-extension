@@ -3,7 +3,6 @@ import { motion, useTransform } from 'framer-motion';
 import * as React from 'react';
 import { useAccount } from 'wagmi';
 
-import { config } from '~/core/config';
 import { i18n } from '~/core/languages';
 import { shortcuts } from '~/core/references/shortcuts';
 import { useFeatureFlagsStore } from '~/core/state/currentSettings/featureFlags';
@@ -23,9 +22,8 @@ import { WalletAvatar } from '../../components/WalletAvatar/WalletAvatar';
 import { WalletContextMenu } from '../../components/WalletContextMenu';
 import { useAvatar } from '../../hooks/useAvatar';
 import { useCurrentWalletTypeAndVendor } from '../../hooks/useCurrentWalletType';
-import { useIsFullScreen } from '../../hooks/useIsFullScreen';
-import { useNavigateToSwaps } from '../../hooks/useNavigateToSwaps';
 import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
+import { useIsFullScreen } from '../../hooks/useIsFullScreen';
 import { useScroll } from '../../hooks/useScroll';
 import { useWallets } from '../../hooks/useWallets';
 import { ROUTES } from '../../urls';
@@ -140,7 +138,6 @@ function ActionButtonsSection() {
   const { isWatchingWallet } = useWallets();
   const { featureFlags } = useFeatureFlagsStore();
   const navigate = useExtensionNavigate();
-  const navigateToSwaps = useNavigateToSwaps();
 
   const handleCopy = React.useCallback(() => {
     navigator.clipboard.writeText(address as string);
@@ -150,13 +147,6 @@ function ActionButtonsSection() {
     });
   }, [address]);
 
-  const allowSwap = React.useMemo(
-    () =>
-      (!isWatchingWallet || featureFlags.full_watching_wallets) &&
-      config.swaps_enabled,
-    [featureFlags.full_watching_wallets, isWatchingWallet],
-  );
-
   const allowSend = React.useMemo(
     () => !isWatchingWallet || featureFlags.full_watching_wallets,
     [featureFlags.full_watching_wallets, isWatchingWallet],
@@ -164,10 +154,6 @@ function ActionButtonsSection() {
 
   const alertWatchingWallet = React.useCallback(() => {
     triggerAlert({ text: i18n.t('alert.wallet_watching_mode') });
-  }, []);
-
-  const alertComingSoon = React.useCallback(() => {
-    triggerAlert({ text: i18n.t('alert.coming_soon') });
   }, []);
 
   const { type, vendor } = useCurrentWalletTypeAndVendor();
@@ -215,26 +201,6 @@ function ActionButtonsSection() {
           />
 
           <ActionButton
-            symbol="arrow.triangle.swap"
-            text={i18n.t('wallet_header.swap')}
-            tabIndex={tabIndexes.WALLET_HEADER_SWAP_BUTTON}
-            testId={'header-link-swap'}
-            onClick={() => {
-              if (!allowSwap) {
-                if (isWatchingWallet) {
-                  alertWatchingWallet();
-                } else {
-                  alertComingSoon();
-                }
-              } else {
-                navigateToSwaps();
-              }
-            }}
-            tooltipHint={shortcuts.home.GO_TO_SWAP.display}
-            tooltipText={i18n.t('tooltip.swap')}
-          />
-
-          <ActionButton
             symbol="paperplane.fill"
             text={i18n.t('wallet_header.send')}
             tabIndex={tabIndexes.WALLET_HEADER_SEND_BUTTON}
@@ -248,16 +214,6 @@ function ActionButtonsSection() {
                 handleSendFallback();
               }
             }}
-          />
-
-          <ActionButton
-            symbol="creditcard.fill"
-            testId="header-link-buy"
-            text={i18n.t('wallet_header.buy')}
-            tabIndex={tabIndexes.WALLET_HEADER_BUY_BUTTON}
-            onClick={() => navigate(ROUTES.BUY)}
-            tooltipHint={shortcuts.home.BUY.display}
-            tooltipText={i18n.t('tooltip.buy_crypto')}
           />
         </Inline>
       )}

@@ -26,7 +26,6 @@ import { AppConnectionWalletSwitcher } from '../../components/AppConnection/AppC
 import { BackupReminder } from '../../components/BackupReminder/BackupReminder';
 import { Navbar } from '../../components/Navbar/Navbar';
 import { TabBar as NewTabBar, Tab } from '../../components/Tabs/TabBar';
-import { CursorTooltip } from '../../components/Tooltip/CursorTooltip';
 import { WalletAvatar } from '../../components/WalletAvatar/WalletAvatar';
 import { WalletContextMenu } from '../../components/WalletContextMenu';
 import { removeImportWalletSecrets } from '../../handlers/importWalletSecrets';
@@ -48,9 +47,7 @@ import { ROUTES } from '../../urls';
 import { Activities } from './Activity/ActivitiesList';
 import { RevokeApproval } from './Approvals/RevokeApproval';
 import { Header } from './Header';
-import { MoreMenu } from './MoreMenu';
 import { NFTs } from './NFTs/NFTs';
-import { AppConnection } from './NetworkMenu';
 import { Points } from './Points/Points';
 import { TabHeader } from './TabHeader';
 import { Tokens } from './Tokens';
@@ -248,7 +245,7 @@ export const Home = memo(function Home() {
             />
             <AppConnectionWalletSwitcher />
           </motion.div>
-          <NewTabBar activeTab={activeTab} onSelectTab={onSelectTab} />
+          {/* <NewTabBar activeTab={activeTab} onSelectTab={onSelectTab} /> */}
           <BackupReminder />
           {currentHomeSheet}
           <RevokeApproval />
@@ -272,28 +269,6 @@ const TopNav = memo(function TopNav() {
       topOffset={0}
     >
       <Navbar
-        leftComponent={<AppConnection />}
-        rightComponent={
-          <MoreMenu>
-            <CursorTooltip
-              align="end"
-              arrowAlignment="right"
-              arrowDirection="up"
-              arrowCentered
-              text={i18n.t('tooltip.more')}
-              textWeight="bold"
-              textSize="12pt"
-              textColor="labelSecondary"
-              hint={shortcuts.home.OPEN_MORE_MENU.display}
-            >
-              <Navbar.SymbolButton
-                symbol="ellipsis"
-                variant="flat"
-                tabIndex={3}
-              />
-            </CursorTooltip>
-          </MoreMenu>
-        }
         titleComponent={
           isCollapsed && (
             <WalletContextMenu account={address}>
