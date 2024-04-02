@@ -3,21 +3,16 @@ import { useCallback, useEffect } from 'react';
 import { NavigateOptions } from 'react-router-dom';
 
 import { i18n } from '~/core/languages';
-import { useFeatureFlagsStore } from '~/core/state/currentSettings/featureFlags';
 import { Box, Separator, Stack, Text } from '~/design-system';
-import { triggerAlert } from '~/design-system/components/Alert/Alert';
 
 import { FullScreenContainer } from '../../components/FullScreen/FullScreenContainer';
 import { OnboardMenu } from '../../components/OnboardMenu/OnboardMenu';
 import { removeImportWalletSecrets } from '../../handlers/importWalletSecrets';
-import { useBrowser } from '../../hooks/useBrowser';
 import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { ROUTES } from '../../urls';
 
 export function ImportOrConnect() {
   const navigate = useExtensionNavigate();
-  const { isFirefox } = useBrowser();
-  const { featureFlags } = useFeatureFlagsStore();
 
   const navigateTo = useCallback(
     (route: string, options?: NavigateOptions) => {
@@ -31,20 +26,6 @@ export function ImportOrConnect() {
     [navigateTo],
   );
 
-  const onConnectHardwareWallet = useCallback(() => {
-    featureFlags.hw_wallets_enabled
-      ? isFirefox
-        ? triggerAlert({ text: i18n.t('alert.no_hw_ff') })
-        : navigateTo(ROUTES.HW_CHOOSE, {
-            state: { direction: 'right', navbarIcon: 'arrow' },
-          })
-      : triggerAlert({ text: i18n.t('alert.coming_soon') });
-  }, [featureFlags.hw_wallets_enabled, isFirefox, navigateTo]);
-
-  const onWatchEthereumAddress = useCallback(
-    () => navigateTo(ROUTES.WATCH),
-    [navigateTo],
-  );
   useEffect(() => {
     // clear secrets if the user backs out of flow entirely
     removeImportWalletSecrets();
@@ -83,26 +64,6 @@ export function ImportOrConnect() {
               symbol="lock.rotation"
               symbolColor="purple"
               testId="import-wallet-option"
-            />
-            <OnboardMenu.Separator />
-            <OnboardMenu.Item
-              onClick={onConnectHardwareWallet}
-              title={i18n.t('import_or_connect.connect_wallet')}
-              subtitle={i18n.t('import_or_connect.connect_wallet_description')}
-              symbol="doc.text.magnifyingglass"
-              symbolColor="blue"
-              testId="connect-wallet-option"
-            />
-
-            <OnboardMenu.Separator />
-            <OnboardMenu.Item
-              onClick={onWatchEthereumAddress}
-              title={i18n.t('import_or_connect.watch_address')}
-              subtitle={i18n.t('import_or_connect.watch_address_description')}
-              symbol="magnifyingglass.circle"
-              symbolColor="green"
-              testId="watch-wallet-option"
-              last
             />
           </OnboardMenu>
         </Box>
