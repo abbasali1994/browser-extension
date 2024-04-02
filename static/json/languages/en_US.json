@@ -35,12 +35,12 @@
   },
   "qr_code": {
     "copy_address": "Copy Address"
-  },
+  }, 
   "add_wallet": {
     "title": "Add another wallet",
-    "create_wallet": "Create a new wallet",
+    "create_wallet": "Create wallet",
     "create_wallet_description": "Create a new wallet on one of your seed phrases.",
-    "import_wallet": "Import with a Secret Recovery Phrase or Private Key",
+    "import_wallet": "Import wallet",
     "import_wallet_description": "Add a wallet using your Secret Recovery Phrase or a Private Key.",
     "hardware_wallet": "Add from your hardware wallet",
     "hardware_wallet_description": "Add more accounts from your hardware wallet.",
@@ -869,10 +869,11 @@
   },
   "welcome": {
     "title": "Rainbow",
-    "subtitle": "Explore the new world of Ethereum",
-    "create_wallet": "Create a new wallet",
-    "import_wallet": "Import or connect a wallet",
-    "disclaimer_tos": "By proceeding, you agree to Rainbow’s",
+    "subtitle_1": "Bitcoin Defi.",
+    "subtitle_2": "Trust Minimized.",
+    "create_wallet": "Create wallet",
+    "import_wallet": "Import wallet",
+    "disclaimer_tos": "By proceeding, you agree to Portal’s",
     "disclaimer_tos_link": "Terms of Use",
     "invalid_code": "Invalid code",
     "join": "Join"

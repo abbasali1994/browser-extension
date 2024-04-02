@@ -6,7 +6,6 @@ import { usePendingRequestStore } from '~/core/state';
 import { useWalletBackupsStore } from '~/core/state/walletBackups';
 import { Box, Stack, Text } from '~/design-system';
 
-import { FlyingRainbows } from '../../components/FlyingRainbows/FlyingRainbows';
 import { LogoWithLetters } from '../../components/LogoWithLetters/LogoWithLetters';
 
 import { ImportOrCreateWallet } from './ImportOrCreateWallet';
@@ -29,15 +28,31 @@ export function Welcome() {
         show={showOnboardBeforeConnectSheet}
         onClick={() => setShowOnboardBeforeConnectSheet(false)}
       />
-      <FlyingRainbows>
-        <Box
-          as={motion.div}
-          initial={{ marginTop: 135 }}
-          animate={headerControls}
-        >
-          <Stack space="4px">
-            <Box width="full" display="flex" justifyContent="center">
-              <LogoWithLetters color="label" />
+      <Box
+        as={motion.div}
+        initial={{ marginTop: 88, marginBottom: 88 }}
+        animate={headerControls}
+      >
+        <Stack space="4px">
+          <Box width="full" display="flex" justifyContent="center">
+            <LogoWithLetters color="label" />
+          </Box>
+          <Box as={motion.div} initial={{ marginTop: 50 }}>
+            <Box
+              width="full"
+              justifyContent="center"
+              alignItems="center"
+              display="flex"
+              style={{ marginBottom: '10px' }}
+            >
+              <Text
+                align="center"
+                color="labelTertiary"
+                size="16pt"
+                weight="bold"
+              >
+                {i18n.t('welcome.subtitle_1')}
+              </Text>
             </Box>
             <Box
               width="full"
@@ -51,17 +66,17 @@ export function Welcome() {
                 size="16pt"
                 weight="bold"
               >
-                {i18n.t('welcome.subtitle')}
+                {i18n.t('welcome.subtitle_2')}
               </Text>
             </Box>
-          </Stack>
-        </Box>
-        <AnimatePresence mode="popLayout" initial={false}>
-          <Box key="welcome" width="full">
-            <ImportOrCreateWallet />
           </Box>
-        </AnimatePresence>
-      </FlyingRainbows>
+        </Stack>
+      </Box>
+      <AnimatePresence mode="popLayout" initial={false}>
+        <Box key="welcome" width="full">
+          <ImportOrCreateWallet />
+        </Box>
+      </AnimatePresence>
     </>
   );
 }

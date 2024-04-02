@@ -49,12 +49,12 @@ export function ImportOrCreateWallet() {
 
   const { setCurrentAddress } = useCurrentAddressStore();
 
-  const handleImportWalletClick = React.useCallback(async () => {
+  const handleImportWalletClick = useCallback(async () => {
     const permissionsOk = await requestPermissionsIfNeeded();
     permissionsOk && navigate(ROUTES.IMPORT_OR_CONNECT);
   }, [navigate, requestPermissionsIfNeeded]);
 
-  const handleCreateNewWalletClick = React.useCallback(async () => {
+  const handleCreateNewWalletClick = useCallback(async () => {
     if (loading) return;
     const permissionsOk = await requestPermissionsIfNeeded();
     if (!permissionsOk) return;
@@ -74,7 +74,7 @@ export function ImportOrCreateWallet() {
   }, [loading, navigate, requestPermissionsIfNeeded, setCurrentAddress]);
 
   return (
-    <Box style={{ marginTop: '234px' }}>
+    <Box>
       <Rows space="20px">
         <Row>
           <Rows space="10px">
@@ -89,12 +89,10 @@ export function ImportOrCreateWallet() {
                   borderRadius="round"
                 >
                   <Button
-                    color={isFirefox ? 'surfaceSecondaryElevated' : 'label'}
+                    color="surfaceSecondaryElevated"
                     height="44px"
-                    variant={isFirefox ? 'flat' : 'tinted'}
+                    variant="flat"
                     width="full"
-                    symbol="arrow.right"
-                    symbolSide="right"
                     onClick={handleCreateNewWalletClick}
                     testId="create-wallet-button"
                     tabIndex={0}
@@ -158,7 +156,7 @@ export function ImportOrCreateWallet() {
             >
               {i18n.t('welcome.disclaimer_tos')}&nbsp;
               <a
-                href="https://rainbow.me/terms-of-use"
+                href="https://google.com/"
                 target="_blank"
                 style={{ color: accentColorAsHsl }}
                 rel="noreferrer"
