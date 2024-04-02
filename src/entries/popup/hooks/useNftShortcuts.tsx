@@ -10,14 +10,14 @@ import { UniqueAsset } from '~/core/types/nfts';
 import { triggerToast } from '../components/Toast/Toast';
 import { ROUTES } from '../urls';
 
-import useKeyboardAnalytics from './useKeyboardAnalytics';
+
 import { useKeyboardShortcut } from './useKeyboardShortcut';
 import { useRainbowNavigate } from './useRainbowNavigate';
 
 export function useNftShortcuts(nft?: UniqueAsset | null) {
   const { currentAddress: address } = useCurrentAddressStore();
   const { selectedNft, setSelectedNft } = useSelectedNftStore();
-  const { trackShortcut } = useKeyboardAnalytics();
+  
   const { toggleHideNFT } = useNftsStore();
   const navigate = useRainbowNavigate();
   const nftToFocus = nft ?? selectedNft;
@@ -58,34 +58,22 @@ export function useNftShortcuts(nft?: UniqueAsset | null) {
     (e: KeyboardEvent) => {
       if (e.key === shortcuts.nfts.DOWNLOAD_NFT.key) {
         handleDownload();
-        trackShortcut({
-          key: shortcuts.nfts.DOWNLOAD_NFT.display,
-          type: 'nfts.download',
-        });
+      
       }
       if (e.key === shortcuts.nfts.COPY_NFT_ID.key) {
         handleCopyId();
-        trackShortcut({
-          key: shortcuts.nfts.COPY_NFT_ID.display,
-          type: 'nfts.copyId',
-        });
+      
       }
       if (e.key === shortcuts.nfts.HIDE_NFT.key) {
         handleHideNft();
-        trackShortcut({
-          key: shortcuts.nfts.HIDE_NFT.display,
-          type: 'nfts.hide',
-        });
+       
       }
       if (e.key === shortcuts.nfts.SEND_NFT.key) {
         handleSendNft();
-        trackShortcut({
-          key: shortcuts.nfts.SEND_NFT.display,
-          type: 'nfts.send',
-        });
+       
       }
     },
-    [handleCopyId, handleDownload, handleHideNft, handleSendNft, trackShortcut],
+    [handleCopyId, handleDownload, handleHideNft, handleSendNft],
   );
   useKeyboardShortcut({
     condition: getNftIsSelected,

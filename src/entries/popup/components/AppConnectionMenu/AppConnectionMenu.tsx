@@ -1,4 +1,4 @@
-import React, {
+import {
   ReactNode,
   useCallback,
   useEffect,
@@ -14,7 +14,6 @@ import { useCurrentAddressStore } from '~/core/state';
 import { Box, Inline, Stack, Symbol, Text } from '~/design-system';
 
 import { useAppSession } from '../../hooks/useAppSession';
-import useKeyboardAnalytics from '../../hooks/useKeyboardAnalytics';
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
 import { ROUTES } from '../../urls';
@@ -63,7 +62,7 @@ export const AppConnectionMenu = ({
   const [menuOpen, setMenuOpen] = useState(false);
 
   const { isCommandKVisible } = useCommandKStatus();
-  const { trackShortcut } = useKeyboardAnalytics();
+  
   const { currentAddress } = useCurrentAddressStore();
   const { data } = useDappMetadata({ url });
   const navigate = useRainbowNavigate();
@@ -157,10 +156,7 @@ export const AppConnectionMenu = ({
             !appConnectionSwitchWalletsPromptIsActive()
           ) {
             pressingNetworkShortcut.current = true;
-            trackShortcut({
-              key: shortcuts.home.SWITCH_NETWORK.display,
-              type: 'switchNetworkMenu.toggle',
-            });
+            
             if (!menuOpen) {
               setMenuOpen(true);
             }
@@ -177,20 +173,14 @@ export const AppConnectionMenu = ({
           break;
         case shortcuts.global.CLOSE.key:
           if (subMenuOpen) {
-            trackShortcut({
-              key: shortcuts.global.CLOSE.display,
-              type: 'switchNetworkMenu.dismiss',
-            });
+          
             e.preventDefault();
             setSubMenuOpen(false);
           }
           break;
         case shortcuts.home.SWITCH_WALLETS.key:
           if (!subMenuOpen && activeSession) {
-            trackShortcut({
-              key: shortcuts.home.SWITCH_WALLETS.display,
-              type: 'switchNetworkMenu.switchWallets',
-            });
+           
             triggerWalletSwitcher({ show: true });
             setMenuOpen(false);
             e.preventDefault();
@@ -201,10 +191,7 @@ export const AppConnectionMenu = ({
           break;
         case shortcuts.home.DISCONNECT_APP.key:
           if (activeSession) {
-            trackShortcut({
-              key: shortcuts.home.DISCONNECT_APP.display,
-              type: 'switchNetworkMenu.disconnect',
-            });
+          
             disconnectAppSession();
           }
           break;

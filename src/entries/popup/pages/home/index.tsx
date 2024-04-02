@@ -8,10 +8,7 @@ import {
   useState,
 } from 'react';
 
-import { analytics } from '~/analytics';
-import { event } from '~/analytics/event';
-import { identifyWalletTypes } from '~/analytics/identify/walletTypes';
-import config from '~/core/firebase/remoteConfig';
+import { config } from '~/core/config';
 import { i18n } from '~/core/languages';
 import { shortcuts } from '~/core/references/shortcuts';
 import { useCurrentAddressStore, usePendingRequestStore } from '~/core/state';
@@ -36,7 +33,6 @@ import { removeImportWalletSecrets } from '../../handlers/importWalletSecrets';
 import { useAvatar } from '../../hooks/useAvatar';
 import { useCurrentHomeSheet } from '../../hooks/useCurrentHomeSheet';
 import { useHomeShortcuts } from '../../hooks/useHomeShortcuts';
-import useKeyboardAnalytics from '../../hooks/useKeyboardAnalytics';
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import { usePendingTransactionWatcher } from '../../hooks/usePendingTransactionWatcher';
 import usePrevious from '../../hooks/usePrevious';
@@ -81,7 +77,7 @@ const Tabs = memo(function Tabs({
   onSelectTab,
   prevScrollPosition,
 }: TabProps) {
-  const { trackShortcut } = useKeyboardAnalytics();
+  
   const { visibleTokenCount } = useVisibleTokenCount();
 
   const COLLAPSED_HEADER_TOP_OFFSET = 157;
@@ -106,10 +102,7 @@ const Tabs = memo(function Tabs({
   useKeyboardShortcut({
     handler: (e) => {
       if (e.key === shortcuts.global.BACK.key) {
-        trackShortcut({
-          key: shortcuts.global.BACK.display,
-          type: 'home.switchTab',
-        });
+       
         if (activeTab === 'activity') {
           onSelectTab('tokens');
         } else if (activeTab === 'nfts') {
@@ -119,10 +112,7 @@ const Tabs = memo(function Tabs({
         }
       }
       if (e.key === shortcuts.global.FORWARD.key) {
-        trackShortcut({
-          key: shortcuts.global.FORWARD.display,
-          type: 'home.switchTab',
-        });
+     
         if (activeTab === 'tokens') {
           onSelectTab('activity');
         } else if (activeTab === 'activity') {
@@ -223,8 +213,6 @@ export const Home = memo(function Home() {
   }, [navigate, pendingRequests, prevPendingRequest?.id]);
 
   useEffect(() => {
-    analytics.track(event.walletViewed);
-    identifyWalletTypes();
     removeImportWalletSecrets();
   }, []);
 

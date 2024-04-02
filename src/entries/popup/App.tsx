@@ -3,12 +3,8 @@ import { isEqual } from 'lodash';
 import * as React from 'react';
 import { WagmiConfig } from 'wagmi';
 
-import { analytics } from '~/analytics';
-import { event } from '~/analytics/event';
-import { flushQueuedEvents } from '~/analytics/flushQueuedEvents';
 // !!!! DO NOT REMOVE THE NEXT 2 LINES BELOW !!!!
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import config from '~/core/firebase/remoteConfig';
 import { initializeMessenger } from '~/core/messengers';
 import { persistOptions, queryClient } from '~/core/react-query';
 import { initializeSentry, setSentryUser } from '~/core/sentry';
@@ -18,6 +14,7 @@ import { POPUP_DIMENSIONS } from '~/core/utils/dimensions';
 import { createWagmiClient } from '~/core/wagmi';
 import { Box, ThemeProvider } from '~/design-system';
 
+import { config } from '~/core/config';
 import { Routes } from './Routes';
 import { HWRequestListener } from './components/HWRequestListener/HWRequestListener';
 import { IdleTimer } from './components/IdleTimer/IdleTimer';
@@ -70,10 +67,6 @@ export function App() {
     if (process.env.IS_TESTING !== 'true' && process.env.IS_DEV !== 'true') {
       initializeSentry('popup');
       setSentryUser(deviceId);
-      analytics.setDeviceId(deviceId);
-      analytics.identify();
-      analytics.track(event.popupOpened);
-      setTimeout(() => flushQueuedEvents(), 1000);
     }
     // Init trezor once globally
     window.TrezorConnect?.init({

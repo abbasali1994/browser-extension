@@ -32,7 +32,6 @@ import {
 
 import { useActiveTab } from './useActiveTab';
 import { useAppSession } from './useAppSession';
-import useKeyboardAnalytics from './useKeyboardAnalytics';
 import { useKeyboardShortcut } from './useKeyboardShortcut';
 import { useNavigateToSwaps } from './useNavigateToSwaps';
 import { useRainbowNavigate } from './useRainbowNavigate';
@@ -44,7 +43,7 @@ export function useHomeShortcuts() {
   const { selectedToken } = useSelectedTokenStore();
   const { selectedTransaction } = useSelectedTransactionStore();
   const { sheet } = useCurrentHomeSheetStore();
-  const { trackShortcut } = useKeyboardAnalytics();
+  
   const navigateToSwaps = useNavigateToSwaps();
   const { url } = useActiveTab();
   const { data: dappMetadata } = useDappMetadata({ url });
@@ -107,33 +106,19 @@ export function useHomeShortcuts() {
       if (inputIsFocused) return;
       switch (e.key) {
         case shortcuts.home.BUY.key:
-          trackShortcut({
-            key: shortcuts.home.BUY.display,
-            type: 'home.goToBuy',
-          });
           navigate(ROUTES.BUY);
           break;
         case shortcuts.home.COPY_ADDRESS.key:
           if (!selectedNft && !selectedToken) {
-            trackShortcut({
-              key: shortcuts.home.COPY_ADDRESS.display,
-              type: 'home.copyAddress',
-            });
             handleCopy();
           }
           break;
         case shortcuts.home.GO_TO_CONNECTED_APPS.key:
-          trackShortcut({
-            key: shortcuts.home.GO_TO_CONNECTED_APPS.display,
-            type: 'home.goToConnectedApps',
-          });
+          
           navigate(ROUTES.CONNECTED);
           break;
         case shortcuts.home.GO_TO_SEND.key:
-          trackShortcut({
-            key: shortcuts.home.GO_TO_SEND.display,
-            type: 'home.goToSend',
-          });
+          
           if (allowSend) {
             navigate(ROUTES.SEND);
           } else {
@@ -141,91 +126,60 @@ export function useHomeShortcuts() {
           }
           break;
         case shortcuts.home.GO_TO_SETTINGS.key:
-          trackShortcut({
-            key: shortcuts.home.GO_TO_SETTINGS.display,
-            type: 'home.goToSettings',
-          });
+          
           navigate(ROUTES.SETTINGS);
           break;
         case shortcuts.home.GO_TO_SWAP.key:
-          trackShortcut({
-            key: shortcuts.home.GO_TO_SWAP.display,
-            type: 'home.goToSwap',
-          });
+         
           navigateToSwaps();
           break;
         case shortcuts.home.GO_TO_PROFILE.key:
           if (!selectedToken) {
-            trackShortcut({
-              key: shortcuts.home.GO_TO_PROFILE.display,
-              type: 'home.goToProfile',
-            });
+           
             openProfile();
           }
           break;
         case shortcuts.home.GO_TO_WALLETS.key:
           if (!activeAppConnectionMenu) {
-            trackShortcut({
-              key: shortcuts.home.GO_TO_WALLETS.display,
-              type: 'home.goToWallets',
-            });
+           
             navigate(ROUTES.WALLET_SWITCHER);
           }
           break;
         case shortcuts.home.GO_TO_QR.key:
-          trackShortcut({
-            key: shortcuts.home.GO_TO_QR.display,
-            type: 'home.goToQr',
-          });
+          
           navigate(ROUTES.QR_CODE);
           break;
         case shortcuts.home.LOCK.key:
-          trackShortcut({
-            key: shortcuts.home.COPY_ADDRESS.display,
-            type: 'home.copyAddress',
-          });
+         
           wallet.lock();
           break;
         case shortcuts.home.TESTNET_MODE.key:
-          trackShortcut({
-            key: shortcuts.home.TESTNET_MODE.display,
-            type: 'home.testnetMode',
-          });
+          
           // in order to close dropdown menus
           clickTabBar();
           handleTestnetMode();
           break;
         case shortcuts.home.OPEN_MORE_MENU.key:
           if (!activeAppWalletSwitcher) {
-            trackShortcut({
-              key: shortcuts.home.OPEN_MORE_MENU.display,
-              type: 'home.openMoreMenu',
-            });
+           
             clickHeaderRight();
           }
           break;
         case shortcuts.home.OPEN_APP_CONNECTION_MENU.key:
           if (!activeAppConnectionMenu && !activeAppWalletSwitcher) {
-            trackShortcut({
-              key: shortcuts.home.OPEN_APP_CONNECTION_MENU.display,
-              type: 'home.openAppConnectionMenu',
-            });
+            
             clickHeaderLeft();
           }
           break;
         case shortcuts.home.DISCONNECT_APP.key:
           if (!activeAppConnectionMenu) {
-            trackShortcut({
-              key: shortcuts.home.DISCONNECT_APP.display,
-              type: 'home.disconnectApp',
-            });
+           
             disconnectFromApp();
           }
           break;
       }
     },
     [
-      trackShortcut,
       navigate,
       selectedNft,
       selectedToken,

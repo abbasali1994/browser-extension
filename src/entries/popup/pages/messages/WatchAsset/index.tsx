@@ -2,8 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Address } from 'wagmi';
 import { getProvider } from 'wagmi/actions';
 
-import { analytics } from '~/analytics';
-import { event } from '~/analytics/event';
 import { useAssetMetadata } from '~/core/resources/assets/assetMetadata';
 import { useDappMetadata } from '~/core/resources/metadata/dapp';
 import { useCurrentAddressStore, useCurrentCurrencyStore } from '~/core/state';
@@ -166,14 +164,7 @@ export const WatchAsset = ({
 
       approveRequest(true);
 
-      analytics.track(event.dappPromptWatchAssetApproved, {
-        chainId: Number(chainId),
-        symbol,
-        decimals: decimals,
-        address: assetAddress,
-        dappURL: dappMetadata?.appHost || '',
-        dappName: dappMetadata?.appName,
-      });
+    
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       logger.info('error adding ethereum chain');
@@ -199,14 +190,7 @@ export const WatchAsset = ({
 
   const onRejectRequest = useCallback(() => {
     rejectRequest();
-    analytics.track(event.dappPromptWatchAssetRejected, {
-      chainId: Number(chainId),
-      symbol,
-      decimals,
-      address: assetAddress,
-      dappURL: dappMetadata?.appHost || '',
-      dappName: dappMetadata?.appName,
-    });
+    
   }, [
     assetAddress,
     chainId,

@@ -3,9 +3,7 @@ import { getAddress } from '@ethersproject/address';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Address } from 'wagmi';
 
-import { analytics } from '~/analytics';
-import { event } from '~/analytics/event';
-import config from '~/core/firebase/remoteConfig';
+import { config } from '~/core/config';
 import { i18n } from '~/core/languages';
 import { NATIVE_ASSETS_PER_CHAIN } from '~/core/references';
 import { useDappMetadata } from '~/core/resources/metadata/dapp';
@@ -118,12 +116,6 @@ export function SendTransaction({
         });
         approveRequest(result.hash);
         setWaitingForDevice(false);
-
-        analytics.track(event.dappPromptSendTransactionApproved, {
-          chainId: txData.chainId,
-          dappURL: dappMetadata?.appHost || '',
-          dappName: dappMetadata?.appName,
-        });
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
@@ -159,19 +151,7 @@ export function SendTransaction({
 
   const onRejectRequest = useCallback(() => {
     rejectRequest();
-    if (activeSession) {
-      analytics.track(event.dappPromptSendTransactionRejected, {
-        chainId: activeSession?.chainId,
-        dappURL: dappMetadata?.appHost || '',
-        dappName: dappMetadata?.appName,
-      });
-    }
-  }, [
-    rejectRequest,
-    activeSession,
-    dappMetadata?.appHost,
-    dappMetadata?.appName,
-  ]);
+  }, [rejectRequest]);
 
   const isWatchingWallet = useMemo(() => {
     const watchedAddresses = watchedWallets?.map(({ address }) => address);
@@ -219,13 +199,6 @@ export function SendTransaction({
         </Bleed>
         <Separator color="separatorTertiary" />
         <TransactionFee
-          analyticsEvents={{
-            customGasClicked: event.dappPromptSendTransactionCustomGasClicked,
-            transactionSpeedSwitched:
-              event.dappPromptSendTransactionSpeedSwitched,
-            transactionSpeedClicked:
-              event.dappPromptSendTransactionSpeedClicked,
-          }}
           chainId={activeSession?.chainId || ChainId.mainnet}
           address={activeSession?.address}
           transactionRequest={request?.params?.[0] as TransactionRequest}

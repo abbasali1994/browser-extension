@@ -8,9 +8,6 @@ import React, {
   useState,
 } from 'react';
 import { Address } from 'wagmi';
-
-import { analytics } from '~/analytics';
-import { event } from '~/analytics/event';
 import { i18n } from '~/core/languages';
 import { QuoteTypeMap } from '~/core/raps/references';
 import { useGasStore } from '~/core/state';
@@ -319,40 +316,6 @@ const SwapReviewSheetWithQuote = ({
         state: { tab: 'activity' },
       });
     }
-    isBridge
-      ? analytics.track(event.bridgeSubmitted, {
-          inputAssetSymbol: assetToSell.symbol,
-          inputAssetName: assetToSell.name,
-          inputAssetAddress: assetToSell.address,
-          inputAssetChainId: assetToSell.chainId,
-          inputAssetAmount: q.sellAmount as number,
-          outputAssetSymbol: assetToBuy.symbol,
-          outputAssetName: assetToBuy.name,
-          outputAssetAddress: assetToBuy.address,
-          outputAssetChainId: assetToBuy.chainId,
-          outputAssetAmount: q.buyAmount as number,
-          mainnetAddress:
-            assetToBuy?.chainId === ChainId.mainnet
-              ? 'address'
-              : 'mainnetAddress',
-          flashbots,
-          tradeAmountUSD: q.tradeAmountUSD,
-        })
-      : analytics.track(event.swapSubmitted, {
-          inputAssetSymbol: assetToSell.symbol,
-          inputAssetName: assetToSell.name,
-          inputAssetAddress: assetToSell.address,
-          inputAssetChainId: assetToSell.chainId,
-          inputAssetAmount: q.sellAmount as number,
-          outputAssetSymbol: assetToBuy.symbol,
-          outputAssetName: assetToBuy.name,
-          outputAssetAddress: assetToBuy.address,
-          outputAssetChainId: assetToBuy.chainId,
-          outputAssetAmount: q.buyAmount as number,
-          crosschain: assetToSell.chainId !== assetToBuy.chainId,
-          flashbots,
-          tradeAmountUSD: q.tradeAmountUSD,
-        });
   }, [
     assetToSell,
     assetToBuy,

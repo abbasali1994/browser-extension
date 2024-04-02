@@ -4,8 +4,6 @@ import { CrosschainQuote, Quote, QuoteError } from '@rainbow-me/swaps';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Address } from 'wagmi';
 
-import { analytics } from '~/analytics';
-import { EventProperties } from '~/analytics/event';
 import { i18n } from '~/core/languages';
 import { shortcuts } from '~/core/references/shortcuts';
 import { ParsedSearchAsset } from '~/core/types/assets';
@@ -35,7 +33,7 @@ import {
   useSwapGas,
   useTransactionGas,
 } from '../../hooks/useGas';
-import useKeyboardAnalytics from '../../hooks/useKeyboardAnalytics';
+
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import { ChainBadge } from '../ChainBadge/ChainBadge';
 import { CursorTooltip } from '../Tooltip/CursorTooltip';
@@ -53,11 +51,6 @@ type FeeProps = {
   currentBaseFee: string;
   baseFeeTrend: number;
   flashbotsEnabled: boolean;
-  analyticsEvents?: {
-    customGasClicked: keyof EventProperties;
-    transactionSpeedSwitched: keyof EventProperties;
-    transactionSpeedClicked: keyof EventProperties;
-  };
   speedMenuMarginRight?: Space;
   setSelectedSpeed: React.Dispatch<React.SetStateAction<GasSpeed>>;
   setCustomMaxBaseFee: (maxBaseFee?: string) => void;
@@ -66,7 +59,6 @@ type FeeProps = {
 
 function Fee({
   accentColor,
-  analyticsEvents,
   baseFeeTrend,
   chainId,
   currentBaseFee,
@@ -80,7 +72,7 @@ function Fee({
   setCustomMaxBaseFee,
   setCustomMaxPriorityFee,
 }: FeeProps) {
-  const { trackShortcut } = useKeyboardAnalytics();
+  
   const [showCustomGasSheet, setShowCustomGasSheet] = useState(false);
   const switchTransactionSpeedMenuRef = useRef<{ open: () => void }>(null);
   const gasFeeParamsForSelectedSpeed = useMemo(
@@ -89,9 +81,7 @@ function Fee({
   );
   const openCustomGasSheet = useCallback(() => {
     setShowCustomGasSheet(true);
-    analyticsEvents?.customGasClicked &&
-      analytics.track(analyticsEvents?.customGasClicked);
-  }, [analyticsEvents?.customGasClicked]);
+  }, []);
 
   const closeCustomGasSheet = useCallback(
     () => setShowCustomGasSheet(false),
@@ -105,42 +95,21 @@ function Fee({
       } else {
         setSelectedSpeed(speed);
       }
-      analyticsEvents?.transactionSpeedSwitched &&
-        analytics.track(analyticsEvents?.transactionSpeedSwitched, { speed });
     },
-    [
-      analyticsEvents?.transactionSpeedSwitched,
-      openCustomGasSheet,
-      setSelectedSpeed,
-    ],
-  );
-
-  const onSpeedOpenChange = useCallback(
-    (isOpen: boolean) => {
-      isOpen &&
-        analyticsEvents?.transactionSpeedClicked &&
-        analytics.track(analyticsEvents?.transactionSpeedClicked);
-    },
-    [analyticsEvents?.transactionSpeedClicked],
+    [openCustomGasSheet, setSelectedSpeed],
   );
 
   useKeyboardShortcut({
     handler: (e: KeyboardEvent) => {
       if (e.key === shortcuts.global.OPEN_CUSTOM_GAS_MENU.key) {
         if (chainId === ChainId.mainnet) {
-          trackShortcut({
-            key: shortcuts.global.OPEN_CUSTOM_GAS_MENU.display,
-            type: 'customGasMenu.open',
-          });
+      
           // hackery preventing GweiInputMask from firing an onChange event when opening the menu with KB
           setTimeout(() => openCustomGasSheet(), 0);
         }
       } else if (e.key === shortcuts.global.OPEN_GAS_MENU.key) {
         if (chainId === ChainId.mainnet || chainId === ChainId.polygon) {
-          trackShortcut({
-            key: shortcuts.global.OPEN_GAS_MENU.display,
-            type: 'gasMenu.open',
-          });
+          
           switchTransactionSpeedMenuRef?.current?.open();
         }
       }
@@ -211,7 +180,6 @@ function Fee({
               }
               accentColor={accentColor}
               plainTriggerBorder={plainTriggerBorder}
-              onOpenChange={onSpeedOpenChange}
               dropdownContentMarginRight={speedMenuMarginRight}
               ref={switchTransactionSpeedMenuRef}
             />
@@ -260,11 +228,6 @@ type TransactionFeeProps = {
   accentColor?: string;
   plainTriggerBorder?: boolean;
   flashbotsEnabled?: boolean;
-  analyticsEvents?: {
-    customGasClicked: keyof EventProperties;
-    transactionSpeedSwitched: keyof EventProperties;
-    transactionSpeedClicked: keyof EventProperties;
-  };
 };
 
 export function TransactionFee({
@@ -274,7 +237,6 @@ export function TransactionFee({
   transactionRequest,
   accentColor,
   plainTriggerBorder,
-  analyticsEvents,
   flashbotsEnabled,
 }: TransactionFeeProps) {
   const { defaultTxSpeed } = useDefaultTxSpeed({ chainId });
@@ -296,7 +258,6 @@ export function TransactionFee({
   });
   return (
     <Fee
-      analyticsEvents={analyticsEvents}
       chainId={chainId}
       accentColor={accentColor}
       plainTriggerBorder={plainTriggerBorder}
@@ -390,11 +351,7 @@ type ApprovalFeeProps = {
   accentColor?: string;
   plainTriggerBorder?: boolean;
   flashbotsEnabled?: boolean;
-  analyticsEvents?: {
-    customGasClicked: keyof EventProperties;
-    transactionSpeedSwitched: keyof EventProperties;
-    transactionSpeedClicked: keyof EventProperties;
-  };
+
   assetType: 'erc20' | 'nft';
 };
 
@@ -407,7 +364,6 @@ export function ApprovalFee({
   transactionRequest,
   accentColor,
   plainTriggerBorder,
-  analyticsEvents,
   flashbotsEnabled,
   assetType,
 }: ApprovalFeeProps) {
@@ -433,7 +389,6 @@ export function ApprovalFee({
   });
   return (
     <Fee
-      analyticsEvents={analyticsEvents}
       chainId={chainId}
       accentColor={accentColor}
       plainTriggerBorder={plainTriggerBorder}

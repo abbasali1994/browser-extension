@@ -11,13 +11,13 @@ import { getTransactionBlockExplorer } from '~/core/utils/transactions';
 
 import { triggerToast } from '../components/Toast/Toast';
 
-import useKeyboardAnalytics from './useKeyboardAnalytics';
+
 import { useKeyboardShortcut } from './useKeyboardShortcut';
 
 export function useActivityShortcuts() {
   const { selectedTransaction } = useSelectedTransactionStore();
   const { sheet, setCurrentHomeSheet } = useCurrentHomeSheetStore();
-  const { trackShortcut } = useKeyboardAnalytics();
+
   const getTransactionIsSelected = useCallback(
     () => !!selectedTransaction,
     [selectedTransaction],
@@ -46,32 +46,16 @@ export function useActivityShortcuts() {
     (e: KeyboardEvent) => {
       if (selectedTransaction?.status === 'pending' && sheet === 'none') {
         if (e.key === shortcuts.activity.CANCEL_TRANSACTION.key) {
-          trackShortcut({
-            key: shortcuts.activity.CANCEL_TRANSACTION.display,
-            type: 'activity.cancelTransaction',
-          });
           setCurrentHomeSheet('cancel');
         }
         if (e.key === shortcuts.activity.SPEED_UP_TRANSACTION.key) {
-          trackShortcut({
-            key: shortcuts.activity.SPEED_UP_TRANSACTION.display,
-            type: 'activity.speedUpTransaction',
-          });
           setCurrentHomeSheet('speedUp');
         }
       }
       if (e.key === shortcuts.activity.COPY_TRANSACTION.key) {
-        trackShortcut({
-          key: shortcuts.activity.COPY_TRANSACTION.display,
-          type: 'activity.copyTransactionAddress',
-        });
         handleCopy();
       }
       if (e.key === shortcuts.activity.VIEW_TRANSACTION.key) {
-        trackShortcut({
-          key: shortcuts.activity.VIEW_TRANSACTION.display,
-          type: 'activity.viewTransactionOnExplorer',
-        });
         viewOnExplorer();
       }
     },
@@ -80,7 +64,6 @@ export function useActivityShortcuts() {
       selectedTransaction,
       setCurrentHomeSheet,
       sheet,
-      trackShortcut,
       viewOnExplorer,
     ],
   );

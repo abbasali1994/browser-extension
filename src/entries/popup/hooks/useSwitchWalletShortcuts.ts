@@ -6,13 +6,13 @@ import {
 } from '../utils/activeElement';
 
 import { useAccounts } from './useAccounts';
-import useKeyboardAnalytics from './useKeyboardAnalytics';
+
 import { useKeyboardShortcut } from './useKeyboardShortcut';
 
 export function useSwitchWalletShortcuts(disable?: boolean) {
   const { sortedAccounts } = useAccounts();
   const { setCurrentAddress } = useCurrentAddressStore();
-  const { trackShortcut } = useKeyboardAnalytics();
+  
 
   useKeyboardShortcut({
     handler: (e: KeyboardEvent) => {
@@ -21,10 +21,7 @@ export function useSwitchWalletShortcuts(disable?: boolean) {
         if (regex.test(e.key)) {
           const accountIndex = parseInt(e.key, 10) - 1;
           if (sortedAccounts[accountIndex]) {
-            trackShortcut({
-              key: e.key.toString(),
-              type: 'global.switchWallet',
-            });
+           
             setCurrentAddress(sortedAccounts[accountIndex]?.address);
           }
         }

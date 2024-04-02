@@ -1,6 +1,6 @@
 import { ReactNode, useCallback } from 'react';
 
-import config from '~/core/firebase/remoteConfig';
+import { config } from '~/core/config';
 import { i18n } from '~/core/languages';
 import { shortcuts } from '~/core/references/shortcuts';
 import { useFeatureFlagsStore } from '~/core/state/currentSettings/featureFlags';

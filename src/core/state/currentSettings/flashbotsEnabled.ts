@@ -1,6 +1,4 @@
 import create from 'zustand';
-
-import { event } from '~/analytics/event';
 import { createStore } from '~/core/state/internal/createStore';
 
 export interface FlashbotsEnabledStore {
@@ -19,13 +17,6 @@ export const flashbotsEnabledStore = createStore<FlashbotsEnabledStore>(
   (set) => ({
     flashbotsEnabled: false,
     setFlashbotsEnabled: (newFlashbotsEnabled) => {
-      import('~/analytics').then(({ analytics }) =>
-        analytics.track(
-          newFlashbotsEnabled
-            ? event.settingsFlashbotsEnabled
-            : event.settingsFlashbotsDisabled,
-        ),
-      );
       set({
         flashbotsEnabled: newFlashbotsEnabled,
         // swapFlashbotsEnabled is just a way to override when flashbotsEnabled is false

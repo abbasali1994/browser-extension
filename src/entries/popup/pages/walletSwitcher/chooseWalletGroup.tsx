@@ -28,7 +28,7 @@ import {
 import { AddressOrEns } from '../../components/AddressOrEns/AddressorEns';
 import { ShortcutHint } from '../../components/ShortcutHint/ShortcutHint';
 import { WalletAvatar } from '../../components/WalletAvatar/WalletAvatar';
-import useKeyboardAnalytics from '../../hooks/useKeyboardAnalytics';
+
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
 import { ROUTES } from '../../urls';
@@ -247,7 +247,7 @@ const ChooseWalletGroup = () => {
   const [wallets, setWallets] = useState<KeychainWallet[]>([]);
   const goHomeOnWalletCreation = state?.goHomeOnWalletCreation;
   const [fromChooseGroup, setFromChooseGroup] = useState(false);
-  const { trackShortcut } = useKeyboardAnalytics();
+  
 
   useEffect(() => {
     const fetchWallets = async () => {
@@ -311,19 +311,13 @@ const ChooseWalletGroup = () => {
       if (createWalletAddress) return;
       const key = e.key;
       if (key === 'n' || key === 'N') {
-        trackShortcut({
-          key: 'N',
-          type: 'chooseWallet.create',
-        });
+       
         handleCreateWallet();
         return;
       }
       const number = Number(key);
       if (number <= wallets.length) {
-        trackShortcut({
-          key,
-          type: 'chooseWallet.select',
-        });
+       
         handleCreateWalletOnGroup(Number(key) - 1);
       }
     },
@@ -331,7 +325,7 @@ const ChooseWalletGroup = () => {
       createWalletAddress,
       handleCreateWallet,
       handleCreateWalletOnGroup,
-      trackShortcut,
+      
       wallets.length,
     ],
   );

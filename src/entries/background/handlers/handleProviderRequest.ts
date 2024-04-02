@@ -5,8 +5,6 @@ import {
 import { Chain, getProvider } from '@wagmi/core';
 import { UserRejectedRequestError } from 'wagmi';
 
-import { event } from '~/analytics/event';
-import { queueEventTracking } from '~/analytics/queueEvent';
 import { hasVault, isInitialized, isPasswordSet } from '~/core/keychain';
 import { Messenger } from '~/core/messengers';
 import { CallbackOptions } from '~/core/messengers/internal/createMessenger';
@@ -192,20 +190,11 @@ const checkRateLimit = async (host: string) => {
 
     // Check rate limits
     if (rateLimits[host].perSecond > MAX_REQUEST_PER_SECOND) {
-      queueEventTracking(event.dappProviderRateLimit, {
-        dappURL: host,
-        typeOfLimitHit: 'perSecond',
-        requests: rateLimits[host].perSecond,
-      });
       return true;
     }
 
     if (rateLimits[host].perMinute > MAX_REQUEST_PER_MINUTE) {
-      queueEventTracking(event.dappProviderRateLimit, {
-        dappURL: host,
-        typeOfLimitHit: 'perMinute',
-        requests: rateLimits[host].perMinute,
-      });
+     
       return true;
     }
     return false;
@@ -381,7 +370,6 @@ export const handleProviderRequest = ({
     }) => {
       const url = callbackOptions?.sender.url || '';
       const host = (isValidUrl(url || '') && getDappHost(url)) || '';
-      const dappName = callbackOptions?.sender.tab?.title || host;
       const extensionUrl = chrome.runtime.getURL('');
       const proposedChainId = Number(proposedChain.chainId);
       const { updateActiveSessionChainId } = appSessionsStore.getState();
@@ -399,11 +387,7 @@ export const handleProviderRequest = ({
         extensionUrl,
         host,
       });
-      queueEventTracking(event.dappProviderNetworkSwitched, {
-        dappURL: host,
-        dappName: dappName,
-        chainId: proposedChainId,
-      });
+      
       inpageMessenger.send(`chainChanged:${host}`, proposedChainId);
     },
   });

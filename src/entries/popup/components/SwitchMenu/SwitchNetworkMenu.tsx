@@ -17,7 +17,7 @@ import {
 } from '~/design-system';
 import { Space } from '~/design-system/styles/designTokens';
 
-import useKeyboardAnalytics from '../../hooks/useKeyboardAnalytics';
+
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import { useUserChains } from '../../hooks/useUserChains';
 import { simulateClick } from '../../utils/simulateClick';
@@ -65,7 +65,7 @@ export const SwitchNetworkMenuSelector = ({
   onShortcutPress: (chainId: string) => void;
   onlySwapSupportedNetworks?: boolean;
 }) => {
-  const { trackShortcut } = useKeyboardAnalytics();
+  
   const { chains: userChains } = useUserChains();
 
   const chains = useMemo(() => {
@@ -90,29 +90,16 @@ export const SwitchNetworkMenuSelector = ({
       if (chainNumber) {
         const chain = chains[chainNumber - 1];
         if (chain) {
-          trackShortcut({
-            key: chainNumber.toString(),
-            type: 'switchNetworkMenu.selectChain',
-          });
+       
           onShortcutPress(String(chain.id));
           onNetworkSelect?.();
         } else if (showDisconnect && chainNumber === chains.length + 1) {
-          trackShortcut({
-            key: chainNumber.toString(),
-            type: 'switchNetworkMenu.disconnect',
-          });
+        
           disconnect?.();
         }
       }
     },
-    [
-      chains,
-      disconnect,
-      onNetworkSelect,
-      onShortcutPress,
-      showDisconnect,
-      trackShortcut,
-    ],
+    [chains, disconnect, onNetworkSelect, onShortcutPress, showDisconnect],
   );
 
   useKeyboardShortcut({

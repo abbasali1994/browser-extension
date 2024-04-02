@@ -1,12 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { analytics } from '~/analytics';
-import { event } from '~/analytics/event';
 import { i18n } from '~/core/languages';
 import { useDappMetadata } from '~/core/resources/metadata/dapp';
 import { useFeatureFlagsStore } from '~/core/state/currentSettings/featureFlags';
 import { ProviderRequestPayload } from '~/core/transports/providerRequestTransport';
-import { RPCMethod } from '~/core/types/rpcMethods';
 import { POPUP_DIMENSIONS } from '~/core/utils/dimensions';
 import { getSigningRequestDisplayDetails } from '~/core/utils/signMessages';
 import { Bleed, Box, Stack } from '~/design-system';
@@ -28,19 +25,6 @@ interface ApproveRequestProps {
   request: ProviderRequestPayload;
 }
 
-const getWalletActionMethod = (
-  method: RPCMethod,
-): 'personal_sign' | 'sign_typed_data' | undefined => {
-  switch (method) {
-    case 'personal_sign':
-      return 'personal_sign';
-    case 'eth_signTypedData':
-    case 'eth_signTypedData_v3':
-    case 'eth_signTypedData_v4':
-      return 'sign_typed_data';
-  }
-};
-
 export function SignMessage({
   approveRequest,
   rejectRequest,
@@ -58,38 +42,17 @@ export function SignMessage({
   const selectedWallet = activeSession?.address;
 
   const onAcceptRequest = useCallback(async () => {
-    const walletAction = getWalletActionMethod(request?.method);
     const requestPayload = getSigningRequestDisplayDetails(request);
     if (!requestPayload.msgData || !requestPayload.address || !selectedWallet)
       return;
     const { type } = await wallet.getWallet(selectedWallet);
-    let result = null;
+    const result = null;
 
     setLoading(true);
     try {
       // Change the label while we wait for confirmation
       if (type === 'HardwareWalletKeychain') {
         setWaitingForDevice(true);
-      }
-
-      if (walletAction === 'personal_sign') {
-        result = await wallet.personalSign(
-          requestPayload.msgData,
-          requestPayload.address,
-        );
-        analytics.track(event.dappPromptSignMessageApproved, {
-          dappURL: dappMetadata?.appHost || '',
-          dappName: dappMetadata?.appName,
-        });
-      } else if (walletAction === 'sign_typed_data') {
-        result = await wallet.signTypedData(
-          requestPayload.msgData,
-          requestPayload.address,
-        );
-        analytics.track(event.dappPromptSignTypedDataApproved, {
-          dappURL: dappMetadata?.appHost || '',
-          dappName: dappMetadata?.appName,
-        });
       }
       approveRequest(result);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -101,34 +64,11 @@ export function SignMessage({
       setWaitingForDevice(false);
       setLoading(false);
     }
-  }, [
-    approveRequest,
-    dappMetadata?.appHost,
-    dappMetadata?.appName,
-    request,
-    selectedWallet,
-  ]);
+  }, [approveRequest, request, selectedWallet]);
 
   const onRejectRequest = useCallback(() => {
     rejectRequest();
-    const walletAction = getWalletActionMethod(request?.method);
-    if (walletAction === 'personal_sign') {
-      analytics.track(event.dappPromptSignMessageRejected, {
-        dappURL: dappMetadata?.appHost || '',
-        dappName: dappMetadata?.appName,
-      });
-    } else if (walletAction === 'sign_typed_data') {
-      analytics.track(event.dappPromptSignTypedDataRejected, {
-        dappURL: dappMetadata?.appHost || '',
-        dappName: dappMetadata?.appName,
-      });
-    }
-  }, [
-    dappMetadata?.appHost,
-    dappMetadata?.appName,
-    rejectRequest,
-    request?.method,
-  ]);
+  }, [rejectRequest]);
 
   const isWatchingWallet = useMemo(() => {
     const watchedAddresses = watchedWallets?.map(({ address }) => address);

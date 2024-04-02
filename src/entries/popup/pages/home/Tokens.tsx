@@ -47,7 +47,7 @@ import { CoinRow } from '~/entries/popup/components/CoinRow/CoinRow';
 import { Asterisks } from '../../components/Asterisks/Asterisks';
 import { CoinbaseIcon } from '../../components/CoinbaseIcon/CoinbaseIcon';
 import { QuickPromo } from '../../components/QuickPromo/QuickPromo';
-import useKeyboardAnalytics from '../../hooks/useKeyboardAnalytics';
+
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import { useRainbowNavigate } from '../../hooks/useRainbowNavigate';
 import { useSystemSpecificModifierKey } from '../../hooks/useSystemSpecificModifierKey';
@@ -105,7 +105,7 @@ export function Tokens() {
   const [manuallyRefetchingTokens, setManuallyRefetchingTokens] =
     useState(false);
   const { hideSmallBalances } = useHideSmallBalancesStore();
-  const { trackShortcut } = useKeyboardAnalytics();
+  
   const { modifierSymbol } = useSystemSpecificModifierKey();
   const { pinnedAssets } = usePinnedAssetStore();
   const { hiddenAssets } = useHiddenAssetStore();
@@ -231,10 +231,7 @@ export function Tokens() {
   useKeyboardShortcut({
     handler: async (e: KeyboardEvent) => {
       if (e.key === shortcuts.tokens.REFRESH_TOKENS.key) {
-        trackShortcut({
-          key: shortcuts.tokens.REFRESH_TOKENS.display,
-          type: 'tokens.refresh',
-        });
+      
         setManuallyRefetchingTokens(true);
         await Promise.all([refetchUserAssets(), refetchCustomNetworkAssets()]);
         setManuallyRefetchingTokens(false);

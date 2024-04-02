@@ -1,6 +1,6 @@
 import { TransactionRequest } from '@ethersproject/abstract-provider';
 import { useQuery } from '@tanstack/react-query';
-import React, {
+import {
   useCallback,
   useEffect,
   useMemo,
@@ -9,9 +9,7 @@ import React, {
 } from 'react';
 import { Address } from 'viem';
 
-import { analytics } from '~/analytics';
-import { event } from '~/analytics/event';
-import config from '~/core/firebase/remoteConfig';
+import { config } from '~/core/config';
 import { i18n } from '~/core/languages';
 import { populateRevokeApproval } from '~/core/raps/actions/unlock';
 import { shortcuts } from '~/core/references/shortcuts';
@@ -210,12 +208,7 @@ export const RevokeApprovalSheet = ({
         navigate(ROUTES.HOME, {
           state: { tab: 'activity' },
         });
-        analytics.track(event.revokeSubmitted, {
-          assetSymbol: approval?.asset?.symbol,
-          assetName: approval?.asset?.name,
-          assetAddress: assetAddress,
-          chainId: approvalChainId,
-        });
+       
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {

@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { Address } from 'wagmi';
 
-import config from '~/core/firebase/remoteConfig';
+import { config } from '~/core/config';
 import { i18n } from '~/core/languages';
 import { shortcuts } from '~/core/references/shortcuts';
 import { useFeatureFlagsStore } from '~/core/state/currentSettings/featureFlags';
@@ -24,7 +24,7 @@ import { triggerToast } from '../components/Toast/Toast';
 import { ROUTES } from '../urls';
 import { simulateClick } from '../utils/simulateClick';
 
-import useKeyboardAnalytics from './useKeyboardAnalytics';
+
 import { useKeyboardShortcut } from './useKeyboardShortcut';
 import { useNavigateToSwaps } from './useNavigateToSwaps';
 import { useRainbowNavigate } from './useRainbowNavigate';
@@ -34,7 +34,7 @@ export function useTokensShortcuts() {
   const { isWatchingWallet } = useWallets();
   const { featureFlags } = useFeatureFlagsStore();
   const { selectedToken, setSelectedToken } = useSelectedTokenStore();
-  const { trackShortcut } = useKeyboardAnalytics();
+  
   const navigate = useRainbowNavigate();
   const navigateToSwaps = useNavigateToSwaps();
 
@@ -127,10 +127,7 @@ export function useTokensShortcuts() {
       if (selectedToken) {
         if (e.key === shortcuts.tokens.SWAP_ASSET.key) {
           if (allowSwap) {
-            trackShortcut({
-              key: shortcuts.tokens.SWAP_ASSET.display,
-              type: 'tokens.goToSwap',
-            });
+          
             navigateToSwaps();
           } else {
             triggerAlert({ text: i18n.t('alert.coming_soon') });
@@ -139,47 +136,29 @@ export function useTokensShortcuts() {
           }
         }
         if (e.key === shortcuts.tokens.BRIDGE_ASSET.key) {
-          trackShortcut({
-            key: shortcuts.tokens.BRIDGE_ASSET.display,
-            type: 'tokens.goToBridge',
-          });
+        
           navigate(ROUTES.BRIDGE);
         }
 
         if (e.key === shortcuts.tokens.SEND_ASSET.key) {
-          trackShortcut({
-            key: shortcuts.tokens.SEND_ASSET.display,
-            type: 'tokens.goToSend',
-          });
+       
           navigate(ROUTES.SEND);
         }
         if (e.key === shortcuts.tokens.VIEW_ASSET.key) {
-          trackShortcut({
-            key: shortcuts.tokens.VIEW_ASSET.display,
-            type: 'tokens.viewAssetOnExplorer',
-          });
+        
           hasExplorerLink && viewOnExplorer();
         }
 
         if (e.key === shortcuts.tokens.PIN_ASSET.key) {
-          trackShortcut({
-            key: shortcuts.tokens.PIN_ASSET.display,
-            type: 'tokenDetailsMenu.pin',
-          });
+        
           togglePinToken(selectedToken);
         }
         if (e.key === shortcuts.tokens.HIDE_ASSET.key) {
-          trackShortcut({
-            key: shortcuts.tokens.HIDE_ASSET.display,
-            type: 'tokenDetailsMenu.hide',
-          });
+      
           hideToken(selectedToken);
         }
         if (e.key === shortcuts.home.COPY_ADDRESS.key) {
-          trackShortcut({
-            key: shortcuts.home.COPY_ADDRESS.display,
-            type: 'tokenDetailsMenu.copyTokenAddress',
-          });
+        
           copyTokenAddress(selectedToken);
         }
       }
@@ -194,7 +173,7 @@ export function useTokensShortcuts() {
       selectedToken,
       setSelectedToken,
       togglePinToken,
-      trackShortcut,
+      
       viewOnExplorer,
     ],
   );

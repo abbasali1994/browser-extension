@@ -9,8 +9,6 @@ import {
   useRouteError,
 } from 'react-router-dom';
 
-import { analytics } from '~/analytics';
-import { screen } from '~/analytics/screen';
 import { i18n } from '~/core/languages';
 import { shortcuts } from '~/core/references/shortcuts';
 import { useErrorStore } from '~/core/state/error';
@@ -31,7 +29,6 @@ import { Toast } from './components/Toast/Toast';
 import { UnsupportedBrowserSheet } from './components/UnsupportedBrowserSheet';
 import { WindowStroke } from './components/WindowStroke/WindowStroke';
 import { useCommandKShortcuts } from './hooks/useCommandKShortcuts';
-import useKeyboardAnalytics from './hooks/useKeyboardAnalytics';
 import { useKeyboardShortcut } from './hooks/useKeyboardShortcut';
 import { useRainbowNavigate } from './hooks/useRainbowNavigate';
 import { Buy } from './pages/buy';
@@ -975,7 +972,6 @@ const RootLayout = () => {
   }, [pathname]);
 
   React.useEffect(() => {
-    analytics.screen(screen[pathname], { path: pathname });
     if (!shouldRestoreNavigation) {
       setLastPage(pathname);
       setLastState(state);
@@ -1015,7 +1011,6 @@ export function Routes() {
 }
 
 const useGlobalShortcuts = () => {
-  const { trackNavigation } = useKeyboardAnalytics();
   useKeyboardShortcut({
     handler: (e: KeyboardEvent) => {
       // prevent scrolling with space
@@ -1028,28 +1023,16 @@ const useGlobalShortcuts = () => {
       // traverse tabIndex with arrow keys
       if (!e.altKey) {
         if (e.key === shortcuts.global.DOWN.key) {
-          trackNavigation({
-            key: shortcuts.global.DOWN.display,
-            type: 'navigate.down',
-          });
           e.preventDefault();
           simulateTab(true);
         }
         if (e.key === shortcuts.global.UP.key) {
-          trackNavigation({
-            key: shortcuts.global.UP.display,
-            type: 'navigate.up',
-          });
           e.preventDefault();
           simulateTab(false);
         }
       }
 
       if (e.key === shortcuts.global.TAB.key) {
-        trackNavigation({
-          key: shortcuts.global.TAB.display,
-          type: e.shiftKey ? 'navigate.up' : 'navigate.down',
-        });
         e.preventDefault();
         simulateTab(!e.shiftKey);
       }

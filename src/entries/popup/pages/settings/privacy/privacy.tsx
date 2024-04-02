@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { analytics } from '~/analytics';
 import { i18n } from '~/core/languages';
 import { autoLockTimerOptions } from '~/core/references/autoLockTimer';
 import { useAnalyticsDisabledStore } from '~/core/state/currentSettings/analyticsDisabled';
@@ -39,10 +38,6 @@ export function Privacy() {
     setConfirmPasswordRedirect(ROUTES.SETTINGS__PRIVACY__CHANGE_PASSWORD);
     openPasswordPrompt();
   };
-
-  useEffect(() => {
-    analyticsDisabled ? analytics.disable() : analytics.enable();
-  }, [analyticsDisabled]);
 
   return (
     <Box>

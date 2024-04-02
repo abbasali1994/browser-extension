@@ -1,8 +1,6 @@
 import { useCallback, useState } from 'react';
 import { Chain } from 'wagmi';
 
-import { analytics } from '~/analytics';
-import { event } from '~/analytics/event';
 import { useDappMetadata } from '~/core/resources/metadata/dapp';
 import { useRainbowChainsStore } from '~/core/state';
 import { useUserChainsStore } from '~/core/state/userChains';
@@ -77,13 +75,6 @@ export const AddEthereumChain = ({
       addUserChain({ chainId: Number(chainId) });
 
       approveRequest(true);
-      analytics.track(event.dappAddEthereumChainPromptApproved, {
-        chainId: Number(chainId),
-        rpcUrl,
-        blockExplorerUrl,
-        dappURL: dappMetadata?.appHost || '',
-        dappName: dappMetadata?.appName,
-      });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       logger.info('error adding ethereum chain');
@@ -91,38 +82,12 @@ export const AddEthereumChain = ({
     } finally {
       setLoading(false);
     }
-  }, [
-    chainId,
-    chainName,
-    name,
-    symbol,
-    rpcUrl,
-    testnet,
-    addCustomRPC,
-    addUserChain,
-    approveRequest,
-    blockExplorerUrl,
-    dappMetadata?.appHost,
-    dappMetadata?.appName,
-  ]);
+  }, [chainId, chainName, name, symbol, rpcUrl, testnet, addCustomRPC, addUserChain, approveRequest]);
 
   const onRejectRequest = useCallback(() => {
     rejectRequest();
-    analytics.track(event.dappAddEthereumChainPromptRejected, {
-      chainId: Number(chainId),
-      rpcUrl,
-      blockExplorerUrl,
-      dappURL: dappMetadata?.appHost || '',
-      dappName: dappMetadata?.appName,
-    });
-  }, [
-    blockExplorerUrl,
-    chainId,
-    dappMetadata?.appHost,
-    dappMetadata?.appName,
-    rejectRequest,
-    rpcUrl,
-  ]);
+    
+  }, [rejectRequest]);
 
   return (
     <Rows alignVertical="justify">

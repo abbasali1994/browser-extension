@@ -1,7 +1,4 @@
 import { uuid4 } from '@sentry/utils';
-
-import { initFCM } from '~/core/firebase/fcm';
-import config from '~/core/firebase/remoteConfig';
 import { initializeMessenger } from '~/core/messengers';
 import { initializeSentry } from '~/core/sentry';
 import { syncStores } from '~/core/state/internal/syncStores';
@@ -16,6 +13,7 @@ import { handleProviderRequest } from './handlers/handleProviderRequest';
 import { handleSetupInpage } from './handlers/handleSetupInpage';
 import { handleTabAndWindowUpdates } from './handlers/handleTabAndWindowUpdates';
 import { handleWallets } from './handlers/handleWallets';
+import { config } from '~/core/config';
 require('../../core/utils/lockdown');
 
 initializeSentry('background');
@@ -37,7 +35,6 @@ handleWallets();
 handleDisconnect();
 syncStores();
 uuid4();
-initFCM();
 handleKeepAlive();
 
 setTimeout(() => {

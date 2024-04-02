@@ -2,7 +2,7 @@ import { CrosschainQuote, Quote, QuoteError } from '@rainbow-me/swaps';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import config from '~/core/firebase/remoteConfig';
+import { config } from '~/core/config';
 import { i18n } from '~/core/languages';
 import { shortcuts } from '~/core/references/shortcuts';
 import { useGasStore } from '~/core/state';
@@ -58,7 +58,7 @@ import {
   useSwapPriceImpact,
 } from '../../hooks/swap/useSwapPriceImpact';
 import { useBrowser } from '../../hooks/useBrowser';
-import useKeyboardAnalytics from '../../hooks/useKeyboardAnalytics';
+
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import {
   TranslationContext,
@@ -185,7 +185,7 @@ export function Swap({ bridge = false }: { bridge?: boolean }) {
   const { explainerSheetParams, showExplainerSheet, hideExplainerSheet } =
     useExplainerSheetParams();
   const { selectedGas, clearCustomGasModified } = useGasStore();
-  const { trackShortcut } = useKeyboardAnalytics();
+  
 
   const { selectedToken, setSelectedToken } = useSelectedTokenStore();
   const [urlSearchParams] = useSearchParams();
@@ -479,10 +479,7 @@ export function Swap({ bridge = false }: { bridge?: boolean }) {
         const flippingAfterSearch =
           getInputIsFocused() && getActiveElement()?.id === SWAP_INPUT_MASK_ID;
         if (flippingAfterSearch || !getInputIsFocused()) {
-          trackShortcut({
-            key: shortcuts.swap.FLIP_ASSETS.display,
-            type: 'swap.flipAssets',
-          });
+        
           e.preventDefault();
           flipAssets();
         }
@@ -493,10 +490,7 @@ export function Swap({ bridge = false }: { bridge?: boolean }) {
             getInputIsFocused() &&
             getActiveElement()?.id === SWAP_INPUT_MASK_ID;
           if (maxxingAfterSearch || !getInputIsFocused()) {
-            trackShortcut({
-              key: shortcuts.swap.SET_MAX_AMOUNT.display,
-              type: 'swap.setMax',
-            });
+       
             e.preventDefault();
             setAssetToSellMaxValue();
           }

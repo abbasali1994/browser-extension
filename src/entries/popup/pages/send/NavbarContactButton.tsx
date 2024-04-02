@@ -32,7 +32,7 @@ import { ShortcutHint } from '../../components/ShortcutHint/ShortcutHint';
 import { triggerToast } from '../../components/Toast/Toast';
 import { WalletAvatar } from '../../components/WalletAvatar/WalletAvatar';
 import { useContact } from '../../hooks/useContacts';
-import useKeyboardAnalytics from '../../hooks/useKeyboardAnalytics';
+
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import { simulateClick } from '../../utils/simulateClick';
 
@@ -264,14 +264,11 @@ const EditContactDropdownCopyAddressRow = ({
   toAddress?: Address;
 }) => {
   const rowRef = useRef<HTMLDivElement>(null);
-  const { trackShortcut } = useKeyboardAnalytics();
+  
   useKeyboardShortcut({
     handler: (e: KeyboardEvent) => {
       if (e.key === shortcuts.contact_menu.COPY_CONTACT_ADDRESS.key) {
-        trackShortcut({
-          key: shortcuts.contact_menu.COPY_CONTACT_ADDRESS.display,
-          type: 'send.copyContactAddress',
-        });
+        
         simulateClick(rowRef?.current);
       }
     },
@@ -306,14 +303,11 @@ const EditContactDropdownCopyAddressRow = ({
 
 const EditContactDropdownEditContactRow = () => {
   const rowRef = useRef<HTMLDivElement>(null);
-  const { trackShortcut } = useKeyboardAnalytics();
+  
   useKeyboardShortcut({
     handler: (e: KeyboardEvent) => {
       if (e.key === shortcuts.contact_menu.EDIT_CONTACT.key) {
-        trackShortcut({
-          key: shortcuts.contact_menu.EDIT_CONTACT.display,
-          type: 'send.editContact',
-        });
+       
         simulateClick(rowRef?.current);
       }
     },

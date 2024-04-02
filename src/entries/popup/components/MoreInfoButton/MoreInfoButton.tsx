@@ -6,7 +6,6 @@ import { SymbolProps } from '~/design-system/components/Symbol/Symbol';
 import { TextStyles } from '~/design-system/styles/core.css';
 import { ButtonVariant } from '~/design-system/styles/designTokens';
 
-import useKeyboardAnalytics from '../../hooks/useKeyboardAnalytics';
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import {
   DropdownMenu,
@@ -44,14 +43,11 @@ const MoreInfoButton = ({
   testId,
   variant = 'transparentHover',
 }: MoreInfoButtonProps) => {
-  const { trackShortcut } = useKeyboardAnalytics();
+  
   useKeyboardShortcut({
     handler: (e: KeyboardEvent) => {
       if (e.key === shortcuts.global.CLOSE.key) {
-        trackShortcut({
-          key: shortcuts.global.CLOSE.display,
-          type: 'moreInfoButton.dismiss',
-        });
+      
         e.preventDefault();
         onClose?.();
       }

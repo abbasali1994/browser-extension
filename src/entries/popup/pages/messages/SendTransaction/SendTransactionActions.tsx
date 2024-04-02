@@ -4,7 +4,7 @@ import { shortcuts } from '~/core/references/shortcuts';
 import { ActiveSession } from '~/core/state/appSessions';
 import { Inline } from '~/design-system';
 import { useApproveAppRequestValidations } from '~/entries/popup/hooks/approveAppRequest/useApproveAppRequestValidations';
-import useKeyboardAnalytics from '~/entries/popup/hooks/useKeyboardAnalytics';
+
 import { useKeyboardShortcut } from '~/entries/popup/hooks/useKeyboardShortcut';
 
 import { AcceptRequestButton, RejectRequestButton } from '../BottomActions';
@@ -27,14 +27,11 @@ export const SendTransactionActions = ({
   const { enoughNativeAssetForGas, buttonLabel } =
     useApproveAppRequestValidations({ session, dappStatus });
 
-  const { trackShortcut } = useKeyboardAnalytics();
+  
   useKeyboardShortcut({
     handler: (e: KeyboardEvent) => {
       if (e.key === shortcuts.transaction_request.CANCEL.key) {
-        trackShortcut({
-          key: shortcuts.transaction_request.CANCEL.display,
-          type: 'send.cancel',
-        });
+       
         e.preventDefault();
         onRejectRequest();
       }

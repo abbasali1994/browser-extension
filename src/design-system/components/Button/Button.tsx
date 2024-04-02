@@ -4,9 +4,6 @@ import { Shortcut, getModifierKeyDisplay } from '~/core/references/shortcuts';
 import { BoxStyles } from '~/design-system/styles/core.css';
 import { Radius } from '~/design-system/styles/designTokens';
 import { ShortcutHint } from '~/entries/popup/components/ShortcutHint/ShortcutHint';
-import useKeyboardAnalytics, {
-  KeyboardEventDescription,
-} from '~/entries/popup/hooks/useKeyboardAnalytics';
 import { useKeyboardShortcut } from '~/entries/popup/hooks/useKeyboardShortcut';
 
 import { Box } from '../Box/Box';
@@ -23,7 +20,7 @@ import {
 import { ButtonHeight } from './ButtonWrapper.css';
 
 type ButtonShortcutExtended = Shortcut & {
-  type?: KeyboardEventDescription;
+  type?: any;
   disabled?: boolean | (() => boolean);
   hideHint?: boolean;
 };
@@ -64,7 +61,7 @@ function ButtonShortcut({
   onTrigger: VoidFunction;
   shortcut: ButtonShortcutExtended;
 }) {
-  const { trackShortcut } = useKeyboardAnalytics();
+  
 
   useKeyboardShortcut({
     handler: (e: KeyboardEvent) => {
@@ -73,12 +70,6 @@ function ButtonShortcut({
         (!shortcut.disabled ||
           (typeof shortcut.disabled === 'function' && !shortcut.disabled()))
       ) {
-        if (shortcut.type) {
-          trackShortcut({
-            key: shortcut.key,
-            type: shortcut.type,
-          });
-        }
         onTrigger();
       }
     },

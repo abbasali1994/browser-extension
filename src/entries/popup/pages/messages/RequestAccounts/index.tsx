@@ -1,8 +1,6 @@
 import { useCallback, useState } from 'react';
 import { Address } from 'wagmi';
 
-import { analytics } from '~/analytics';
-import { event } from '~/analytics/event';
 import { initializeMessenger } from '~/core/messengers';
 import { useDappMetadata } from '~/core/resources/metadata/dapp';
 import { useAppSessionsStore, useCurrentAddressStore } from '~/core/state';
@@ -60,11 +58,6 @@ export const RequestAccounts = ({
         address: selectedWallet,
         chainId: selectedChainId,
       });
-      analytics.track(event.dappPromptConnectApproved, {
-        chainId: selectedChainId,
-        dappURL: dappMetadata?.appHost || '',
-        dappName: dappMetadata?.appName,
-      });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       logger.info('error connecting to dapp');
@@ -72,30 +65,11 @@ export const RequestAccounts = ({
     } finally {
       setLoading(false);
     }
-  }, [
-    approveRequest,
-    selectedWallet,
-    selectedChainId,
-    addSession,
-    dappMetadata?.appHost,
-    dappMetadata?.appHostName,
-    dappMetadata?.appName,
-    dappUrl,
-  ]);
+  }, [approveRequest, selectedWallet, selectedChainId, addSession, dappMetadata?.appHost, dappMetadata?.appHostName, dappUrl]);
 
   const onRejectRequest = useCallback(() => {
     rejectRequest();
-    analytics.track(event.dappPromptConnectRejected, {
-      chainId: selectedChainId,
-      dappURL: dappMetadata?.appHost || '',
-      dappName: dappMetadata?.appName,
-    });
-  }, [
-    dappMetadata?.appHost,
-    dappMetadata?.appName,
-    rejectRequest,
-    selectedChainId,
-  ]);
+  }, [rejectRequest]);
 
   return (
     <Rows alignVertical="justify">

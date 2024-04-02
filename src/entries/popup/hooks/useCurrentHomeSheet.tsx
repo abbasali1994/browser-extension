@@ -7,14 +7,14 @@ import { useSelectedTransactionStore } from '~/core/state/selectedTransaction';
 import { SpeedUpAndCancelSheet } from '../pages/speedUpAndCancelSheet';
 import { ROUTES } from '../urls';
 
-import useKeyboardAnalytics from './useKeyboardAnalytics';
+
 import { useKeyboardShortcut } from './useKeyboardShortcut';
 import { useRainbowNavigate } from './useRainbowNavigate';
 
 export function useCurrentHomeSheet() {
   const { setCurrentHomeSheet, sheet } = useCurrentHomeSheetStore();
   const { selectedTransaction } = useSelectedTransactionStore();
-  const { trackShortcut } = useKeyboardAnalytics();
+  
   const navigate = useRainbowNavigate();
 
   const closeSheet = useCallback(() => {
@@ -44,10 +44,6 @@ export function useCurrentHomeSheet() {
     condition: () => isDisplayingSheet,
     handler: (e: KeyboardEvent) => {
       if (e.key === shortcuts.global.CLOSE.key) {
-        trackShortcut({
-          key: shortcuts.global.CLOSE.display,
-          type: 'home.dismissSheet',
-        });
         closeSheet();
         e.preventDefault();
       }

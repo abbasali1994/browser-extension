@@ -10,7 +10,7 @@ import { accentMenuFocusVisibleStyle } from '~/design-system/components/Lens/Len
 import { globalColors } from '~/design-system/styles/designTokens';
 
 import { useAvatar } from '../../hooks/useAvatar';
-import useKeyboardAnalytics from '../../hooks/useKeyboardAnalytics';
+
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 
 const SelectItem = ({
@@ -133,15 +133,12 @@ export const SwitchMenu = ({
   onClose,
   sideOffset = 16,
 }: SwitchMenuProps) => {
-  const { trackShortcut } = useKeyboardAnalytics();
+  
   useKeyboardShortcut({
     condition: () => open !== undefined,
     handler: (e: KeyboardEvent) => {
       if (e.key === shortcuts.global.CLOSE.key) {
-        trackShortcut({
-          key: shortcuts.global.CLOSE.display,
-          type: 'radix.switchMenu.dismiss',
-        });
+      
         e.preventDefault();
         e.stopPropagation();
         onClose?.();

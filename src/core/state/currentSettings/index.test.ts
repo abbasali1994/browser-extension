@@ -1,23 +1,13 @@
 import { expect, test } from 'vitest';
 
-import { Language } from '~/core/languages';
 import { ChainId } from '~/core/types/chains';
 import { DEFAULT_ACCOUNT } from '~/core/utils/defaults';
 
 import {
   currentAddressStore,
   currentChainIdStore,
-  currentCurrencyStore,
-  currentLanguageStore,
+  currentCurrencyStore
 } from '.';
-
-test('should be able to set and change language', async () => {
-  const { currentLanguage, setCurrentLanguage } =
-    currentLanguageStore.getState();
-  expect(currentLanguage).toBe(Language.EN_US);
-  await setCurrentLanguage(Language.ES_419);
-  expect(currentLanguageStore.getState().currentLanguage).toBe(Language.ES_419);
-});
 
 test('should be able to set and change address', async () => {
   const { setCurrentAddress } = currentAddressStore.getState();

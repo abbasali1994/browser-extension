@@ -1,7 +1,7 @@
 import { Source } from '@rainbow-me/swaps';
 import { useCallback, useEffect, useState } from 'react';
 
-import config from '~/core/firebase/remoteConfig';
+import { config } from '~/core/config';
 import { useFlashbotsEnabledStore } from '~/core/state';
 import { ChainId, ChainName } from '~/core/types/chains';
 import { chainNameFromChainId } from '~/core/utils/chains';

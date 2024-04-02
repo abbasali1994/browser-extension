@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import React, {
+import {
   useCallback,
   useEffect,
   useMemo,
@@ -7,8 +7,6 @@ import React, {
   useState,
 } from 'react';
 
-import { analytics } from '~/analytics';
-import { event } from '~/analytics/event';
 import { i18n } from '~/core/languages';
 import { shortcuts } from '~/core/references/shortcuts';
 import { txSpeedEmoji } from '~/core/references/txSpeed';
@@ -298,24 +296,7 @@ export const CustomGasSheet = ({
   const setCustomGas = useCallback(() => {
     setSelectedSpeed(selectedSpeedOption);
     closeCustomGasSheet();
-    analytics.track(event.dappPromptSendTransactionCustomGasSet, {
-      baseFee: Number(currentBaseFee),
-      maxBaseFee: Number(maxBaseFee),
-      minerTip: Number(maxPriorityFee),
-      maxFee: Number(maxBaseFee) + Number(maxPriorityFee),
-      minerTipWarning: maxPriorityFeeWarning,
-      maxBaseFeeWarning,
-    });
-  }, [
-    closeCustomGasSheet,
-    currentBaseFee,
-    maxBaseFee,
-    maxBaseFeeWarning,
-    maxPriorityFee,
-    maxPriorityFeeWarning,
-    selectedSpeedOption,
-    setSelectedSpeed,
-  ]);
+  }, [closeCustomGasSheet, selectedSpeedOption, setSelectedSpeed]);
 
   useEffect(() => {
     if (show) {
