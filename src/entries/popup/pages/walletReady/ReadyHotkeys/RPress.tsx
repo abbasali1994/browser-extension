@@ -11,7 +11,7 @@ import { Box } from '~/design-system';
 
 import { activeTransitions, inactiveTransitions } from './pressTransitions.css';
 
-export function RPress({ isRPressed }: { isRPressed: boolean }) {
+export function PPress({ isPPressed }: { isPPressed: boolean }) {
   const { currentTheme } = useCurrentThemeStore();
   return (
     <Box paddingHorizontal="5px">
@@ -23,9 +23,9 @@ export function RPress({ isRPressed }: { isRPressed: boolean }) {
             src={currentTheme === 'dark' ? rPressed : rPressedLight}
             style={{ width: '44px', zIndex: 1 }}
             className={
-              activeTransitions[isRPressed ? 'pressed' : 'not pressed']
+              activeTransitions[isPPressed ? 'pressed' : 'not pressed']
             }
-            alt="R"
+            alt="P"
           />
           <Box
             as="img"
@@ -34,10 +34,10 @@ export function RPress({ isRPressed }: { isRPressed: boolean }) {
             src={currentTheme === 'dark' ? rPressedBottom : rPressedBottomLight}
             style={{
               width: '44px',
-              opacity: isRPressed ? 1 : 0,
+              opacity: isPPressed ? 1 : 0,
               transition: 'opacity 0.2s ease-in-out',
             }}
-            alt="R"
+            alt="P"
           />
         </>
 
@@ -49,9 +49,9 @@ export function RPress({ isRPressed }: { isRPressed: boolean }) {
             src={currentTheme === 'dark' ? rInactive : rInactiveLight}
             style={{ width: '44px', zIndex: 1 }}
             className={
-              inactiveTransitions[isRPressed ? 'pressed' : 'not pressed']
+              inactiveTransitions[isPPressed ? 'pressed' : 'not pressed']
             }
-            alt="R"
+            alt="P"
           />
           <Box
             as="img"
@@ -62,10 +62,10 @@ export function RPress({ isRPressed }: { isRPressed: boolean }) {
             }
             style={{
               width: '44px',
-              opacity: isRPressed ? 0 : 1,
+              opacity: isPPressed ? 0 : 1,
               transition: 'opacity 0.2s ease-in-out',
             }}
-            alt="R"
+            alt="P"
           />
         </>
       </Box>

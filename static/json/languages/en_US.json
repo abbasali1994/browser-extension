@@ -1509,7 +1509,7 @@
   },
   "wallet_ready": {
     "title": "Portal is ready to use",
-    "subtitle": "To access your wallet, just click Portal from the Extensions drop-down, or use the speedy keyboard shortcut",
+    "subtitle": "To access your wallet, just click Portal from the Extensions drop-down",
     "open": "Open Portal",
     "get_started_with_rainbow": "Get started with Portal",
     "get_started_with_rainbow_desc": "Welcome to Portal! We're so glad you're here. We’ve created this guide to help with the basics of Portal.",
