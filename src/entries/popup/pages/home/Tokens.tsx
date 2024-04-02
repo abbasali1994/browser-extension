@@ -247,6 +247,7 @@ export function Tokens() {
   }
 
   if (!filteredAssets?.length) {
+    return null;
     return <TokensEmptyState depositAddress={currentAddress} />;
   }
 

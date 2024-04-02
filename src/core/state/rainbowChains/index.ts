@@ -32,7 +32,7 @@ export interface RainbowChainsState {
 
 const IS_TESTING = process.env.IS_TESTING === 'true';
 
-export const RAINBOW_CHAINS_SUPPORTED = IS_TESTING
+export const RAINBOW_CHAINS_SUPPORTED = !IS_TESTING
   ? SUPPORTED_CHAINS.concat(chainHardhat, chainHardhatOptimism)
   : SUPPORTED_CHAINS;
 
