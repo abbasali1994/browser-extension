@@ -12,10 +12,8 @@ import { proxyRpcEndpoint } from '../providers';
 import { queryClient } from '../react-query';
 import { SUPPORTED_CHAINS, getDefaultRPC } from '../references';
 import { LocalStorage } from '../storage';
-import { ChainId, chainHardhat, chainHardhatOptimism } from '../types/chains';
+import { ChainId } from '../types/chains';
 import { findRainbowChainForChainId } from '../utils/chains';
-
-const IS_TESTING = process.env.IS_TESTING === 'true';
 
 const noopStorage = {
   getItem: () => '',
@@ -35,9 +33,7 @@ export const getOriginalRpcEndpoint = (chain: Chain) => {
   return getDefaultRPC(chain.id);
 };
 
-const supportedChains = IS_TESTING
-  ? SUPPORTED_CHAINS.concat(chainHardhat, chainHardhatOptimism)
-  : SUPPORTED_CHAINS;
+const supportedChains = SUPPORTED_CHAINS;
 
 export const configureChainsForWagmiClient = (
   chains: Chain[],
@@ -85,7 +81,7 @@ export function createWagmiClient({
     rainbowChains,
     useProxy,
   );
-
+  console.log('connectors', connectors ? connectors({ chains }) : "nothing");
   return createClient({
     autoConnect,
     connectors: connectors
