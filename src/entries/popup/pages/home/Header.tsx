@@ -4,20 +4,16 @@ import * as React from 'react';
 import { useAccount } from 'wagmi';
 
 import { i18n } from '~/core/languages';
-import { shortcuts } from '~/core/references/shortcuts';
 import { useFeatureFlagsStore } from '~/core/state/currentSettings/featureFlags';
 import { KeychainType } from '~/core/types/keychainTypes';
 import { truncateAddress } from '~/core/utils/address';
 import { POPUP_URL, goToNewTab } from '~/core/utils/tabs';
-import { Box, ButtonSymbol, Inline, Stack, Text } from '~/design-system';
+import { Box, Button, Inline, Stack } from '~/design-system';
 import { triggerAlert } from '~/design-system/components/Alert/Alert';
-import { SymbolProps } from '~/design-system/components/Symbol/Symbol';
-import { BoxStyles, TextStyles } from '~/design-system/styles/core.css';
 
 import { AccountName } from '../../components/AccountName/AccountName';
 import { Avatar } from '../../components/Avatar/Avatar';
 import { triggerToast } from '../../components/Toast/Toast';
-import { CursorTooltip } from '../../components/Tooltip/CursorTooltip';
 import { WalletAvatar } from '../../components/WalletAvatar/WalletAvatar';
 import { WalletContextMenu } from '../../components/WalletContextMenu';
 import { useAvatar } from '../../hooks/useAvatar';
@@ -190,23 +186,24 @@ function ActionButtonsSection() {
     <Box style={{ height: 54 }}>
       {avatar?.color && (
         <Inline space="12px">
-          <ActionButton
-            symbol="square.on.square"
-            text={i18n.t('wallet_header.copy')}
-            onClick={handleCopy}
-            testId="header-link-copy"
-            tabIndex={tabIndexes.WALLET_HEADER_COPY_BUTTON}
-            tooltipHint={shortcuts.home.COPY_ADDRESS.display}
-            tooltipText={i18n.t('tooltip.copy_address')}
-          />
+          <Button
+            color="surfaceSecondaryElevated"
+            height="44px"
+            variant="flat"
+            symbolSide="left"
+            symbol="arrow.down.forward"
+            testId="import-wallet-button"
+            tabIndex={0}
+          >
+            {i18n.t('wallet_header.receive')}
+          </Button>
 
-          <ActionButton
-            symbol="paperplane.fill"
-            text={i18n.t('wallet_header.send')}
-            tabIndex={tabIndexes.WALLET_HEADER_SEND_BUTTON}
-            tooltipHint={shortcuts.home.GO_TO_SEND.display}
-            tooltipText={i18n.t('tooltip.send')}
-            testId={'header-link-send'}
+          <Button
+            color="surfaceSecondaryElevated"
+            height="44px"
+            variant="flat"
+            symbolSide="left"
+            symbol="arrow.up.forward"
             onClick={() => {
               if (shouldNavigateToSend) {
                 navigate(ROUTES.SEND);
@@ -214,62 +211,13 @@ function ActionButtonsSection() {
                 handleSendFallback();
               }
             }}
-          />
+            testId="import-wallet-button"
+            tabIndex={0}
+          >
+            {i18n.t('wallet_header.send')}
+          </Button>
         </Inline>
       )}
     </Box>
-  );
-}
-
-function ActionButton({
-  cursor = 'default',
-  symbol,
-  text,
-  onClick,
-  testId,
-  tabIndex,
-  tooltipHint,
-  tooltipText,
-}: {
-  cursor?: BoxStyles['cursor'];
-  symbol: SymbolProps['symbol'];
-  text: string;
-  onClick?: () => void;
-  testId?: string;
-  tabIndex?: number;
-  tooltipHint: string;
-  tooltipText: string;
-}) {
-  return (
-    <Stack alignHorizontal="center" space="10px">
-      <CursorTooltip
-        align="center"
-        arrowAlignment="center"
-        text={tooltipText}
-        textWeight="bold"
-        textSize="12pt"
-        textColor="labelSecondary"
-        hint={tooltipHint}
-      >
-        <ButtonSymbol
-          color="accent"
-          cursor={cursor}
-          height="36px"
-          variant="raised"
-          symbol={symbol}
-          testId={testId}
-          onClick={onClick}
-          tabIndex={tabIndex}
-        />
-      </CursorTooltip>
-      <Text
-        color="labelSecondary"
-        cursor={cursor as TextStyles['cursor']}
-        size="12pt"
-        weight="semibold"
-      >
-        {text}
-      </Text>
-    </Stack>
   );
 }

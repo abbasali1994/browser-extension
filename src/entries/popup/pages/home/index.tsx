@@ -10,12 +10,11 @@ import {
 
 import { config } from '~/core/config';
 import { i18n } from '~/core/languages';
-import { shortcuts } from '~/core/references/shortcuts';
 import { useCurrentAddressStore, usePendingRequestStore } from '~/core/state';
 import { useTabNavigation } from '~/core/state/currentSettings/tabNavigation';
 import { useErrorStore } from '~/core/state/error';
 import { goToNewTab } from '~/core/utils/tabs';
-import { AccentColorProvider, Box, Inset, Separator } from '~/design-system';
+import { AccentColorProvider, Box, Inset } from '~/design-system';
 import { triggerAlert } from '~/design-system/components/Alert/Alert';
 import { useContainerRef } from '~/design-system/components/AnimatedRoute/AnimatedRoute';
 import { globalColors } from '~/design-system/styles/designTokens';
@@ -25,7 +24,7 @@ import { AccountName } from '../../components/AccountName/AccountName';
 import { AppConnectionWalletSwitcher } from '../../components/AppConnection/AppConnectionWalletSwitcher';
 import { BackupReminder } from '../../components/BackupReminder/BackupReminder';
 import { Navbar } from '../../components/Navbar/Navbar';
-import { Tab } from '../../components/Tabs/TabBar';
+import { TabBar, Tab } from '../../components/Tabs/TabBar';
 import { WalletAvatar } from '../../components/WalletAvatar/WalletAvatar';
 import { WalletContextMenu } from '../../components/WalletContextMenu';
 import { removeImportWalletSecrets } from '../../handlers/importWalletSecrets';
@@ -33,7 +32,6 @@ import { useAvatar } from '../../hooks/useAvatar';
 import { useCurrentHomeSheet } from '../../hooks/useCurrentHomeSheet';
 import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { useHomeShortcuts } from '../../hooks/useHomeShortcuts';
-import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import { usePendingTransactionWatcher } from '../../hooks/usePendingTransactionWatcher';
 import usePrevious from '../../hooks/usePrevious';
 import useRestoreNavigation from '../../hooks/useRestoreNavigation';
@@ -46,8 +44,6 @@ import { ROUTES } from '../../urls';
 import { Activities } from './Activity/ActivitiesList';
 import { RevokeApproval } from './Approvals/RevokeApproval';
 import { Header } from './Header';
-import { Points } from './Points/Points';
-import { TabHeader } from './TabHeader';
 import { Tokens } from './Tokens';
 
 type TabProps = {
@@ -72,7 +68,6 @@ const Tabs = memo(function Tabs({
   onSelectTab,
   prevScrollPosition,
 }: TabProps) {
-  
   const { visibleTokenCount } = useVisibleTokenCount();
 
   const COLLAPSED_HEADER_TOP_OFFSET = 157;
@@ -94,27 +89,6 @@ const Tabs = memo(function Tabs({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
-  useKeyboardShortcut({
-    handler: (e) => {
-      if (e.key === shortcuts.global.BACK.key) {
-       
-        if (activeTab === 'activity') {
-          onSelectTab('tokens');
-        } else if (activeTab === 'points') {
-          onSelectTab('activity');
-        }
-      }
-      if (e.key === shortcuts.global.FORWARD.key) {
-     
-        if (activeTab === 'tokens') {
-          onSelectTab('activity');
-        }  else if (activeTab === 'activity') {
-          onSelectTab('points');
-        }
-      }
-    },
-  });
-
   const getDisableBottomPadding = () => {
     return isPlaceholderTab(activeTab);
   };
@@ -126,11 +100,9 @@ const Tabs = memo(function Tabs({
 
   return (
     <>
-      <TabBar activeTab={activeTab} setActiveTab={onSelectTab} />
       <Content disableBottomPadding={getDisableBottomPadding()}>
         {activeTab === 'activity' && <Activities />}
         {activeTab === 'tokens' && <Tokens />}
-        {activeTab === 'points' && <Points />}
       </Content>
     </>
   );
@@ -164,12 +136,6 @@ export const Home = memo(function Home() {
       return;
     }
     setActiveTab(tab);
-    if (isPlaceholderTab(tab)) {
-      // Don’t persist placeholder tabs (NFTs, Points)
-      setSelectedTab('tokens');
-    } else {
-      setSelectedTab(tab);
-    }
   };
 
   useEffect(() => {
@@ -235,7 +201,7 @@ export const Home = memo(function Home() {
             />
             <AppConnectionWalletSwitcher />
           </motion.div>
-          {/* <NewTabBar activeTab={activeTab} onSelectTab={onSelectTab} /> */}
+          <TabBar activeTab={activeTab} onSelectTab={onSelectTab} />
           <BackupReminder />
           {currentHomeSheet}
           <RevokeApproval />
@@ -290,27 +256,6 @@ const TopNav = memo(function TopNav() {
     </StickyHeader>
   );
 });
-
-function TabBar({
-  activeTab,
-  setActiveTab,
-}: {
-  activeTab: Tab;
-  setActiveTab: (tab: Tab) => void;
-}) {
-  return (
-    <StickyHeader
-      background="surfacePrimaryElevatedSecondary"
-      height={39}
-      topOffset={TOP_NAV_HEIGHT}
-    >
-      <TabHeader activeTab={activeTab} onSelectTab={setActiveTab} />
-      <Box position="relative" style={{ bottom: 1 }}>
-        <Separator color="separatorTertiary" strokeWeight="1px" />
-      </Box>
-    </StickyHeader>
-  );
-}
 
 function Content({
   children,

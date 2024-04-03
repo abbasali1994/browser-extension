@@ -4,11 +4,10 @@ import { ReactElement, useMemo } from 'react';
 
 import { useCurrentAddressStore } from '~/core/state';
 import { useCurrentThemeStore } from '~/core/state/currentSettings/currentTheme';
-import { Box, Inline } from '~/design-system';
+import { Box, Text } from '~/design-system';
 import { globalColors } from '~/design-system/styles/designTokens';
 
 import { useAvatar } from '../../hooks/useAvatar';
-import { useWallets } from '../../hooks/useWallets';
 import { zIndexes } from '../../utils/zIndexes';
 import { timingConfig } from '../CommandK/references';
 
@@ -16,8 +15,6 @@ import ActivityIcon from './TabIcons/Activity';
 import ActivitySelected from './TabIcons/ActivitySelected';
 import HomeIcon from './TabIcons/Home';
 import HomeSelected from './TabIcons/HomeSelected';
-import PointsIcon from './TabIcons/Points';
-import PointsSelected from './TabIcons/PointsSelected';
 
 export type Tab = (typeof TABS)[number];
 
@@ -42,6 +39,8 @@ type TabConfigType = {
     colorMatrixValues: number[];
   }) => ReactElement;
   name: Tab;
+  label: string;
+  isDisabled?: boolean;
 };
 
 const tabConfig: TabConfigType[] = [
@@ -49,22 +48,20 @@ const tabConfig: TabConfigType[] = [
     Icon: HomeIcon,
     SelectedIcon: HomeSelected,
     name: 'tokens',
+    label: 'Assests',
+    isDisabled: false,
   },
   {
     Icon: ActivityIcon,
     SelectedIcon: ActivitySelected,
     name: 'activity',
-  },
-  {
-    Icon: PointsIcon,
-    SelectedIcon: PointsSelected,
-    name: 'points',
+    label: 'Activity',
+    isDisabled: true,
   },
 ];
 
 export function TabBar({
   activeTab,
-  height = 44,
   onSelectTab,
 }: {
   activeTab: Tab;
@@ -82,19 +79,17 @@ export function TabBar({
     return currentTheme === 'dark' ? [0, 0, 0] : rgbValues;
   }, [avatar?.color, currentTheme]);
 
-  const { isWatchingWallet } = useWallets();
-
   return (
     <Box
       alignItems="center"
       id="tab-bar"
       as={motion.div}
-      borderRadius="16px"
       display="flex"
-      justifyContent="center"
+      justifyContent="space-around"
       key="tabBarContainer"
-      padding="6px"
+      padding="8px"
       position="absolute"
+      width="full"
       style={{
         alignSelf: 'center',
         backdropFilter: 'blur(15px)',
@@ -102,40 +97,31 @@ export function TabBar({
           currentTheme === 'dark'
             ? 'linear-gradient(180deg, rgba(36, 37, 41, 0.6) 0%, rgba(36, 37, 41, 0.8) 100%)'
             : 'linear-gradient(180deg, rgba(250, 250, 250, 0.6) 0%, rgba(240, 240, 240, 0.8) 100%)',
-        bottom: 20,
+        backgroundColor: "black",
+        bottom: 0,
         boxShadow:
           currentTheme === 'dark'
             ? '0 16px 32px 0 rgba(0, 0, 0, 0.5), 0 0 0.5px 0 #000000, 0 -1px 6px 0 rgba(245, 248, 255, 0.05) inset, 0 0.5px 2px 0 rgba(245, 248, 255, 0.1) inset'
             : '0 16px 32px 0 rgba(0, 0, 0, 0.15), 0 0 1px 0 rgba(0, 0, 0, 0.08), 0 -1px 6px 0 rgba(255, 255, 255, 0.8) inset, 0 0.5px 2px 0 rgba(255, 255, 255, 0.8) inset',
-        height: height,
+        height: 80,
         zIndex: zIndexes.TAB_BAR,
       }}
       transition={timingConfig(0.2)}
     >
-      <TabBackground selectedTabIndex={TABS.indexOf(activeTab)} />
-      <Inline
-        alignHorizontal="center"
-        alignVertical="center"
-        height="full"
-        space="4px"
-      >
-        {tabConfig.map((tab, index) => {
-          if (tab.name === 'points' && isWatchingWallet) return null;
-          return (
-            <Tab
-              Icon={tab.Icon}
-              SelectedIcon={tab.SelectedIcon}
-              accentColor={avatar?.color || globalColors.blue50}
-              colorMatrixValues={colorMatrixValues}
-              index={index}
-              key={index}
-              name={tab.name}
-              onSelectTab={onSelectTab}
-              selectedTabIndex={TABS.indexOf(activeTab)}
-            />
-          );
-        })}
-      </Inline>
+      {tabConfig.map((tab, index) => {
+        return (
+          <Tab
+            {...tab}
+            accentColor={avatar?.color || globalColors.blue50}
+            colorMatrixValues={colorMatrixValues}
+            index={index}
+            key={index}
+            onSelectTab={onSelectTab}
+            selectedTabIndex={TABS.indexOf(activeTab)}
+          />
+        );
+      })}
+      {/* </Inline> */}
     </Box>
   );
 }
@@ -147,8 +133,10 @@ function Tab({
   colorMatrixValues,
   index,
   name,
+  label,
   onSelectTab,
   selectedTabIndex,
+  isDisabled,
 }: {
   Icon: () => ReactElement;
   SelectedIcon: ({
@@ -162,25 +150,33 @@ function Tab({
   colorMatrixValues: number[];
   index: number;
   name: Tab;
+  label: string;
   onSelectTab: (tab: Tab) => void;
   selectedTabIndex: number;
+  isDisabled: boolean;
 }) {
   const isSelected = selectedTabIndex === index;
+  const { currentAddress } = useCurrentAddressStore();
+  const { data: avatar } = useAvatar({ addressOrName: currentAddress });
 
   return (
     <Box
       onClick={() => {
-        onSelectTab(name);
+        if (!isDisabled) {
+          onSelectTab(name);
+        }
       }}
-      style={{ height: TAB_HEIGHT, width: TAB_WIDTH }}
       testId={`bottom-tab-${name}`}
+      cursor={isDisabled ? 'not-allowed' : 'pointer'}
     >
       <Box
         alignItems="center"
         as={motion.div}
         display="flex"
+        flexDirection='column'
         height="full"
         justifyContent="center"
+        gap='4px'
         key={`tab-${name}`}
         style={{
           width: TAB_WIDTH,
@@ -224,34 +220,12 @@ function Tab({
             </Box>
           </Box>
         </Box>
+        <Box style={{ color: avatar?.color }}>
+          <Text size="14pt" weight="bold">
+            {label}
+          </Text>
+        </Box>
       </Box>
     </Box>
-  );
-}
-
-function TabBackground({ selectedTabIndex }: { selectedTabIndex: number }) {
-  const { currentTheme } = useCurrentThemeStore();
-  const { currentAddress } = useCurrentAddressStore();
-  const { data: avatar } = useAvatar({ addressOrName: currentAddress });
-
-  // 6 = tab bar horizontal padding; 4 = space between tabs
-  const xPosition = selectedTabIndex * TAB_WIDTH + (6 + selectedTabIndex * 4);
-
-  return (
-    <Box
-      borderRadius="10px"
-      position="absolute"
-      style={{
-        backgroundColor: avatar?.color || globalColors.blue50,
-        height: TAB_HEIGHT,
-        left: 0,
-        opacity: currentTheme === 'dark' ? 0.2 : 0.15,
-        top: 6,
-        transform: `translateX(${xPosition}px)`,
-        transition: '0.2s cubic-bezier(0.2, 0, 0, 1)',
-        width: TAB_WIDTH,
-        willChange: 'transform',
-      }}
-    />
   );
 }

@@ -112,6 +112,10 @@ export const shortcuts = {
       display: 'A',
       key: 'a',
     },
+    GO_TO_RECEIVE: {
+      display: 'R',
+      key: 'r',
+    },
     GO_TO_SEND: {
       display: 'S',
       key: 's',

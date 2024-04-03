@@ -449,8 +449,8 @@ export const backgroundColors: Record<
   },
 };
 
-type Cursor = 'copy' | 'default' | 'pointer' | 'text';
-export const cursorOpts: Cursor[] = ['copy', 'default', 'pointer', 'text'];
+type Cursor = 'copy' | 'default' | 'pointer' | 'text' | 'not-allowed';
+export const cursorOpts: Cursor[] = ['copy', 'default', 'pointer', 'text', 'not-allowed'];
 
 type UserSelect = 'all' | 'none' | 'text';
 export const userSelectOpts: UserSelect[] = ['all', 'none', 'text'];

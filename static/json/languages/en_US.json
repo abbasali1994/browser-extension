@@ -1522,6 +1522,7 @@
     "copy": "Copy",
     "swap": "Swap",
     "send": "Send",
+    "receive": "Receive",
     "copy_toast": "Address Copied"
   },
   "token_search": {
@@ -1694,6 +1695,7 @@
     "copy_address": "Copy wallet address",
     "swap": "Swap your tokens",
     "send": "Send tokens",
+    "receive": "Receive tokens",
     "more": "More items",
     "view_tokens": "View tokens",
     "view_activity": "View activity",
