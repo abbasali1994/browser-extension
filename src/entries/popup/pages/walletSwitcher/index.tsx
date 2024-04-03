@@ -196,7 +196,6 @@ export function WalletSwitcher() {
   const { visibleWallets: accounts, fetchWallets } = useWallets();
   const { data: avatar } = useAvatar({ addressOrName: currentAddress });
   const { featureFlags } = useFeatureFlagsStore();
-  
 
   const isLastWallet = accounts?.length === 1;
 

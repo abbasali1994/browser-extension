@@ -2,7 +2,6 @@ import { RainbowTransaction } from '~/core/types/transactions';
 import {
   CoinIcon,
   ContractIcon,
-  NFTIcon,
   TwoCoinsIcon,
 } from '~/entries/popup/components/CoinIcon/CoinIcon';
 
@@ -29,9 +28,6 @@ export const ActivityIcon = ({
         />
       );
   }
-
-  if (asset?.type === 'nft')
-    return <NFTIcon asset={asset} size={size} badge={badge} />;
 
   if (asset)
     return (

@@ -7,8 +7,7 @@ import { i18n } from '~/core/languages';
 import { ParsedUserAsset } from '~/core/types/assets';
 import { ChainId } from '~/core/types/chains';
 import { GasFeeLegacyParams, GasFeeParams } from '~/core/types/gas';
-import { UniqueAsset } from '~/core/types/nfts';
-import { chainIdFromChainName, getChain } from '~/core/utils/chains';
+import { getChain } from '~/core/utils/chains';
 import { toWei } from '~/core/utils/ethereum';
 import {
   add,
@@ -22,14 +21,12 @@ import { useNativeAsset } from '../useNativeAsset';
 export const useSendValidations = ({
   asset,
   assetAmount,
-  nft,
   selectedGas,
   toAddress,
   toAddressOrName,
 }: {
   asset?: ParsedUserAsset | null;
   assetAmount?: string;
-  nft?: UniqueAsset;
   selectedGas?: GasFeeParams | GasFeeLegacyParams;
   toAddress?: Address;
   toAddressOrName?: string;
@@ -40,8 +37,6 @@ export const useSendValidations = ({
   const getNativeAssetChainId = () => {
     if (asset) {
       return asset?.chainId || ChainId.mainnet;
-    } else if (nft && nft.network) {
-      return chainIdFromChainName(nft.network);
     }
     return ChainId.mainnet;
   };
@@ -58,9 +53,6 @@ export const useSendValidations = ({
   );
 
   const enoughAssetBalance = useMemo(() => {
-    if (nft) {
-      return true;
-    }
     if (assetAmount) {
       if (!asset?.isNativeAsset) {
         return lessOrEqualThan(
@@ -82,7 +74,6 @@ export const useSendValidations = ({
     asset?.decimals,
     asset?.isNativeAsset,
     assetAmount,
-    nft,
   ]);
 
   const enoughNativeAssetForGas = useMemo(() => {
@@ -117,16 +108,16 @@ export const useSendValidations = ({
       }
     };
     checkToAddress();
-  }, [asset?.chainId, nft, toAddress]);
+  }, [asset?.chainId, toAddress]);
 
   const buttonLabel = useMemo(() => {
     if (!isValidToAddress && toAddressOrName !== '')
       return i18n.t('send.button_label.enter_valid_address');
 
-    if (!toAddress && !assetAmount && !nft) {
+    if (!toAddress && !assetAmount) {
       return i18n.t('send.button_label.enter_address_and_amount');
     }
-    if (!assetAmount && !nft) {
+    if (!assetAmount) {
       return i18n.t('send.button_label.enter_amount');
     }
     if (toAddressOrName === '') {
@@ -149,7 +140,7 @@ export const useSendValidations = ({
     enoughAssetBalance,
     enoughNativeAssetForGas,
     isValidToAddress,
-    nft,
+
     toAddress,
     toAddressOrName,
   ]);
@@ -159,7 +150,7 @@ export const useSendValidations = ({
       selectedGas?.gasFee?.amount &&
       isValidToAddress &&
       toAddressOrName !== '' &&
-      (assetAmount || !!nft) &&
+      assetAmount &&
       enoughAssetBalance &&
       enoughNativeAssetForGas,
     [
@@ -167,7 +158,7 @@ export const useSendValidations = ({
       enoughAssetBalance,
       enoughNativeAssetForGas,
       isValidToAddress,
-      nft,
+
       selectedGas?.gasFee?.amount,
       toAddressOrName,
     ],

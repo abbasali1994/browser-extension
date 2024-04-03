@@ -401,7 +401,7 @@ export const useApprovalGas = ({
   defaultSpeed?: GasSpeed;
   transactionRequest: TransactionRequest;
   flashbotsEnabled?: boolean;
-  assetType: 'erc20' | 'nft';
+  assetType: 'erc20';
 }) => {
   const { data: estimatedGasLimit } = useEstimateApprovalGasLimit({
     chainId,

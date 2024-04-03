@@ -23,8 +23,7 @@ import {
   pendingTransactionsStore,
 } from '../state';
 import { AddressOrEth, ParsedAsset, ParsedUserAsset } from '../types/assets';
-import { ChainId, ChainName } from '../types/chains';
-import { UniqueAsset } from '../types/nfts';
+import { ChainId } from '../types/chains';
 import {
   NewTransaction,
   PaginatedTransactionsApiResponse,
@@ -109,54 +108,6 @@ export const CRYPTO_PUNKS_NFT_ADDRESS =
  * @param asset The asset to transfer.
  * @return The data string if the transfer can be attempted, otherwise undefined.
  */
-export const getDataForNftTransfer = (
-  from: string,
-  to: string,
-  asset: UniqueAsset,
-): string | undefined => {
-  if (!asset.id || !asset.asset_contract?.address) return;
-  const lowercasedContractAddress = asset.asset_contract.address.toLowerCase();
-  const standard = asset.asset_contract?.schema_name;
-  let data: string | undefined;
-  if (
-    lowercasedContractAddress === CRYPTO_KITTIES_NFT_ADDRESS &&
-    asset.network === ChainName.mainnet
-  ) {
-    const transferMethod = smartContractMethods.token_transfer;
-    data = getDataString(transferMethod.hash, [
-      removeHexPrefix(to),
-      convertStringToHex(asset.id),
-    ]);
-  } else if (
-    lowercasedContractAddress === CRYPTO_PUNKS_NFT_ADDRESS &&
-    asset.network === ChainName.mainnet
-  ) {
-    const transferMethod = smartContractMethods.punk_transfer;
-    data = getDataString(transferMethod.hash, [
-      removeHexPrefix(to),
-      convertStringToHex(asset.id),
-    ]);
-  } else if (standard === TokenStandard.ERC1155) {
-    const transferMethodHash =
-      smartContractMethods.erc1155_safe_transfer_from.hash;
-    data = getDataString(transferMethodHash, [
-      removeHexPrefix(from),
-      removeHexPrefix(to),
-      convertStringToHex(asset.id),
-      convertStringToHex('1'),
-      convertStringToHex('160'),
-      convertStringToHex('0'),
-    ]);
-  } else if (standard === TokenStandard.ERC721) {
-    const transferMethod = smartContractMethods.erc721_transfer_from;
-    data = getDataString(transferMethod.hash, [
-      removeHexPrefix(from),
-      removeHexPrefix(to),
-      convertStringToHex(asset.id),
-    ]);
-  }
-  return data;
-};
 
 type ParseTransactionArgs = {
   tx: PaginatedTransactionsApiResponse;
@@ -178,7 +129,6 @@ const getDescription = (
   type: TransactionType,
   meta: PaginatedTransactionsApiResponse['meta'],
 ) => {
-  if (asset?.type === 'nft') return asset.symbol || asset.name;
   if (type === 'cancel') return i18n.t('transactions.cancelled');
 
   return asset?.name || meta.action;
@@ -596,16 +546,14 @@ export const getExchangeRate = ({ type, changes }: RainbowTransaction) => {
 export const getAdditionalDetails = (transaction: RainbowTransaction) => {
   const exchangeRate = getExchangeRate(transaction);
   const { asset, changes, approvalAmount, contract, type } = transaction;
-  const nft = changes?.find((c) => c?.asset.type === 'nft')?.asset;
-  const collection = nft?.symbol;
-  const standard = nft?.standard;
+
   const tokenContract =
     asset?.address !== ETH_ADDRESS && asset?.address !== AddressZero
       ? asset?.address
       : undefined;
 
   const tokenAmount =
-    !nft && !exchangeRate && tokenContract
+    !exchangeRate && tokenContract
       ? changes?.find((c) => c?.asset.address === tokenContract)?.asset.balance
           .amount
       : undefined;
@@ -616,15 +564,7 @@ export const getAdditionalDetails = (transaction: RainbowTransaction) => {
       label: getApprovalLabel(transaction),
     };
 
-  if (
-    !tokenAmount &&
-    !tokenContract &&
-    !exchangeRate &&
-    !collection &&
-    !standard &&
-    !approval
-  )
-    return;
+  if (!tokenAmount && !tokenContract && !exchangeRate && !approval) return;
 
   return {
     asset,
@@ -632,8 +572,6 @@ export const getAdditionalDetails = (transaction: RainbowTransaction) => {
     tokenContract,
     contract,
     exchangeRate,
-    collection,
-    standard,
     approval,
   };
 };

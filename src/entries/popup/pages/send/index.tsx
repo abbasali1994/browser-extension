@@ -24,37 +24,17 @@ import {
   useHiddenAssetStore,
 } from '~/core/state/hiddenAssets/hiddenAssets';
 import { usePopupInstanceStore } from '~/core/state/popupInstances';
-import { useSelectedNftStore } from '~/core/state/selectedNft';
 import { useSelectedTokenStore } from '~/core/state/selectedToken';
-import {
-  AddressOrEth,
-  ParsedAsset,
-  ParsedUserAsset,
-} from '~/core/types/assets';
+import { AddressOrEth, ParsedUserAsset } from '~/core/types/assets';
 import { ChainId } from '~/core/types/chains';
 import {
   TransactionGasParams,
   TransactionLegacyGasParams,
 } from '~/core/types/gas';
-import { UniqueAsset } from '~/core/types/nfts';
 import { NewTransaction, TxHash } from '~/core/types/transactions';
-import { chainIdFromChainName, chainIdToUse } from '~/core/utils/chains';
-import {
-  getUniqueAssetImagePreviewURL,
-  getUniqueAssetImageThumbnailURL,
-} from '~/core/utils/nfts';
+import { chainIdToUse } from '~/core/utils/chains';
 import { addNewTransaction } from '~/core/utils/transactions';
-import {
-  Box,
-  Button,
-  Column,
-  Columns,
-  Inline,
-  Row,
-  Rows,
-  Symbol,
-  Text,
-} from '~/design-system';
+import { Box, Button, Inline, Row, Rows, Symbol, Text } from '~/design-system';
 import { triggerAlert } from '~/design-system/components/Alert/Alert';
 import { AccentColorProvider } from '~/design-system/components/Box/ColorContext';
 import { RainbowError, logger } from '~/logger';
@@ -71,16 +51,13 @@ import { getWallet, sendTransaction } from '../../handlers/wallet';
 import { useSendAsset } from '../../hooks/send/useSendAsset';
 import { useSendInputs } from '../../hooks/send/useSendInputs';
 import { useSendState } from '../../hooks/send/useSendState';
-import { useSendUniqueAsset } from '../../hooks/send/useSendUniqueAsset';
 import { useSendValidations } from '../../hooks/send/useSendValidations';
-
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import usePrevious from '../../hooks/usePrevious';
-import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { useWallets } from '../../hooks/useWallets';
 import { ROUTES } from '../../urls';
 import { clickHeaderRight } from '../../utils/clickHeader';
-import { NFTThumbnail } from '../home/NFTs/NFTThumbnail';
 
 import { ContactAction, ContactPrompt } from './ContactPrompt';
 import { NavbarContactButton } from './NavbarContactButton';
@@ -137,14 +114,9 @@ export function Send() {
     [assets, isHidden],
   );
 
-  const { nft, nfts, nftSortMethod, setNftSortMethod, selectNft } =
-    useSendUniqueAsset();
-
   const { clearCustomGasModified, selectedGas } = useGasStore();
 
-  const { selectedNft, setSelectedNft } = useSelectedNftStore();
   const { selectedToken, setSelectedToken } = useSelectedTokenStore();
-  
 
   const toAddressInputRef = useRef<ChildInputAPI>(null);
   const sendTokenInputRef = useRef<ChildInputAPI>(null);
@@ -175,7 +147,7 @@ export function Send() {
     txToAddress,
     value,
     setToAddressOrName,
-  } = useSendState({ assetAmount, rawMaxAssetBalanceAmount, asset, nft });
+  } = useSendState({ assetAmount, rawMaxAssetBalanceAmount, asset });
 
   const {
     buttonLabel,
@@ -186,7 +158,7 @@ export function Send() {
   } = useSendValidations({
     asset,
     assetAmount,
-    nft,
+
     selectedGas,
     toAddress,
     toAddressOrName,
@@ -194,13 +166,6 @@ export function Send() {
 
   const controls = useAnimationControls();
   const transactionRequestForGas: TransactionRequest = useMemo(() => {
-    if (nft) {
-      return {
-        to: nft.asset_contract.address,
-        from: fromAddress,
-        data,
-      };
-    }
     return {
       to: txToAddress,
       from: fromAddress,
@@ -209,15 +174,7 @@ export function Send() {
       data,
       ...maxAssetBalanceParams,
     };
-  }, [
-    txToAddress,
-    fromAddress,
-    value,
-    chainId,
-    data,
-    maxAssetBalanceParams,
-    nft,
-  ]);
+  }, [txToAddress, fromAddress, value, chainId, data, maxAssetBalanceParams]);
 
   const handleToAddressChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -266,41 +223,17 @@ export function Send() {
     flashbotsEnabled &&
     asset?.chainId === ChainId.mainnet;
 
-  const buildNftAssetObject = useCallback((nft: UniqueAsset) => {
-    return {
-      address: (nft.asset_contract.address || '') as AddressOrEth,
-      chainId: chainIdFromChainName(nft.network),
-      chainName: nft.network,
-      isNativeAsset: false,
-      name: nft.name,
-      symbol: nft.collection.name,
-      uniqueId: `${nft.asset_contract.address || ''}_${chainIdFromChainName(
-        nft.network,
-      )}`,
-      decimals: 0,
-      native: {
-        price: {
-          amount: 0,
-          change: '',
-          display: '$0.00',
-        },
-      },
-    } as ParsedAsset;
-  }, []);
-
   const buildPendingTransaction = useCallback(
     (result: TransactionResponse) => {
       return {
         changes: [
-          nft
-            ? { direction: 'out', asset: buildNftAssetObject(nft) }
-            : {
-                direction: 'out',
-                asset,
-                value: assetAmount,
-              },
+          {
+            direction: 'out',
+            asset,
+            value: assetAmount,
+          },
         ],
-        asset: nft ? buildNftAssetObject(nft) : asset,
+        asset: asset,
         data: result.data,
         flashbots: flashbotsEnabledGlobally,
         value: result.value.toString(),
@@ -324,11 +257,9 @@ export function Send() {
     [
       asset,
       assetAmount,
-      buildNftAssetObject,
       chainId,
       flashbotsEnabledGlobally,
       fromAddress,
-      nft,
       selectedGas.transactionGasParams,
       txToAddress,
     ],
@@ -364,33 +295,6 @@ export function Send() {
             navigate(ROUTES.HOME, {
               state: { tab: 'activity' },
             });
-            
-          }
-        } else if (nft) {
-          const { type } = await getWallet(fromAddress);
-          // Change the label while we wait for confirmation
-          if (type === 'HardwareWalletKeychain') {
-            setWaitingForDevice(true);
-          }
-          resetSendValues();
-          const result = await sendTransaction({
-            from: fromAddress,
-            to: nft.asset_contract.address,
-            chainId: activeChainId,
-            data,
-          });
-          if (result && nft) {
-            const transaction: NewTransaction = buildPendingTransaction(result);
-            addNewTransaction({
-              address: fromAddress,
-              chainId,
-              transaction,
-            });
-            callback?.();
-            navigate(ROUTES.HOME, {
-              state: { tab: 'activity' },
-            });
-          
           }
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -417,11 +321,9 @@ export function Send() {
       activeChainId,
       data,
       asset,
-      assetAmount,
       buildPendingTransaction,
       chainId,
       navigate,
-      nft,
     ],
   );
 
@@ -478,13 +380,6 @@ export function Send() {
       selectAsset(selectedToken.address, selectedToken.chainId);
       // clear selected token
       setSelectedToken();
-    } else if (selectedNft && selectedNft.collection.collection_id) {
-      // clear any saved token amounts
-      setIndependentAmount('');
-      // navigating from nft details
-      selectNft(selectedNft.collection.collection_id, selectedNft.fullUniqueId);
-      // clear selected nft
-      setSelectedNft();
     } else if (sendTokenAddressAndChain) {
       selectAsset(
         sendTokenAddressAndChain.address,
@@ -524,23 +419,19 @@ export function Send() {
     handler: (e: KeyboardEvent) => {
       if (e.altKey) {
         if (e.key === shortcuts.send.FOCUS_TO_ADDRESS.key) {
-         
           toAddressInputRef?.current?.focus();
           sendTokenInputRef?.current?.blur();
         }
         if (e.key === shortcuts.send.FOCUS_ASSET.key) {
-         
           toAddressInputRef?.current?.blur();
           sendTokenInputRef.current?.focus();
         }
       } else {
         if (!toAddressInputRef.current?.isFocused?.()) {
           if (e.key === shortcuts.send.SET_MAX_AMOUNT.key) {
-           
             setMaxAssetAmount();
           }
           if (e.key === shortcuts.send.SWITCH_CURRENCY_LABEL.key) {
-           
             switchIndependentField();
           }
         }
@@ -548,15 +439,13 @@ export function Send() {
           e.key === shortcuts.send.OPEN_CONTACT_MENU.key &&
           !valueInputRef.current?.isFocused?.()
         ) {
-          
           clickHeaderRight();
         }
       }
     },
   });
 
-  const assetAccentColor =
-    nft?.predominantColor || asset?.colors?.primary || asset?.colors?.fallback;
+  const assetAccentColor = asset?.colors?.primary || asset?.colors?.fallback;
 
   return (
     <>
@@ -585,7 +474,6 @@ export function Send() {
               onSend={handleSend}
               toAddress={toAddress}
               asset={asset}
-              nft={nft}
               primaryAmountDisplay={independentAmountDisplay.display}
               secondaryAmountDisplay={dependentAmountDisplay.display}
               onSaveContactAction={setSaveContactAction}
@@ -658,11 +546,6 @@ export function Send() {
                     setSortMethod={setSortMethod}
                     sortMethod={sortMethod}
                     ref={sendTokenInputRef}
-                    nft={nft}
-                    nfts={nfts}
-                    nftSortMethod={nftSortMethod}
-                    setNftSortMethod={setNftSortMethod}
-                    selectNft={selectNft}
                   />
                   {asset ? (
                     <ValueInput
@@ -683,27 +566,8 @@ export function Send() {
               </AccentColorProvider>
             </Row>
           </Rows>
-
-          {nft && (
-            <Row>
-              <Box paddingBottom="14px">
-                <Columns alignHorizontal="center">
-                  <Column width="content">
-                    <NFTThumbnail
-                      size={232}
-                      imageSrc={getUniqueAssetImageThumbnailURL(nft)}
-                      placeholderSrc={getUniqueAssetImagePreviewURL(nft)}
-                      borderRadius="16px"
-                      index={0}
-                    />
-                  </Column>
-                </Columns>
-              </Box>
-            </Row>
-          )}
-
           <Row height="content">
-            {isValidToAddress && (!!asset || !!nft) ? (
+            {isValidToAddress && !!asset ? (
               <AccentColorProvider color={assetAccentColor}>
                 <Box paddingHorizontal="8px">
                   <Rows space="20px">

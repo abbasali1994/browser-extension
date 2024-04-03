@@ -9,7 +9,6 @@ import { useCurrentHomeSheetStore } from '~/core/state/currentHomeSheet';
 import { useDeveloperToolsEnabledStore } from '~/core/state/currentSettings/developerToolsEnabled';
 import { useFeatureFlagsStore } from '~/core/state/currentSettings/featureFlags';
 import { useTestnetModeStore } from '~/core/state/currentSettings/testnetMode';
-import { useSelectedNftStore } from '~/core/state/selectedNft';
 import { useSelectedTokenStore } from '~/core/state/selectedToken';
 import { useSelectedTransactionStore } from '~/core/state/selectedTransaction';
 import { truncateAddress } from '~/core/utils/address';
@@ -32,9 +31,9 @@ import {
 
 import { useActiveTab } from './useActiveTab';
 import { useAppSession } from './useAppSession';
+import { useExtensionNavigate } from './useExtensionNavigate';
 import { useKeyboardShortcut } from './useKeyboardShortcut';
 import { useNavigateToSwaps } from './useNavigateToSwaps';
-import { useExtensionNavigate } from './useExtensionNavigate';
 import { useWallets } from './useWallets';
 
 export function useHomeShortcuts() {
@@ -43,7 +42,7 @@ export function useHomeShortcuts() {
   const { selectedToken } = useSelectedTokenStore();
   const { selectedTransaction } = useSelectedTransactionStore();
   const { sheet } = useCurrentHomeSheetStore();
-  
+
   const navigateToSwaps = useNavigateToSwaps();
   const { url } = useActiveTab();
   const { data: dappMetadata } = useDappMetadata({ url });
@@ -52,7 +51,6 @@ export function useHomeShortcuts() {
   const { isWatchingWallet } = useWallets();
   const { testnetMode, setTestnetMode } = useTestnetModeStore();
   const { developerToolsEnabled } = useDeveloperToolsEnabledStore();
-  const { selectedNft } = useSelectedNftStore();
 
   const allowSend = useMemo(
     () => !isWatchingWallet || featureFlags.full_watching_wallets,
@@ -109,16 +107,14 @@ export function useHomeShortcuts() {
           navigate(ROUTES.BUY);
           break;
         case shortcuts.home.COPY_ADDRESS.key:
-          if (!selectedNft && !selectedToken) {
+          if (!selectedToken) {
             handleCopy();
           }
           break;
         case shortcuts.home.GO_TO_CONNECTED_APPS.key:
-          
           navigate(ROUTES.CONNECTED);
           break;
         case shortcuts.home.GO_TO_SEND.key:
-          
           if (allowSend) {
             navigate(ROUTES.SEND);
           } else {
@@ -126,54 +122,44 @@ export function useHomeShortcuts() {
           }
           break;
         case shortcuts.home.GO_TO_SETTINGS.key:
-          
           navigate(ROUTES.SETTINGS);
           break;
         case shortcuts.home.GO_TO_SWAP.key:
-         
           navigateToSwaps();
           break;
         case shortcuts.home.GO_TO_PROFILE.key:
           if (!selectedToken) {
-           
             openProfile();
           }
           break;
         case shortcuts.home.GO_TO_WALLETS.key:
           if (!activeAppConnectionMenu) {
-           
             navigate(ROUTES.WALLET_SWITCHER);
           }
           break;
         case shortcuts.home.GO_TO_QR.key:
-          
           navigate(ROUTES.QR_CODE);
           break;
         case shortcuts.home.LOCK.key:
-         
           wallet.lock();
           break;
         case shortcuts.home.TESTNET_MODE.key:
-          
           // in order to close dropdown menus
           clickTabBar();
           handleTestnetMode();
           break;
         case shortcuts.home.OPEN_MORE_MENU.key:
           if (!activeAppWalletSwitcher) {
-           
             clickHeaderRight();
           }
           break;
         case shortcuts.home.OPEN_APP_CONNECTION_MENU.key:
           if (!activeAppConnectionMenu && !activeAppWalletSwitcher) {
-            
             clickHeaderLeft();
           }
           break;
         case shortcuts.home.DISCONNECT_APP.key:
           if (!activeAppConnectionMenu) {
-           
             disconnectFromApp();
           }
           break;
@@ -181,7 +167,6 @@ export function useHomeShortcuts() {
     },
     [
       navigate,
-      selectedNft,
       selectedToken,
       allowSend,
       navigateToSwaps,

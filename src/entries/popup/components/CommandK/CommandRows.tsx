@@ -20,7 +20,7 @@ import {
 import { transitions } from '~/design-system/styles/designTokens';
 
 import { Asterisks } from '../Asterisks/Asterisks';
-import { CoinIcon, NFTIcon } from '../CoinIcon/CoinIcon';
+import { CoinIcon } from '../CoinIcon/CoinIcon';
 import { MenuItem } from '../Menu/MenuItem';
 import { WalletAvatar } from '../WalletAvatar/WalletAvatar';
 
@@ -32,7 +32,6 @@ import {
 } from './CommandKStyles.css';
 import {
   ENSOrAddressSearchItem,
-  NFTSearchItem,
   SearchItem,
   SearchItemType,
   ShortcutSearchItem,
@@ -138,62 +137,6 @@ export const CommandRow = ({
         </Columns>
       </Box>
     </Box>
-  );
-};
-
-type NFTRowProps = {
-  command: NFTSearchItem;
-  handleExecuteCommand: (command: SearchItem, e?: KeyboardEvent) => void;
-  selected: boolean;
-};
-
-export const NFTRow = ({
-  command,
-  handleExecuteCommand,
-  selected,
-}: NFTRowProps) => {
-  const _NftIcon = React.useMemo(
-    () => <NFTIcon asset={command.nft} size={20} badge={false} />,
-    [command.nft],
-  );
-
-  const NFTBadge = React.useMemo(() => {
-    const tokenId = parseInt(command.nft?.id);
-    const hasTokenId = !isNaN(tokenId) && tokenId < 999999999;
-    return (
-      <Box
-        alignItems="center"
-        borderColor="separatorSecondary"
-        borderRadius="7px"
-        borderWidth="1px"
-        display="flex"
-        paddingHorizontal="4px"
-        style={{
-          height: 20,
-          whiteSpace: 'nowrap',
-        }}
-      >
-        <Text
-          align="center"
-          color="labelQuaternary"
-          size="12pt"
-          weight="semibold"
-        >
-          {hasTokenId ? `#${tokenId}` : 'NFT'}
-        </Text>
-      </Box>
-    );
-  }, [command.nft]);
-
-  return (
-    <CommandRow
-      command={command}
-      handleExecuteCommand={handleExecuteCommand}
-      name={command.name}
-      selected={selected}
-      LeftComponent={_NftIcon}
-      RightComponent={NFTBadge}
-    />
   );
 };
 

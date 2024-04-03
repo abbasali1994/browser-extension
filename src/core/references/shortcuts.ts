@@ -165,44 +165,6 @@ export const shortcuts = {
       key: 'w',
     },
   },
-  nfts: {
-    DISPLAY_MODE_GROUPED: {
-      display: '1',
-      key: '1',
-    },
-    DISPLAY_MODE_COLLECTION: {
-      display: '2',
-      key: '2',
-    },
-    SORT_RECENT: {
-      display: '1',
-      key: '1',
-    },
-    SORT_ABC: {
-      display: '2',
-      key: '2',
-    },
-    REFRESH_NFTS: {
-      display: 'R',
-      key: 'r',
-    },
-    DOWNLOAD_NFT: {
-      display: 'D',
-      key: 'd',
-    },
-    COPY_NFT_ID: {
-      display: 'C',
-      key: 'c',
-    },
-    SEND_NFT: {
-      display: 'S',
-      key: 's',
-    },
-    HIDE_NFT: {
-      display: 'H',
-      key: 'h',
-    },
-  },
   wallets: {
     CHOOSE_WALLET_GROUP_NEW: {
       display: 'N',

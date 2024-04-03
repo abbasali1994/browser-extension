@@ -5,27 +5,21 @@ import { useCurrentAddressStore, useCurrentCurrencyStore } from '~/core/state';
 import { usePopupInstanceStore } from '~/core/state/popupInstances';
 import { ParsedUserAsset } from '~/core/types/assets';
 import { ChainId } from '~/core/types/chains';
-import { UniqueAsset } from '~/core/types/nfts';
-import { chainIdFromChainName, isNativeAsset } from '~/core/utils/chains';
+import { isNativeAsset } from '~/core/utils/chains';
 import { toWei } from '~/core/utils/ethereum';
 import { toHex } from '~/core/utils/hex';
 import { convertAmountToRawAmount } from '~/core/utils/numbers';
-import {
-  getDataForNftTransfer,
-  getDataForTokenTransfer,
-} from '~/core/utils/transactions';
+import { getDataForTokenTransfer } from '~/core/utils/transactions';
 
 import { useEns } from '../useEns';
 
 export const useSendState = ({
   assetAmount,
   asset,
-  nft,
   rawMaxAssetBalanceAmount,
 }: {
   assetAmount?: string;
   asset: ParsedUserAsset | null;
-  nft?: UniqueAsset;
   rawMaxAssetBalanceAmount: string;
 }) => {
   const [toAddressOrName, setToAddressOrName] = useState<Address | string>('');
@@ -38,8 +32,6 @@ export const useSendState = ({
   const getChainId = () => {
     if (asset) {
       return asset?.chainId ?? ChainId.mainnet;
-    } else if (nft) {
-      return nft?.network ? chainIdFromChainName(nft.network) : ChainId.mainnet;
     }
     return ChainId.mainnet;
   };
@@ -61,13 +53,10 @@ export const useSendState = ({
   );
 
   const data = useMemo(() => {
-    if (nft && toAddress) {
-      return getDataForNftTransfer(fromAddress, toAddress, nft);
-    }
     if (!asset || !toAddress || !assetAmount || sendingNativeAsset) return '0x';
     const rawAmount = convertAmountToRawAmount(assetAmount, asset?.decimals);
     return getDataForTokenTransfer(rawAmount, toAddress);
-  }, [assetAmount, asset, fromAddress, nft, sendingNativeAsset, toAddress]);
+  }, [assetAmount, asset, sendingNativeAsset, toAddress]);
 
   const txToAddress: Address = useMemo(() => {
     const assetAddress = asset?.address;
@@ -80,11 +69,6 @@ export const useSendState = ({
   }, [asset?.address, chainId, toAddress]);
 
   const maxAssetBalanceParams = useMemo(() => {
-    if (nft && toAddress) {
-      return {
-        data: getDataForNftTransfer(fromAddress, toAddress, nft),
-      };
-    }
     return asset?.isNativeAsset
       ? { value: rawMaxAssetBalanceAmount }
       : {
@@ -93,13 +77,7 @@ export const useSendState = ({
             toAddress || '',
           ),
         };
-  }, [
-    asset?.isNativeAsset,
-    fromAddress,
-    nft,
-    rawMaxAssetBalanceAmount,
-    toAddress,
-  ]);
+  }, [asset?.isNativeAsset, rawMaxAssetBalanceAmount, toAddress]);
 
   return {
     asset,

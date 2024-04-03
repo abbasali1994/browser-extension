@@ -12,7 +12,6 @@ import { Address } from 'wagmi';
 import { i18n } from '~/core/languages';
 import { ParsedUserAsset } from '~/core/types/assets';
 import { ChainId, ChainName, ChainNameDisplay } from '~/core/types/chains';
-import { UniqueAsset } from '~/core/types/nfts';
 import { truncateAddress } from '~/core/utils/address';
 import {
   chainIdFromChainName,
@@ -47,8 +46,7 @@ import {
 import { ChainBadge } from '../../components/ChainBadge/ChainBadge';
 import { Checkbox } from '../../components/Checkbox/Checkbox';
 import { ChevronDown } from '../../components/ChevronDown/ChevronDown';
-import { CoinIcon, NFTIcon } from '../../components/CoinIcon/CoinIcon';
-import { parseNftName } from '../../components/CommandK/useSearchableNFTs';
+import { CoinIcon } from '../../components/CoinIcon/CoinIcon';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -247,7 +245,6 @@ export const ReviewSheet = ({
   show,
   toAddress,
   asset,
-  nft,
   primaryAmountDisplay,
   secondaryAmountDisplay,
   waitingForDevice,
@@ -258,7 +255,6 @@ export const ReviewSheet = ({
   show: boolean;
   toAddress: Address;
   asset?: ParsedUserAsset | null;
-  nft?: UniqueAsset;
   primaryAmountDisplay: string;
   secondaryAmountDisplay: string;
   waitingForDevice: boolean;
@@ -279,7 +275,7 @@ export const ReviewSheet = ({
   const confirmSendButtonRef = useRef<HTMLButtonElement>(null);
   const { chains } = getNetwork();
   const assetChainId =
-    asset?.chainId || chainIdFromChainName(nft?.network || ChainName.mainnet);
+    asset?.chainId || chainIdFromChainName(ChainName.mainnet);
   const chain = useMemo(
     () => chains.find((c) => c.id === assetChainId),
     [assetChainId, chains],
@@ -389,44 +385,24 @@ export const ReviewSheet = ({
                         <Box paddingVertical="6px" height="full">
                           <Rows space="10px" alignVertical="center">
                             <Row>
-                              {nft ? (
-                                <TextOverflow
-                                  size="20pt"
-                                  weight="bold"
-                                  color="label"
-                                >
-                                  {parseNftName(nft.name, nft.id)}
-                                </TextOverflow>
-                              ) : (
-                                <TextOverflow
-                                  size="20pt"
-                                  weight="bold"
-                                  color="label"
-                                >
-                                  {primaryAmountDisplay}
-                                </TextOverflow>
-                              )}
+                              <TextOverflow
+                                size="20pt"
+                                weight="bold"
+                                color="label"
+                              >
+                                {primaryAmountDisplay}
+                              </TextOverflow>
                             </Row>
                             <Row>
-                              {nft ? (
-                                <TextOverflow
-                                  size="12pt"
-                                  weight="bold"
-                                  color="labelTertiary"
-                                >
-                                  {`${nft?.collection.name} #${nft.id}`}
-                                </TextOverflow>
-                              ) : (
-                                <TextOverflow
-                                  size="12pt"
-                                  weight="bold"
-                                  color="labelTertiary"
-                                >
-                                  {shouldHideAmount
-                                    ? i18n.t('token_details.not_available')
-                                    : secondaryAmountDisplay}
-                                </TextOverflow>
-                              )}
+                              <TextOverflow
+                                size="12pt"
+                                weight="bold"
+                                color="labelTertiary"
+                              >
+                                {shouldHideAmount
+                                  ? i18n.t('token_details.not_available')
+                                  : secondaryAmountDisplay}
+                              </TextOverflow>
                             </Row>
                           </Rows>
                         </Box>
@@ -434,13 +410,7 @@ export const ReviewSheet = ({
                       <Column>
                         <Inline alignVertical="center" alignHorizontal="right">
                           <Box>
-                            {nft ? (
-                              <Box>
-                                <NFTIcon asset={nft} size={44} badge={true} />
-                              </Box>
-                            ) : (
-                              <CoinIcon asset={asset} size={44} />
-                            )}
+                            <CoinIcon asset={asset} size={44} />
                           </Box>
                         </Inline>
                       </Column>

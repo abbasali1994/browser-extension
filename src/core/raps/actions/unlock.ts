@@ -185,7 +185,7 @@ export const populateRevokeApproval = async ({
   tokenAddress?: Address;
   spenderAddress?: Address;
   chainId?: ChainId;
-  type: 'erc20' | 'nft';
+  type: string;
 }): Promise<PopulatedTransaction> => {
   if (!tokenAddress || !spenderAddress || !chainId) return {};
   const provider = getProvider({ chainId });

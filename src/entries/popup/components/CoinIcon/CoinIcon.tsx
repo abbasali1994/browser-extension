@@ -10,7 +10,6 @@ import {
   ParsedUserAsset,
 } from '~/core/types/assets';
 import { ChainId } from '~/core/types/chains';
-import { UniqueAsset } from '~/core/types/nfts';
 import { SearchAsset } from '~/core/types/search';
 import { AccentColorProvider, Box, Symbol } from '~/design-system';
 import { BoxStyles } from '~/design-system/styles/core.css';
@@ -258,41 +257,6 @@ function formatSymbol(symbol: string, width: number) {
 
   return _cache[key];
 }
-
-export const NFTIcon = ({
-  asset,
-  size,
-  badge = false,
-}: {
-  asset: ParsedAsset | UniqueAsset;
-  size: keyof typeof nftRadiusBySize;
-  badge?: boolean;
-}) => {
-  const chainId = 'chainId' in asset ? asset.chainId : undefined;
-
-  return (
-    <Box position="relative" style={{ minWidth: size, height: size }}>
-      <ExternalImage
-        borderRadius={nftRadiusBySize[size]}
-        src={
-          // eslint-disable-next-line no-nested-ternary
-          ('icon_url' in asset
-            ? asset.icon_url
-            : 'image_thumbnail_url' in asset
-            ? asset.image_thumbnail_url
-            : '') || ''
-        }
-        height={size}
-        width={size}
-      />
-      {badge && chainId && chainId !== ChainId.mainnet && (
-        <Box position="absolute" bottom="0" style={{ zIndex: 2, left: '-6px' }}>
-          <ChainBadge chainId={chainId} shadow size="16" />
-        </Box>
-      )}
-    </Box>
-  );
-};
 
 export const ContractIcon = ({
   size,

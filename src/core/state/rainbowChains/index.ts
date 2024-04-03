@@ -2,11 +2,7 @@ import { Chain } from 'viem/chains';
 import create from 'zustand';
 
 import { SUPPORTED_CHAINS, getDefaultRPC } from '~/core/references';
-import {
-  ChainId,
-  chainHardhat,
-  chainHardhatOptimism,
-} from '~/core/types/chains';
+import { ChainId } from '~/core/types/chains';
 
 import { createStore } from '../internal/createStore';
 
@@ -30,11 +26,7 @@ export interface RainbowChainsState {
   removeCustomRPC: ({ rpcUrl }: { rpcUrl: string }) => void;
 }
 
-const IS_TESTING = process.env.IS_TESTING === 'true';
-
-export const RAINBOW_CHAINS_SUPPORTED = !IS_TESTING
-  ? SUPPORTED_CHAINS.concat(chainHardhat, chainHardhatOptimism)
-  : SUPPORTED_CHAINS;
+export const RAINBOW_CHAINS_SUPPORTED = SUPPORTED_CHAINS;
 
 const getInitialRainbowChains = () => {
   const rainbowChains: Record<number, RainbowChain> = {};

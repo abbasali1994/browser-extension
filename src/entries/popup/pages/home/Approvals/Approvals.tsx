@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { ReactNode, useCallback, useMemo, useRef, useState } from 'react';
+import { ReactNode, useMemo, useRef, useState } from 'react';
 import { Address, Chain } from 'wagmi';
 
 import { i18n } from '~/core/languages';
@@ -12,7 +12,6 @@ import {
 } from '~/core/resources/approvals/approvals';
 import { useConsolidatedTransactions } from '~/core/resources/transactions/consolidatedTransactions';
 import { useCurrentAddressStore, useCurrentCurrencyStore } from '~/core/state';
-import { useCurrentThemeStore } from '~/core/state/currentSettings/currentTheme';
 import { useTestnetModeStore } from '~/core/state/currentSettings/testnetMode';
 import { useUserChainsStore } from '~/core/state/userChains';
 import { ChainId } from '~/core/types/chains';
@@ -53,14 +52,11 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from '~/entries/popup/components/DropdownMenu/DropdownMenu';
-import { HomeMenuRow } from '~/entries/popup/components/HomeMenuRow/HomeMenuRow';
-import { ShortcutHint } from '~/entries/popup/components/ShortcutHint/ShortcutHint';
 import { Spinner } from '~/entries/popup/components/Spinner/Spinner';
 import { useKeyboardShortcut } from '~/entries/popup/hooks/useKeyboardShortcut';
 import { simulateContextClick } from '~/entries/popup/utils/simulateClick';
 
 import { CoinIcon } from '../../../components/CoinIcon/CoinIcon';
-import { gradientBorderDark, gradientBorderLight } from '../NFTs/NFTs.css';
 
 import { childAStyle, childBStyle } from './Approvals.css';
 import { RevokeApprovalSheet } from './RevokeApprovalSheet';
@@ -68,122 +64,9 @@ import { RevokeApprovalSheet } from './RevokeApprovalSheet';
 type Tab = 'tokens' | 'nfts';
 type SortType = 'recent' | 'alphabetical';
 
-const SortDropdown = ({
-  sort,
-  setSort,
-}: {
-  sort: SortType;
-  setSort: (sortType: SortType) => void;
-}) => {
-  const onValueChange = useCallback(
-    (value: SortType) => {
-      setSort(value);
-    },
-    [setSort],
-  );
-  const { currentTheme } = useCurrentThemeStore();
-  const [open, setIsOpen] = useState(false);
-
-  useKeyboardShortcut({
-    condition: () => open,
-    handler: (e) => {
-      e.stopImmediatePropagation();
-      if (e.key === shortcuts.nfts.SORT_RECENT.key) {
-        onValueChange('recent');
-        setIsOpen(false);
-      } else if (e.key === shortcuts.nfts.SORT_ABC.key) {
-        onValueChange('alphabetical');
-        setIsOpen(false);
-      }
-    },
-  });
-
-  return (
-    <DropdownMenu
-      open={open}
-      onOpenChange={(openChange) => !openChange && setIsOpen(false)}
-    >
-      <DropdownMenuTrigger asChild>
-        <Box onClick={() => setIsOpen(true)}>
-          <Lens
-            className={
-              currentTheme === 'dark' ? gradientBorderDark : gradientBorderLight
-            }
-            style={{ display: 'flex', alignItems: 'center' }}
-            testId={'nfts-sort-dropdown'}
-          >
-            <Box style={{ paddingRight: 7, paddingLeft: 7 }}>
-              <Inline alignVertical="center" space="6px">
-                <Symbol
-                  symbol={sort === 'recent' ? 'clock' : 'list.bullet'}
-                  weight="bold"
-                  size={13}
-                  color="labelSecondary"
-                />
-                <Text weight="bold" size="14pt" color="label">
-                  {sort === 'recent'
-                    ? i18n.t('nfts.sort_option_recent')
-                    : i18n.t('nfts.sort_option_abc')}
-                </Text>
-                <Symbol
-                  symbol="chevron.down"
-                  weight="bold"
-                  size={10}
-                  color="labelTertiary"
-                />
-              </Inline>
-            </Box>
-          </Lens>
-        </Box>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent marginRight="16px" marginTop="6px">
-        <DropdownMenuRadioGroup
-          onValueChange={(value) => onValueChange(value as typeof sort)}
-        >
-          <Stack space="4px">
-            <Stack>
-              <DropdownMenuRadioItem highlightAccentColor value="recent">
-                <HomeMenuRow
-                  leftComponent={
-                    <Symbol size={12} symbol="clock" weight="semibold" />
-                  }
-                  centerComponent={
-                    <Text size="14pt" weight="semibold">
-                      {i18n.t('nfts.sort_option_recent_long')}
-                    </Text>
-                  }
-                  rightComponent={
-                    <ShortcutHint hint={shortcuts.nfts.SORT_RECENT.display} />
-                  }
-                />
-              </DropdownMenuRadioItem>
-              <DropdownMenuRadioItem highlightAccentColor value="alphabetical">
-                <HomeMenuRow
-                  leftComponent={
-                    <Symbol size={12} symbol="list.bullet" weight="semibold" />
-                  }
-                  centerComponent={
-                    <Text size="14pt" weight="semibold">
-                      {i18n.t('nfts.sort_option_abc_long')}
-                    </Text>
-                  }
-                  rightComponent={
-                    <ShortcutHint hint={shortcuts.nfts.SORT_ABC.display} />
-                  }
-                />
-              </DropdownMenuRadioItem>
-            </Stack>
-          </Stack>
-        </DropdownMenuRadioGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
 
 function ApprovalHeader({
-  sort,
   activeTab,
-  setSort,
   onSelectTab,
 }: {
   sort: SortType;
@@ -242,43 +125,7 @@ function ApprovalHeader({
                 </Stack>
               </Box>
             </Lens>
-
-            <Lens borderRadius="2px" onKeyDown={() => onSelectTab?.('nfts')}>
-              <Box onClick={() => onSelectTab?.('nfts')}>
-                <Stack space="9px">
-                  <Box paddingVertical="4px">
-                    <Inline space="5px" alignVertical="center">
-                      <Symbol
-                        symbol="square.grid.2x2.fill"
-                        weight="regular"
-                        size={12}
-                        color={activeTab === 'nfts' ? 'label' : 'labelTertiary'}
-                      />
-                      <Text
-                        size="16pt"
-                        weight="heavy"
-                        color={activeTab === 'nfts' ? 'label' : 'labelTertiary'}
-                      >
-                        {i18n.t(`tabs.nfts`)}
-                      </Text>
-                    </Inline>
-                  </Box>
-                  <Box
-                    style={{
-                      borderRadius: '3px 3px 0 0',
-                      width: '100%',
-                      height: '1px',
-                    }}
-                    background={activeTab === 'nfts' ? 'accent' : undefined}
-                  />
-                </Stack>
-              </Box>
-            </Lens>
           </Inline>
-
-          <Box marginTop="-8px">
-            <SortDropdown sort={sort} setSort={setSort} />
-          </Box>
         </Box>
       </Inset>
     </Box>
@@ -348,14 +195,8 @@ export const Approvals = () => {
       data?.pages
         .map((p) => p.transactions)
         .flat()
-        .filter(
-          (tx) =>
-            tx.type === 'revoke' &&
-            (activeTab === 'nfts'
-              ? tx.asset?.type === 'nft'
-              : tx.asset?.type !== 'nft'),
-        ),
-    [activeTab, data?.pages],
+        .filter((tx) => tx.type === 'revoke'),
+    [data?.pages],
   );
 
   const chainIds = Object.keys(userChains)
@@ -371,12 +212,7 @@ export const Approvals = () => {
     {
       select(data) {
         if (data) {
-          const newApprovals = data.filter((approval) =>
-            activeTab === 'nfts'
-              ? approval.asset.type === 'nft'
-              : approval.asset.type !== 'nft',
-          );
-          return newApprovals;
+          return data;
         }
         return null;
       },

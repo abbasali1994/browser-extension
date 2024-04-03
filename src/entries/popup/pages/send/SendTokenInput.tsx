@@ -12,12 +12,9 @@ import React, {
 } from 'react';
 
 import { i18n } from '~/core/languages';
-import { NFTCollectionSectionData } from '~/core/resources/_selectors/nfts';
 import { useTestnetModeStore } from '~/core/state/currentSettings/testnetMode';
-import { NftSort } from '~/core/state/nfts';
 import { AddressOrEth, ParsedUserAsset } from '~/core/types/assets';
 import { ChainId } from '~/core/types/chains';
-import { UniqueAsset } from '~/core/types/nfts';
 import { TESTNET_MODE_BAR_HEIGHT } from '~/core/utils/dimensions';
 import { handleSignificantDecimals } from '~/core/utils/numbers';
 import { Bleed, Box, Inline, Stack, Symbol, Text } from '~/design-system';
@@ -25,8 +22,7 @@ import { Input } from '~/design-system/components/Input/Input';
 import { TextOverflow } from '~/design-system/components/TextOverflow/TextOverflow';
 
 import { AssetContextMenu } from '../../components/AssetContextMenu';
-import { CoinIcon, NFTIcon } from '../../components/CoinIcon/CoinIcon';
-import { parseNftName } from '../../components/CommandK/useSearchableNFTs';
+import { CoinIcon } from '../../components/CoinIcon/CoinIcon';
 import { DropdownInputWrapper } from '../../components/DropdownInputWrapper/DropdownInputWrapper';
 import {
   DropdownMenu,
@@ -37,7 +33,6 @@ import {
 } from '../../components/DropdownMenu/DropdownMenu';
 import { CursorTooltip } from '../../components/Tooltip/CursorTooltip';
 import { SortMethod } from '../../hooks/send/useSendAsset';
-import { NFTCollectionSection } from '../home/NFTs/NFTCollectionSection';
 import { AssetRow } from '../home/Tokens';
 
 import { InputActionButton } from './InputActionButton';
@@ -125,83 +120,6 @@ const TokenSortMenu = ({
   );
 };
 
-const NFTSortMenu = ({
-  setSortDropdownOpen,
-  sortDropdownOpen,
-  sortMethod,
-  setSortMethod,
-}: {
-  setSortDropdownOpen: Dispatch<SetStateAction<boolean>>;
-  sortDropdownOpen: boolean;
-  sortMethod: string;
-  setSortMethod: (method: NftSort) => void;
-}) => {
-  return (
-    <DropdownMenu onOpenChange={setSortDropdownOpen} open={sortDropdownOpen}>
-      <DropdownMenuTrigger asChild>
-        <Box>
-          <Inline space="4px" alignVertical="center">
-            <Symbol
-              symbol="arrow.up.arrow.down"
-              color="labelTertiary"
-              weight="semibold"
-              size={14}
-            />
-            <Text size="14pt" weight="semibold" color="labelTertiary">
-              {i18n.t('send.tokens_input.sort')}
-            </Text>
-          </Inline>
-        </Box>
-      </DropdownMenuTrigger>
-
-      <DropdownMenuContent marginRight="32px">
-        <DropdownMenuRadioGroup
-          value={sortMethod}
-          onValueChange={(method) => {
-            setSortMethod(method as NftSort);
-          }}
-        >
-          <DropdownMenuRadioItem value="recent" selectedValue={sortMethod}>
-            <Inline space="8px" alignVertical="center">
-              <Bleed vertical="4px">
-                <Symbol
-                  weight="semibold"
-                  symbol="clock"
-                  size={18}
-                  color="label"
-                />
-              </Bleed>
-
-              <Text size="14pt" weight="semibold" color="label">
-                {i18n.t('send.tokens_input.recent')}
-              </Text>
-            </Inline>
-          </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem
-            value="alphabetical"
-            selectedValue={sortMethod}
-          >
-            <Inline space="8px" alignVertical="center">
-              <Bleed vertical="4px">
-                <Symbol
-                  weight="semibold"
-                  symbol="list.bullet"
-                  size={18}
-                  color="label"
-                />
-              </Bleed>
-
-              <Text size="14pt" weight="semibold" color="label">
-                {i18n.t('send.tokens_input.alphabetical')}
-              </Text>
-            </Inline>
-          </DropdownMenuRadioItem>
-        </DropdownMenuRadioGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
-
 interface InputRefAPI {
   blur: () => void;
   focus: () => void;
@@ -214,11 +132,6 @@ interface SendTokenInputProps {
     address: AddressOrEth | '',
     chainId: ChainId,
   ) => void;
-  nft?: UniqueAsset;
-  nfts: NFTCollectionSectionData[];
-  nftSortMethod: NftSort;
-  setNftSortMethod: (sort: NftSort) => void;
-  selectNft: (collectionId: string, uniqueId: string) => void;
   dropdownClosed: boolean;
   setSortMethod: (sortMethod: SortMethod) => void;
   sortMethod: SortMethod;
@@ -232,11 +145,6 @@ export const SendTokenInput = React.forwardRef<
   const {
     asset,
     assets,
-    nft,
-    nfts,
-    nftSortMethod,
-    setNftSortMethod,
-    selectNft,
     selectAssetAddressAndChain,
     dropdownClosed = false,
     setSortMethod,
@@ -245,7 +153,6 @@ export const SendTokenInput = React.forwardRef<
   } = props;
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
-  const [sortNFTDropdownOpen, setSortNFTDropdownOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const { testnetMode } = useTestnetModeStore();
@@ -268,20 +175,10 @@ export const SendTokenInput = React.forwardRef<
 
   const onSelectAsset = useCallback(
     (address: AddressOrEth | '', chainId: ChainId) => {
-      selectNft('', '');
       selectAssetAddressAndChain(address, chainId);
       setDropdownVisible(false);
     },
-    [selectAssetAddressAndChain, selectNft],
-  );
-
-  const onSelectNft = useCallback(
-    (collectionId: string, uniqueId: string) => {
-      selectNft(collectionId, uniqueId);
-      selectAssetAddressAndChain('', ChainId.mainnet);
-      setDropdownVisible(false);
-    },
-    [selectAssetAddressAndChain, selectNft],
+    [selectAssetAddressAndChain],
   );
 
   const onInputValueChange = useCallback(
@@ -302,34 +199,14 @@ export const SendTokenInput = React.forwardRef<
       : assets;
   }, [assets, inputValue]);
 
-  const filteredNfts = useMemo(() => {
-    return nfts.reduce((res, currentSection) => {
-      const { assets, collection } = currentSection;
-      const val = inputValue.toLowerCase();
-      const collectionMatch = collection.name.toLowerCase().startsWith(val);
-      const assetMatches = assets.filter(({ name }) =>
-        name.toLowerCase().startsWith(val),
-      );
-      if (collectionMatch) {
-        res.push(currentSection);
-      } else if (assetMatches.length) {
-        res.push({
-          ...currentSection,
-          assets: assetMatches,
-        });
-      }
-      return res;
-    }, [] as NFTCollectionSectionData[]);
-  }, [inputValue, nfts]);
-
   const onCloseDropdown = useCallback(() => {
     onSelectAsset('', ChainId.mainnet);
-    onSelectNft('', '');
+
     setTimeout(() => {
       inputRef?.current?.focus();
       onDropdownAction();
     }, 200);
-  }, [inputRef, onSelectAsset, onSelectNft, onDropdownAction]);
+  }, [inputRef, onSelectAsset, onDropdownAction]);
 
   const selectAsset = useCallback(
     (address: AddressOrEth | '', chainId: ChainId) => {
@@ -345,7 +222,7 @@ export const SendTokenInput = React.forwardRef<
     }
   }, [dropdownClosed]);
 
-  const inputVisible = useMemo(() => !asset && !nft, [asset, nft]);
+  const inputVisible = useMemo(() => !asset, [asset]);
   const onFocusTokenInput = useCallback(() => {
     if (!dropdownVisible) {
       onDropdownAction();
@@ -354,7 +231,7 @@ export const SendTokenInput = React.forwardRef<
 
   const inputActionButton = (
     <InputActionButton
-      showClose={!!asset || !!nft}
+      showClose={!!asset}
       onClose={onCloseDropdown}
       onDropdownAction={onDropdownAction}
       dropdownVisible={dropdownVisible}
@@ -402,35 +279,10 @@ export const SendTokenInput = React.forwardRef<
           )}
         </Stack>
       );
-    } else if (nft) {
-      return (
-        <Stack space="8px">
-          <TextOverflow size="16pt" weight="semibold" color={'label'}>
-            {parseNftName(nft?.name, nft?.id)}
-          </TextOverflow>
-
-          <TextOverflow
-            as="p"
-            size="12pt"
-            weight="semibold"
-            color="labelTertiary"
-            maxWidth={240}
-          >
-            {`${nft.collection.name} #${nft.id}`}
-          </TextOverflow>
-        </Stack>
-      );
     }
 
     return null;
-  }, [
-    asset,
-    nft,
-    inputValue,
-    inputVisible,
-    onFocusTokenInput,
-    onInputValueChange,
-  ]);
+  }, [asset, inputValue, inputVisible, onFocusTokenInput, onInputValueChange]);
 
   return (
     <DropdownInputWrapper
@@ -438,13 +290,9 @@ export const SendTokenInput = React.forwardRef<
       dropdownHeight={376 - (testnetMode ? TESTNET_MODE_BAR_HEIGHT : 0)}
       testId={'token-input'}
       leftComponent={
-        nft ? (
-          <NFTIcon asset={nft} size={36} badge={true} />
-        ) : (
-          <AssetContextMenu asset={asset}>
-            <CoinIcon asset={asset ?? undefined} />
-          </AssetContextMenu>
-        )
+        <AssetContextMenu asset={asset}>
+          <CoinIcon asset={asset ?? undefined} />
+        </AssetContextMenu>
       }
       centerComponent={<Box width="full">{CenterComponent}</Box>}
       rightComponent={
@@ -510,50 +358,8 @@ export const SendTokenInput = React.forwardRef<
             </Stack>
           )}
           <Box>
-            {!!filteredNfts?.length && (
-              <Stack space="8px">
-                <Box paddingHorizontal="20px" paddingTop="20px">
-                  <Inline alignHorizontal="justify">
-                    <Inline space="4px" alignVertical="center">
-                      <Symbol
-                        symbol="circlebadge.2.fill"
-                        color="labelTertiary"
-                        weight="semibold"
-                        size={14}
-                      />
-                      <Text size="14pt" weight="semibold" color="labelTertiary">
-                        {i18n.t('send.tokens_input.nfts')}
-                      </Text>
-                    </Inline>
-                    <NFTSortMenu
-                      setSortDropdownOpen={setSortNFTDropdownOpen}
-                      sortDropdownOpen={sortNFTDropdownOpen}
-                      sortMethod={nftSortMethod}
-                      setSortMethod={setNftSortMethod}
-                    />
-                  </Inline>
-                </Box>
-                <Box paddingTop="12px" paddingHorizontal="8px">
-                  {filteredNfts.map((section) => {
-                    return (
-                      <NFTCollectionSection
-                        displayMode="list"
-                        key={section.collection.collection_id}
-                        onAssetClick={(nft) =>
-                          onSelectNft(
-                            nft.collection.collection_id || '',
-                            nft.fullUniqueId,
-                          )
-                        }
-                        section={section}
-                        isLast={false}
-                      />
-                    );
-                  })}
-                </Box>
-              </Stack>
-            )}
-            {!filteredAssets.length && !filteredNfts.length && (
+           
+            {!filteredAssets.length && (
               <Box alignItems="center" style={{ paddingTop: 119 }}>
                 <Box paddingHorizontal="44px">
                   <Stack space="16px">

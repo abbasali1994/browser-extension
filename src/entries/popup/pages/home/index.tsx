@@ -25,17 +25,17 @@ import { AccountName } from '../../components/AccountName/AccountName';
 import { AppConnectionWalletSwitcher } from '../../components/AppConnection/AppConnectionWalletSwitcher';
 import { BackupReminder } from '../../components/BackupReminder/BackupReminder';
 import { Navbar } from '../../components/Navbar/Navbar';
-import { TabBar as NewTabBar, Tab } from '../../components/Tabs/TabBar';
+import { Tab } from '../../components/Tabs/TabBar';
 import { WalletAvatar } from '../../components/WalletAvatar/WalletAvatar';
 import { WalletContextMenu } from '../../components/WalletContextMenu';
 import { removeImportWalletSecrets } from '../../handlers/importWalletSecrets';
 import { useAvatar } from '../../hooks/useAvatar';
 import { useCurrentHomeSheet } from '../../hooks/useCurrentHomeSheet';
+import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { useHomeShortcuts } from '../../hooks/useHomeShortcuts';
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import { usePendingTransactionWatcher } from '../../hooks/usePendingTransactionWatcher';
 import usePrevious from '../../hooks/usePrevious';
-import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import useRestoreNavigation from '../../hooks/useRestoreNavigation';
 import { useScroll } from '../../hooks/useScroll';
 import { useSwitchWalletShortcuts } from '../../hooks/useSwitchWalletShortcuts';
@@ -43,11 +43,9 @@ import { useVisibleTokenCount } from '../../hooks/useVisibleTokenCount';
 import { useWallets } from '../../hooks/useWallets';
 import { StickyHeader } from '../../layouts/StickyHeader';
 import { ROUTES } from '../../urls';
-
 import { Activities } from './Activity/ActivitiesList';
 import { RevokeApproval } from './Approvals/RevokeApproval';
 import { Header } from './Header';
-import { NFTs } from './NFTs/NFTs';
 import { Points } from './Points/Points';
 import { TabHeader } from './TabHeader';
 import { Tokens } from './Tokens';
@@ -102,19 +100,15 @@ const Tabs = memo(function Tabs({
        
         if (activeTab === 'activity') {
           onSelectTab('tokens');
-        } else if (activeTab === 'nfts') {
-          onSelectTab('activity');
         } else if (activeTab === 'points') {
-          onSelectTab('nfts');
+          onSelectTab('activity');
         }
       }
       if (e.key === shortcuts.global.FORWARD.key) {
      
         if (activeTab === 'tokens') {
           onSelectTab('activity');
-        } else if (activeTab === 'activity') {
-          onSelectTab('nfts');
-        } else if (activeTab === 'nfts') {
+        }  else if (activeTab === 'activity') {
           onSelectTab('points');
         }
       }
@@ -122,9 +116,6 @@ const Tabs = memo(function Tabs({
   });
 
   const getDisableBottomPadding = () => {
-    if (activeTab === 'nfts') {
-      return false;
-    }
     return isPlaceholderTab(activeTab);
   };
 
@@ -139,7 +130,6 @@ const Tabs = memo(function Tabs({
       <Content disableBottomPadding={getDisableBottomPadding()}>
         {activeTab === 'activity' && <Activities />}
         {activeTab === 'tokens' && <Tokens />}
-        {activeTab === 'nfts' && <NFTs />}
         {activeTab === 'points' && <Points />}
       </Content>
     </>

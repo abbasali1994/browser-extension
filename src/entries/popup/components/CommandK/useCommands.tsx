@@ -26,8 +26,8 @@ import {
 import { triggerAlert } from '~/design-system/components/Alert/Alert';
 import * as wallet from '~/entries/popup/handlers/wallet';
 import { useAccounts } from '~/entries/popup/hooks/useAccounts';
-import { useNavigateToSwaps } from '~/entries/popup/hooks/useNavigateToSwaps';
 import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
+import { useNavigateToSwaps } from '~/entries/popup/hooks/useNavigateToSwaps';
 import { useWallets } from '~/entries/popup/hooks/useWallets';
 import { ROUTES } from '~/entries/popup/urls';
 
@@ -37,18 +37,16 @@ import { triggerToast } from '../Toast/Toast';
 
 import {
   ENSOrAddressSearchItem,
-  NFTSearchItem,
   SearchItem,
   SearchItemType,
   ShortcutSearchItem,
   TokenSearchItem,
-  WalletSearchItem,
+  WalletSearchItem
 } from './SearchItems';
 import { CommandKPage, PAGES } from './pageConfig';
 import { actionLabels } from './references';
 import { CommandKPageState } from './useCommandKNavigation';
 import { useSearchableENSorAddress } from './useSearchableENSOrAddress';
-import { useSearchableNFTs } from './useSearchableNFTs';
 import { useSearchableTokens } from './useSearchableTokens';
 import { useSearchableWallets } from './useSearchableWallets';
 import { handleExportAddresses } from './utils';
@@ -462,7 +460,6 @@ const compileCommandList = (
   overrides: CommandOverride,
   staticInfo: CommandInfo,
   tokens: TokenSearchItem[],
-  nfts: NFTSearchItem[],
   walletSearchResult: ENSOrAddressSearchItem[],
   wallets: WalletSearchItem[],
 ): SearchItem[] => {
@@ -483,7 +480,7 @@ const compileCommandList = (
       onClick: overrides[key]?.action,
     }));
 
-  return [...shortcuts, ...tokens, ...nfts, ...walletSearchResult, ...wallets];
+  return [...shortcuts, ...tokens, ...walletSearchResult, ...wallets];
 };
 
 const isENSOrAddressCommand = (
@@ -523,7 +520,6 @@ export const useCommands = (
     setSelectedCommandNeedsUpdate,
   );
   const { searchableTokens } = useSearchableTokens();
-  const { searchableNFTs } = useSearchableNFTs();
   const { searchableWallets } = useSearchableWallets(currentPage);
   const { setSelectedToken } = useSelectedTokenStore();
   const { sortedAccounts } = useAccounts();
@@ -914,7 +910,6 @@ export const useCommands = (
         commandOverrides,
         staticCommandInfo,
         searchableTokens,
-        searchableNFTs,
         searchableENSOrAddress,
         searchableWallets,
       ),
@@ -924,7 +919,6 @@ export const useCommands = (
       featureFlags.full_watching_wallets,
       commandOverrides,
       searchableTokens,
-      searchableNFTs,
       searchableENSOrAddress,
       searchableWallets,
     ],

@@ -9,14 +9,12 @@ import { LIST_HEIGHT, MODAL_HEIGHT } from './CommandKModal';
 import { TOOLBAR_HEIGHT } from './CommandKToolbar';
 import {
   COMMAND_ROW_HEIGHT,
-  NFTRow,
   ShortcutRow,
   TokenRow,
   WalletRow,
 } from './CommandRows';
 import {
   ENSOrAddressSearchItem,
-  NFTSearchItem,
   SearchItem,
   SearchItemType,
   ShortcutSearchItem,
@@ -223,17 +221,7 @@ export const CommandKList = React.forwardRef<
                       selected={isSelected}
                     />
                   );
-                } else if (command.type === SearchItemType.NFT) {
-                  row = (
-                    <NFTRow
-                      command={command as NFTSearchItem}
-                      handleExecuteCommand={handleExecuteCommand}
-                      key={command.id}
-                      selected={isSelected}
-                    />
-                  );
                 }
-
                 return (
                   <Box
                     key={key}

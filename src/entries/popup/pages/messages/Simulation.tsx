@@ -6,7 +6,7 @@ import { createNumberFormatter } from '~/core/utils/formatNumber';
 import { Inline, Stack, Symbol, Text, TextOverflow } from '~/design-system';
 import { TextColor } from '~/design-system/styles/designTokens';
 
-import { CoinIcon, NFTIcon } from '../../components/CoinIcon/CoinIcon';
+import { CoinIcon } from '../../components/CoinIcon/CoinIcon';
 import { Spinner } from '../../components/Spinner/Spinner';
 
 import {
@@ -66,11 +66,9 @@ function SimulatedChangeRow({
         </Text>
       </Inline>
       <Inline wrap={false} space="6px" alignVertical="center">
-        {asset?.type === 'nft' ? (
-          <NFTIcon asset={asset} size={16} />
-        ) : (
+        
           <CoinIcon asset={asset} size={14} />
-        )}
+        
         <Inline wrap={false} space="4px" alignVertical="center">
           <TextOverflow size="14pt" weight="bold" color={color}>
             {quantity === 'UNLIMITED' || +changeAmount > 999e12 // say unlimited if more than 999T

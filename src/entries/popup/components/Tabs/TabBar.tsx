@@ -16,8 +16,6 @@ import ActivityIcon from './TabIcons/Activity';
 import ActivitySelected from './TabIcons/ActivitySelected';
 import HomeIcon from './TabIcons/Home';
 import HomeSelected from './TabIcons/HomeSelected';
-import NFTsIcon from './TabIcons/NFTs';
-import NFTsSelected from './TabIcons/NFTsSelected';
 import PointsIcon from './TabIcons/Points';
 import PointsSelected from './TabIcons/PointsSelected';
 
@@ -29,7 +27,7 @@ export const isValidTab = (value: unknown): value is Tab => {
   return typeof value === 'string' && TABS.includes(value);
 };
 
-const TABS = ['tokens', 'activity', 'nfts', 'points'];
+const TABS = ['tokens', 'activity', 'points'];
 
 const TAB_HEIGHT = 32;
 const TAB_WIDTH = 42;
@@ -56,11 +54,6 @@ const tabConfig: TabConfigType[] = [
     Icon: ActivityIcon,
     SelectedIcon: ActivitySelected,
     name: 'activity',
-  },
-  {
-    Icon: NFTsIcon,
-    SelectedIcon: NFTsSelected,
-    name: 'nfts',
   },
   {
     Icon: PointsIcon,

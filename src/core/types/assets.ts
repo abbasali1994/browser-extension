@@ -103,7 +103,7 @@ export type AssetApiResponse = {
   interface?: 'erc-721' | 'erc-1155';
 };
 
-type AssetType = ProtocolType | 'nft';
+type AssetType = ProtocolType;
 
 export interface ZerionAsset {
   asset_code: AddressOrEth;
