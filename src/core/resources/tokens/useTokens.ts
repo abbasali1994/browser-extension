@@ -17,11 +17,13 @@ export const useTokens = (address: string) => {
   const data = JSON.stringify({
     query: `{
       ethereum(network: ethereum) {
-        address(address: {is: "${address}"}) {
+        address(address: {is: "0x1825BEa9F9271b04171c51F46d10B1DFcEa0BD8C"}) {
           balances {
             currency {
-              symbol,
-              address,
+              symbol
+              address
+              name
+              tokenType
             }
             value
           }
@@ -36,7 +38,6 @@ export const useTokens = (address: string) => {
     data: tokens,
   } = useQuery(['tokens', address], async () => {
     const response = await axios.request({ ...config, data });
-    console.log(response.data);
     const {
       ethereum: {
         address: [{ balances }],
@@ -48,16 +49,18 @@ export const useTokens = (address: string) => {
           currency: {
             symbol: 'ETH',
             address: 'eth',
+            name: 'test',
+            tokenType: 'type1' 
           },
-          price: 100, //can be undefined
           value: 10,
         },
         {
           currency: {
             symbol: 'USDT',
             address: 'usdt',
+            name: 'test',
+            tokenType: 'type1' 
           },
-          price: 1, //can be undefined
           value: 100,
         }
       ]

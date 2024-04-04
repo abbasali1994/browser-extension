@@ -42,23 +42,15 @@ export interface ParsedAsset {
   };
 }
 
-export interface ParsedUserAsset extends ParsedAsset {
-  balance: {
-    amount: string;
-    display: string;
+export interface ParsedUserAsset {
+  currency: {
+    symbol: string;
+    address: any;
+    name: string;
+    tokenType: string;
   };
-  native: {
-    balance: {
-      amount: string;
-      display: string;
-    };
-    price?: {
-      change: string;
-      amount: number;
-      display: string;
-    };
-  };
-}
+  value: number;
+};
 
 export type SearchAssetWithPrice = SearchAsset & ParsedAsset;
 export type ParsedSearchAsset = SearchAsset & ParsedUserAsset;

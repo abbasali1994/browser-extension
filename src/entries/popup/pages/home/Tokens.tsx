@@ -2,18 +2,18 @@
 import { motion } from 'framer-motion';
 import { memo, useMemo } from 'react';
 
-import { supportedCurrencies } from '~/core/references';
+// import { supportedCurrencies } from '~/core/references';
 import { useTokens } from '~/core/resources/tokens/useTokens';
-import { useCurrentAddressStore, useCurrentCurrencyStore } from '~/core/state';
-import { useHideAssetBalancesStore } from '~/core/state/currentSettings/hideAssetBalances';
+import { useCurrentAddressStore } from '~/core/state';
+// import { useHideAssetBalancesStore } from '~/core/state/currentSettings/hideAssetBalances';
 import { ParsedUserAsset } from '~/core/types/assets';
 import { truncateAddress } from '~/core/utils/address';
-import { isCustomChain } from '~/core/utils/chains';
-import { Box, Column, Columns, Inline, Text } from '~/design-system';
+// import { isCustomChain } from '~/core/utils/chains';
+import { Box, Column, Columns } from '~/design-system';
 import { TextOverflow } from '~/design-system/components/TextOverflow/TextOverflow';
 import { CoinRow } from '~/entries/popup/components/CoinRow/CoinRow';
 
-import { Asterisks } from '../../components/Asterisks/Asterisks';
+// import { Asterisks } from '../../components/Asterisks/Asterisks';
 import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { useTokenPressMouseEvents } from '../../hooks/useTokenPressMouseEvents';
 import { ROUTES } from '../../urls';
@@ -29,7 +29,7 @@ export const TokenRow = memo(function TokenRow({
 }) {
   const navigate = useExtensionNavigate();
   const openDetails = () => {
-    navigate(ROUTES.TOKEN_DETAILS(token.uniqueId), {
+    navigate(ROUTES.TOKEN_DETAILS(token.currency.address), {
       state: { skipTransitionOnRoute: ROUTES.HOME },
     });
   };
@@ -70,7 +70,7 @@ export function Tokens() {
         // Prevent bottommost coin icon shadow from clipping
         overflow: 'visible',
       }}
-      paddingBottom="8px"
+      paddingBottom="16px"
       paddingTop="2px"
       marginTop="-14px"
     >
@@ -81,16 +81,17 @@ export function Tokens() {
         }}
       >
         <Box style={{ overflow: 'auto' }}>
-          {tokens?.map((token: any, index: any) => {
+          {tokens?.filter(t => t.value != 0).map((token: any, index: any) => {
             console.log(token);
             return (
               <Box
                 key={`${index}`}
                 as={motion.div}
-                position="absolute"
+                layoutId={`list-${index}`}
+                // position="absolute"
                 width="full"
               >
-                {/* <TokenRow token={token} testId={`coin-row-item-${index}`} /> */}
+                <TokenRow token={token} testId={`coin-row-item-${index}`} />
               </Box>
             );
           })}
@@ -109,56 +110,49 @@ export const AssetRow = memo(function AssetRow({
   asset,
   testId,
 }: AssetRowProps) {
-  const name = asset?.name || asset?.symbol || truncateAddress(asset.address);
-  const uniqueId = asset?.uniqueId;
-  const { hideAssetBalances } = useHideAssetBalancesStore();
-  const { currentCurrency } = useCurrentCurrencyStore();
+  console.log({ asset })
+  const name = asset?.currency?.name || asset?.currency?.symbol || truncateAddress(asset.currency?.address);
+  const uniqueId = asset.currency?.address;
+  // const { hideAssetBalances } = useHideAssetBalancesStore();
+  // const { currentCurrency } = useCurrentCurrencyStore();
 
-  const priceChange = asset?.native?.price?.change;
-  const priceChangeDisplay = priceChange?.length ? priceChange : '-';
-  const priceChangeColor =
-    priceChangeDisplay[0] !== '-' ? 'green' : 'labelTertiary';
+  // const priceChange = asset?.native?.price?.change;
+  // const priceChangeDisplay = priceChange?.length ? priceChange : '-';
+  // const priceChangeColor =
+  //   priceChangeDisplay[0] !== '-' ? 'green' : 'labelTertiary';
 
-  const balanceDisplay = useMemo(
-    () =>
-      hideAssetBalances ? (
-        <Inline space="4px">
-          <Asterisks color="labelTertiary" size={8} />
-          <TextOverflow color="labelTertiary" size="12pt" weight="semibold">
-            {asset?.symbol}
-          </TextOverflow>
-        </Inline>
-      ) : (
-        <TextOverflow color="labelTertiary" size="12pt" weight="semibold">
-          {asset?.balance?.display}
-        </TextOverflow>
-      ),
-    [asset?.balance?.display, asset?.symbol, hideAssetBalances],
-  );
+  // const balanceDisplay = useMemo(
+  //   () =>
+  //     <TextOverflow color="labelTertiary" size="12pt" weight="semibold">
+  //       {/* {updatePrecisionToDisplay(asset?.value)} */}
+  //       {0.00}
+  //     </TextOverflow>,
+  //   [asset?.value],
+  // );
 
-  const nativeBalanceDisplay = useMemo(
-    () =>
-      hideAssetBalances ? (
-        <Inline alignHorizontal="right">
-          <TextOverflow size="14pt" weight="semibold" align="right">
-            {supportedCurrencies[currentCurrency].symbol}
-          </TextOverflow>
-          <Asterisks color="label" size={10} />
-        </Inline>
-      ) : isCustomChain(asset.chainId) &&
-        asset?.native?.balance?.amount === '0' ? null : (
-        <Text size="14pt" weight="semibold" align="right">
-          {asset?.native?.balance?.display}
-        </Text>
-      ),
-    [
-      hideAssetBalances,
-      currentCurrency,
-      asset.chainId,
-      asset?.native?.balance?.amount,
-      asset?.native?.balance?.display,
-    ],
-  );
+  // const nativeBalanceDisplay = useMemo(
+  //   () =>
+  //     hideAssetBalances ? (
+  //       <Inline alignHorizontal="right">
+  //         <TextOverflow size="14pt" weight="semibold" align="right">
+  //           {supportedCurrencies[currentCurrency].symbol}
+  //         </TextOverflow>
+  //         <Asterisks color="label" size={10} />
+  //       </Inline>
+  //     ) : isCustomChain(asset.chainId) &&
+  //       asset?.native?.balance?.amount === '0' ? null : (
+  //       <Text size="14pt" weight="semibold" align="right">
+  //         {asset?.native?.balance?.display}
+  //       </Text>
+  //     ),
+  //   [
+  //     hideAssetBalances,
+  //     currentCurrency,
+  //     asset.chainId,
+  //     asset?.native?.balance?.amount,
+  //     asset?.native?.balance?.display,
+  //   ],
+  // );
 
   const topRow = useMemo(
     () => (
@@ -170,23 +164,29 @@ export const AssetRow = memo(function AssetRow({
             </TextOverflow>
           </Box>
         </Column>
-        <Column width="content">
-          <Box paddingVertical="4px">{nativeBalanceDisplay}</Box>
+        <Column>
+          <Box paddingVertical="4px" testId={`asset-name-${uniqueId}`} display='flex' justifyContent='flex-end'>
+            <TextOverflow color="labelTertiary" size="14pt" weight="semibold">
+              {asset?.value.toFixed(2)}
+            </TextOverflow>
+          </Box>
         </Column>
       </Columns>
     ),
-    [name, nativeBalanceDisplay],
+    [name],
   );
 
   const bottomRow = useMemo(
     () => (
       <Columns>
-        <Column>
-          <Box paddingVertical="4px" testId={`asset-name-${uniqueId}`}>
-            {balanceDisplay}
+        <Column width="content">
+          <Box paddingVertical="4px">
+            <TextOverflow size="10pt" weight="regular" align="left">
+              {asset?.currency?.tokenType}
+            </TextOverflow>
           </Box>
         </Column>
-        <Column width="content">
+        {/* <Column width="content">
           <Box paddingVertical="4px">
             <Text
               color={priceChangeColor}
@@ -197,10 +197,10 @@ export const AssetRow = memo(function AssetRow({
               {priceChangeDisplay}
             </Text>
           </Box>
-        </Column>
+        </Column> */}
       </Columns>
     ),
-    [balanceDisplay, priceChangeColor, priceChangeDisplay, uniqueId],
+    [uniqueId],
   );
 
   return (

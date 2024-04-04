@@ -52,7 +52,7 @@ export function CoinIcon({
   badgeSize?: ChainIconProps['size'];
 }) {
   const mainnetAddress = asset?.mainnetAddress;
-  const address = asset?.address;
+  const address = asset?.address || asset?.currency?.address;
   const chain = asset?.chainId || ChainId.mainnet;
   const shadowColor = asset?.colors?.primary || '#808088';
   const isNft =
@@ -72,7 +72,7 @@ export function CoinIcon({
     >
       <CloudinaryCoinIcon
         address={address}
-        fallbackText={asset?.symbol || fallbackText}
+        fallbackText={asset?.currency?.symbol || fallbackText}
         mainnetAddress={mainnetAddress}
         url={asset?.icon_url}
         size={size}
