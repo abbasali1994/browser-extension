@@ -309,7 +309,7 @@ export const ToAddressInput = React.forwardRef<InputRefAPI, ToAddressProps>(
         dropdownVisible={false}
         testId={`input-wrapper-close-to-address-input`}
       />
-    ): null;
+    ) : null;
 
     return (
       <>
@@ -317,16 +317,15 @@ export const ToAddressInput = React.forwardRef<InputRefAPI, ToAddressProps>(
           zIndex={2}
           dropdownHeight={452 - (testnetMode ? TESTNET_MODE_BAR_HEIGHT : 0)}
           testId={'to-address-input'}
-          // leftComponent={
-          //   <WalletContextMenu account={toAddress}>
-          //     <WalletAvatar
-          //       addressOrName={toAddress}
-          //       size={36}
-          //       emojiSize="20pt"
-          //     />
-          //   </WalletContextMenu>
-          // }
-          leftComponent={null}
+          leftComponent={
+            <WalletContextMenu account={toAddress}>
+              <WalletAvatar
+                addressOrName={toAddress}
+                size={36}
+                emojiSize="20pt"
+              />
+            </WalletContextMenu>
+          }
           centerComponent={
             <WalletContextMenu account={toAddress}>
               <Box as={motion.div} layout>
@@ -336,7 +335,7 @@ export const ToAddressInput = React.forwardRef<InputRefAPI, ToAddressProps>(
                     key="input"
                     // onClick={onInputClick}
                     layout="position"
-                  > 
+                  >
                     <AnimatePresence>
                       {inputVisible ? (
                         <Box

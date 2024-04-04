@@ -2,6 +2,7 @@ import { upperCase } from 'lodash';
 import React, { ReactNode } from 'react';
 
 import EthIcon from 'static/assets/ethIcon.png';
+import { getAssetLogoUrl } from 'static/assets/assetLogos';
 import { ETH_ADDRESS } from '~/core/references';
 import {
   AddressOrEth,
@@ -55,7 +56,7 @@ export function CoinIcon({
   const address = asset?.address || asset?.currency?.address;
   const chain = asset?.chainId || ChainId.mainnet;
   const shadowColor = asset?.colors?.primary || '#808088';
-  const isNft =
+const isNft =
     (asset as ParsedAsset)?.standard === 'erc-721' ||
     (asset as ParsedAsset)?.standard === 'erc-1155';
 
@@ -74,7 +75,7 @@ export function CoinIcon({
         address={address}
         fallbackText={asset?.currency?.symbol || fallbackText}
         mainnetAddress={mainnetAddress}
-        url={asset?.icon_url}
+        url={asset?.icon_url || getAssetLogoUrl(asset?.currency?.symbol)}
         size={size}
       />
     </CoinIconWrapper>
