@@ -59,7 +59,7 @@ import usePrevious from '~/entries/popup/hooks/usePrevious';
 import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { ROUTES } from '~/entries/popup/urls';
 import { zIndexes } from '~/entries/popup/utils/zIndexes';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { Spinner } from '../../../components/Spinner/Spinner';
 import playSound from '../../../utils/playSound';
@@ -219,7 +219,7 @@ export const RevokeApprovalSheet = ({
           description: extractedError,
         });
       }
-      logger.error(new RainbowError('send: error executing revoke approval'), {
+      logger.error(new PortalError('send: error executing revoke approval'), {
         message: (e as Error)?.message,
       });
     } finally {

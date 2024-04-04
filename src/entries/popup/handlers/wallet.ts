@@ -29,7 +29,7 @@ import { hasPreviousTransactions } from '~/core/utils/ethereum';
 import { estimateGasWithPadding } from '~/core/utils/gas';
 import { toHex } from '~/core/utils/hex';
 import { getNextNonce } from '~/core/utils/transactions';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { PathOptions } from '../pages/hw/addByIndexSheet';
 
@@ -136,7 +136,7 @@ export const sendTransaction = async (
   try {
     walletInfo = await getWallet(transactionRequest.from as Address);
   } catch (e) {
-    const re = new RainbowError('sendTransaction::getWallet error');
+    const re = new PortalError('sendTransaction::getWallet error');
     logger.error(re, {
       message: (e as Error)?.message,
       from: transactionRequest.from,
@@ -340,7 +340,7 @@ export const importAccountAtIndex = async (
         });
 
         if (!result.success) {
-          const e = new RainbowError('window.TrezorConnect.getAddress failed');
+          const e = new PortalError('window.TrezorConnect.getAddress failed');
           logger.error(e, {
             result: JSON.stringify(result, null, 2),
           });
@@ -380,7 +380,7 @@ export const connectTrezor = async () => {
     });
 
     if (!result.success) {
-      const e = new RainbowError(
+      const e = new PortalError(
         'window.TrezorConnect.ethereumGetPublicKey failed',
       );
       logger.error(e, {

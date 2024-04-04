@@ -11,7 +11,7 @@ import {
 } from '~/core/react-query';
 import { ChainId } from '~/core/types/chains';
 import { methodRegistryLookupAndParse } from '~/core/utils/methodRegistry';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 // ///////////////////////////////////////////////
 // Query Types
@@ -67,7 +67,7 @@ async function registryLookupQueryFunction({
     );
     return name;
   } catch (e) {
-    logger.error(new RainbowError('registryLookUpQueryFunction: '), {
+    logger.error(new PortalError('registryLookUpQueryFunction: '), {
       message: (e as Error)?.message,
     });
     return '';

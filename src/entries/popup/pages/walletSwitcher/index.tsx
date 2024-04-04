@@ -177,7 +177,7 @@ const AccountItemWithMenu = ({
           />
         </Inline>
       }
-      labelType={LabelOption.balance}
+      labelType={LabelOption.address}
       isSelected={isSelected}
     />
   );

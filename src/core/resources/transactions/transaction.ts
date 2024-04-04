@@ -22,7 +22,7 @@ import {
 import { isCustomChain } from '~/core/utils/chains';
 import { parseTransaction } from '~/core/utils/transactions';
 import { useUserChains } from '~/entries/popup/hooks/useUserChains';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 type ConsolidatedTransactionsResult = QueryFunctionResult<
   typeof consolidatedTransactionsQueryFunction
@@ -55,7 +55,7 @@ export const fetchTransaction = async ({
     if (!parsedTx) throw new Error('Failed to parse transaction');
     return parsedTx;
   } catch (e) {
-    logger.error(new RainbowError('fetchTransaction: '), {
+    logger.error(new PortalError('fetchTransaction: '), {
       message: (e as Error)?.message,
     });
   }

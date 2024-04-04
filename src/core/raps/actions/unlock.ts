@@ -17,7 +17,7 @@ import {
 } from '~/core/types/gas';
 import { NewTransaction, TxHash } from '~/core/types/transactions';
 import { addNewTransaction } from '~/core/utils/transactions';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { ETH_ADDRESS, gasUnits } from '../../references';
 import { gasStore } from '../../state';
@@ -48,7 +48,7 @@ export const getAssetRawAllowance = async ({
     const allowance = await tokenContract.allowance(owner, spender);
     return allowance.toString();
   } catch (error) {
-    logger.error(new RainbowError('getRawAllowance: error'), {
+    logger.error(new PortalError('getRawAllowance: error'), {
       message: (error as Error)?.message,
     });
     return null;
@@ -106,7 +106,7 @@ export const estimateApprove = async ({
     );
     return gasLimit ? gasLimit.toString() : `${gasUnits.basic_approval}`;
   } catch (error) {
-    logger.error(new RainbowError('unlock: error estimateApprove'), {
+    logger.error(new PortalError('unlock: error estimateApprove'), {
       message: (error as Error)?.message,
     });
     return `${gasUnits.basic_approval}`;
@@ -136,7 +136,7 @@ export const populateApprove = async ({
     );
     return approveTransaction;
   } catch (error) {
-    logger.error(new RainbowError(' error populateApprove'), {
+    logger.error(new PortalError(' error populateApprove'), {
       message: (error as Error)?.message,
     });
     return null;
@@ -167,7 +167,7 @@ export const estimateERC721Approval = async ({
     return gasLimit ? gasLimit.toString() : `${gasUnits.basic_approval}`;
   } catch (error) {
     logger.error(
-      new RainbowError('estimateERC721Approval: error estimateApproval'),
+      new PortalError('estimateERC721Approval: error estimateApproval'),
       {
         message: (error as Error)?.message,
       },
@@ -252,7 +252,7 @@ export const unlock = async ({
   const { address: assetAddress } = assetToUnlock;
 
   if (assetAddress === ETH_ADDRESS)
-    throw new RainbowError('unlock: Native ETH cannot be unlocked');
+    throw new PortalError('unlock: Native ETH cannot be unlocked');
 
   let gasLimit;
   try {
@@ -263,7 +263,7 @@ export const unlock = async ({
       chainId,
     });
   } catch (e) {
-    logger.error(new RainbowError('unlock: error estimateApprove'), {
+    logger.error(new PortalError('unlock: error estimateApprove'), {
       message: (e as Error)?.message,
     });
     throw e;
@@ -289,13 +289,13 @@ export const unlock = async ({
       chainId,
     });
   } catch (e) {
-    logger.error(new RainbowError('unlock: error executeApprove'), {
+    logger.error(new PortalError('unlock: error executeApprove'), {
       message: (e as Error)?.message,
     });
     throw e;
   }
 
-  if (!approval) throw new RainbowError('unlock: error executeApprove');
+  if (!approval) throw new PortalError('unlock: error executeApprove');
 
   const transaction = {
     asset: assetToUnlock,

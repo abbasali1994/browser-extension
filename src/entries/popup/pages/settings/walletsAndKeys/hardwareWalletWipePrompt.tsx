@@ -23,7 +23,7 @@ import { Prompt } from '~/design-system/components/Prompt/Prompt';
 import { getAccounts, remove, wipe } from '~/entries/popup/handlers/wallet';
 import { useExtensionNavigate } from '~/entries/popup/hooks/useExtensionNavigate';
 import { ROUTES } from '~/entries/popup/urls';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 const { deleteWalletName } = walletNamesStore.getState();
 const { deleteWalletBackup } = walletBackupsStore.getState();
@@ -88,7 +88,7 @@ export const HardwareWalletWipePrompt = ({
       navigate(-2);
     } catch (e) {
       logger.error(
-        new RainbowError('Wallet Removal: Hardware wallet removal error'),
+        new PortalError('Wallet Removal: Hardware wallet removal error'),
         {
           message: (e as Error)?.message,
         },

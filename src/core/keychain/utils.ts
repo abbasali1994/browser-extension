@@ -1,4 +1,4 @@
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { ahaHttp } from '../network/aha';
 
@@ -56,7 +56,7 @@ export const autoDiscoverAccountsFromIndex = async ({
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    logger.error(new RainbowError(`[aha]: Failed to discover wallets`), {
+    logger.error(new PortalError(`[aha]: Failed to discover wallets`), {
       message: error.message,
     });
     return { accountsEnabled: 1 };

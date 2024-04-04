@@ -11,7 +11,7 @@ import { triggerAlert } from '~/design-system/components/Alert/Alert';
 import { showLedgerDisconnectedAlertIfNeeded } from '~/entries/popup/handlers/ledger';
 import { useAppSession } from '~/entries/popup/hooks/useAppSession';
 import { useWallets } from '~/entries/popup/hooks/useWallets';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import * as wallet from '../../../handlers/wallet';
 import { AccountSigningWith } from '../AccountSigningWith';
@@ -59,7 +59,7 @@ export function SignMessage({
     } catch (e: any) {
       showLedgerDisconnectedAlertIfNeeded(e);
       logger.info('error in sign message');
-      logger.error(new RainbowError(e.name), { message: e.message });
+      logger.error(new PortalError(e.name), { message: e.message });
     } finally {
       setWaitingForDevice(false);
       setLoading(false);

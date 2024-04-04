@@ -13,7 +13,7 @@ import { SupportedCurrencyKey } from '~/core/references';
 import { ParsedAssetsDictByChain, ParsedUserAsset } from '~/core/types/assets';
 import { ChainId } from '~/core/types/chains';
 import { AddressAssetsReceivedMessage } from '~/core/types/refraction';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { parseUserAssets, userAssetsQueryKey } from './common';
 
@@ -102,7 +102,7 @@ export async function userAssetsByChainQueryFunction({
     }
   } catch (e) {
     logger.error(
-      new RainbowError(
+      new PortalError(
         `userAssetsByChainQueryFunction - chainId = ${chainId}:`,
       ),
       {

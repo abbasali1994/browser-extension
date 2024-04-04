@@ -3,7 +3,7 @@
 /* eslint-disable no-promise-executor-return */
 import { Signer } from '@ethersproject/abstract-signer';
 
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { swap, unlock } from './actions';
 import { crosschainSwap } from './actions/crosschainSwap';
@@ -84,7 +84,7 @@ export async function executeAction<T extends RapActionTypes>({
     )()) as RapActionResult;
     return { baseNonce: nonce, errorMessage: null, hash };
   } catch (error) {
-    logger.error(new RainbowError(`rap: ${rapName} - error execute action`), {
+    logger.error(new PortalError(`rap: ${rapName} - error execute action`), {
       message: (error as Error)?.message,
     });
     if (index === 0) {

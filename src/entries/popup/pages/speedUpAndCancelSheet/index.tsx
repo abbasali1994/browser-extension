@@ -41,7 +41,7 @@ import {
 } from '~/design-system';
 import { triggerAlert } from '~/design-system/components/Alert/Alert';
 import { Prompt } from '~/design-system/components/Prompt/Prompt';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { EthSymbol } from '../../components/EthSymbol/EthSymbol';
 import { Spinner } from '../../components/Spinner/Spinner';
@@ -219,7 +219,7 @@ export function SpeedUpAndCancelSheet({
           description: extractedError,
         });
       }
-      logger.error(new RainbowError('send: error speed up tx'), {
+      logger.error(new PortalError('send: error speed up tx'), {
         message: (e as Error)?.message,
       });
     } finally {
@@ -257,7 +257,7 @@ export function SpeedUpAndCancelSheet({
           description: extractedError,
         });
       }
-      logger.error(new RainbowError('send: error cancel tx'), {
+      logger.error(new PortalError('send: error cancel tx'), {
         message: (e as Error)?.message,
       });
     } finally {

@@ -3,7 +3,7 @@ import React, { SetStateAction, useCallback, useState } from 'react';
 import { i18n } from '~/core/languages';
 import { Box, Button, Inline, Separator, Symbol, Text } from '~/design-system';
 import { accentColorAsHsl } from '~/design-system/styles/core.css';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { PasswordInput } from '../../components/PasswordInput/PasswordInput';
 import { Spinner } from '../../components/Spinner/Spinner';
@@ -45,7 +45,7 @@ export function Unlock() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e) {
       logger.info('Unlock error: exception while trying to unlock');
-      logger.error(e as RainbowError);
+      logger.error(e as PortalError);
       setLoading(false);
     }
   }, [navigate, password]);

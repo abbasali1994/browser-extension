@@ -2,7 +2,7 @@ import { getAddress, isAddress } from '@ethersproject/address';
 import { Bytes, isHexString } from '@ethersproject/bytes';
 import { Address } from 'wagmi';
 
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { ProviderRequestPayload } from '../transports/providerRequestTransport';
 import { RPCMethod } from '../types/rpcMethods';
@@ -73,7 +73,7 @@ export const getSigningRequestDisplayDetails = (
     return {};
   } catch (e) {
     logger.info('MSG Signing Parsing Error with meta', payload.meta);
-    logger.error(new RainbowError('MSG Signing Parsing Error'), {
+    logger.error(new PortalError('MSG Signing Parsing Error'), {
       payload,
     });
     return {};

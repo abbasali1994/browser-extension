@@ -16,7 +16,7 @@ import {
 } from '~/core/types/assets';
 import { ChainId } from '~/core/types/chains';
 import { chunkArray, parseAssetMetadata } from '~/core/utils/assets';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 export const ASSETS_TIMEOUT_DURATION = 10000;
 const ASSETS_REFETCH_INTERVAL = 60000;
@@ -67,7 +67,7 @@ export async function assetsQueryFunction({
     const parsedAssets = parseAssets(results, chainId, currency);
     return parsedAssets;
   } catch (e) {
-    logger.error(new RainbowError('assetsQueryFunction: '), {
+    logger.error(new PortalError('assetsQueryFunction: '), {
       message: (e as Error)?.message,
     });
     return {};

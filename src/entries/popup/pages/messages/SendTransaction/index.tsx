@@ -23,7 +23,7 @@ import { showLedgerDisconnectedAlertIfNeeded } from '~/entries/popup/handlers/le
 import { useSendAsset } from '~/entries/popup/hooks/send/useSendAsset';
 import { useAppSession } from '~/entries/popup/hooks/useAppSession';
 import { useWallets } from '~/entries/popup/hooks/useWallets';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import * as wallet from '../../../handlers/wallet';
 import { AccountSigningWith } from '../AccountSigningWith';
@@ -121,7 +121,7 @@ export function SendTransaction({
     } catch (e: any) {
       showLedgerDisconnectedAlertIfNeeded(e);
       logger.error(
-        new RainbowError('send: error executing send dapp approval'),
+        new PortalError('send: error executing send dapp approval'),
         {
           message: (e as Error)?.message,
         },

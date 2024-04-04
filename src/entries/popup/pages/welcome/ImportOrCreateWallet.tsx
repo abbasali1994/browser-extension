@@ -7,7 +7,7 @@ import { Box, Button, Inline, Text, ThemeProvider } from '~/design-system';
 import { ButtonOverflow } from '~/design-system/components/Button/ButtonOverflow';
 import { Row, Rows } from '~/design-system/components/Rows/Rows';
 import { accentColorAsHsl } from '~/design-system/styles/core.css';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { Spinner } from '../../components/Spinner/Spinner';
 import {
@@ -68,7 +68,7 @@ export function ImportOrCreateWallet() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       logger.info('Onboarding error: creating new wallet failed');
-      logger.error(new RainbowError(e?.name), { message: e?.message });
+      logger.error(new PortalError(e?.name), { message: e?.message });
       setLoading(false);
     }
   }, [loading, navigate, requestPermissionsIfNeeded, setCurrentAddress]);

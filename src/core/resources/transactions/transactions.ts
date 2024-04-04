@@ -14,7 +14,7 @@ import { TransactionsReceivedMessage } from '~/core/types/refraction';
 import { RainbowTransaction } from '~/core/types/transactions';
 import { chainIdFromChainName } from '~/core/utils/chains';
 import { parseTransaction } from '~/core/utils/transactions';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 const TRANSACTIONS_REFETCH_INTERVAL = 60000;
 
@@ -89,7 +89,7 @@ async function transactionsQueryFunction({
     const cachedTransactions = cache.find(
       transactionsQueryKey({ address, chainId, currency, transactionsLimit }),
     )?.state?.data as RainbowTransaction[];
-    logger.error(new RainbowError('transactionsQueryFunction: '), {
+    logger.error(new PortalError('transactionsQueryFunction: '), {
       message: (e as Error)?.message,
     });
     return cachedTransactions;

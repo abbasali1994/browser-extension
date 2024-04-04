@@ -24,7 +24,7 @@ import {
   getTransactionFlashbotStatus,
   getTransactionReceiptStatus,
 } from '~/core/utils/transactions';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { useSwapRefreshAssets } from './swap/useSwapAssetsRefresh';
 
@@ -138,7 +138,7 @@ export const useWatchPendingTransactions = ({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         logger.error(
-          new RainbowError(
+          new PortalError(
             `useWatchPendingTransaction: Failed to watch transaction`,
           ),
           {

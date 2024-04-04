@@ -56,7 +56,7 @@ import { useUserAsset } from '~/entries/popup/hooks/useUserAsset';
 import { ROUTES } from '~/entries/popup/urls';
 import playSound from '~/entries/popup/utils/playSound';
 import { zIndexes } from '~/entries/popup/utils/zIndexes';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import * as wallet from '../../../handlers/wallet';
 
@@ -301,7 +301,7 @@ const SwapReviewSheetWithQuote = ({
     if (errorMessage) {
       setSendingSwap(false);
       if (errorMessage !== 'handled') {
-        logger.error(new RainbowError('swap: error executing swap'), {
+        logger.error(new PortalError('swap: error executing swap'), {
           message: errorMessage,
         });
         const extractedError = errorMessage.split('[')[0];

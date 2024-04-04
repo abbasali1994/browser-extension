@@ -16,7 +16,7 @@ import { TransactionsReceivedMessage } from '~/core/types/refraction';
 import { RainbowTransaction } from '~/core/types/transactions';
 import { chainIdFromChainName } from '~/core/utils/chains';
 import { parseTransaction } from '~/core/utils/transactions';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 const CONSOLIDATED_TRANSACTIONS_INTERVAL = 60000;
 const CONSOLIDATED_TRANSACTIONS_TIMEOUT = 20000;
@@ -120,7 +120,7 @@ export async function consolidatedTransactionsQueryFunction({
     };
   } catch (e) {
     // we don't bother with fetching cache and returning stale data here because we probably have previous page data already
-    logger.error(new RainbowError('consolidatedTransactionsQueryFunction: '), {
+    logger.error(new PortalError('consolidatedTransactionsQueryFunction: '), {
       message: e,
     });
     return { transactions: [] };

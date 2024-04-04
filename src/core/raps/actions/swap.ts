@@ -23,7 +23,7 @@ import { isLowerCaseMatch } from '~/core/utils/strings';
 import { isUnwrapEth, isWrapEth } from '~/core/utils/swaps';
 import { addNewTransaction } from '~/core/utils/transactions';
 import { TransactionSimulationResponse } from '~/entries/popup/pages/messages/useSimulateTransaction';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { REFERRER, gasUnits } from '../../references';
 import { gasStore } from '../../state';
@@ -291,7 +291,7 @@ export const swap = async ({
       quote,
     });
   } catch (e) {
-    logger.error(new RainbowError('swap: error estimateSwapGasLimit'), {
+    logger.error(new PortalError('swap: error estimateSwapGasLimit'), {
       message: (e as Error)?.message,
     });
 
@@ -312,13 +312,13 @@ export const swap = async ({
     };
     swap = await executeSwap(swapParams);
   } catch (e) {
-    logger.error(new RainbowError('swap: error executeSwap'), {
+    logger.error(new PortalError('swap: error executeSwap'), {
       message: (e as Error)?.message,
     });
     throw e;
   }
 
-  if (!swap) throw new RainbowError('swap: error executeSwap');
+  if (!swap) throw new PortalError('swap: error executeSwap');
 
   const transaction = {
     data: swap.data,

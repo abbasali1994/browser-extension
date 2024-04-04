@@ -37,7 +37,7 @@ import { addNewTransaction } from '~/core/utils/transactions';
 import { Box, Button, Inline, Row, Rows, Symbol, Text } from '~/design-system';
 import { triggerAlert } from '~/design-system/components/Alert/Alert';
 import { AccentColorProvider } from '~/design-system/components/Box/ColorContext';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import {
   ExplainerSheet,
@@ -306,7 +306,7 @@ export function Send() {
             description: extractedError,
           });
         }
-        logger.error(new RainbowError('send: error executing send'), {
+        logger.error(new PortalError('send: error executing send'), {
           message: (e as Error)?.message,
         });
       } finally {

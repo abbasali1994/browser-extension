@@ -15,12 +15,12 @@ The old `Logger.sentry` and `Logger.error` should now look like this (see
 below for more info):
 
 ```typescript
-import { logger, RainbowError } from '@/logger';
+import { logger, PortalError } from '@/logger';
 
 try {
   // some async code
 } catch (e) {
-  const error = new RainbowError('Descriptive error message');
+  const error = new PortalError('Descriptive error message');
   logger.error(error, { ...metadata });
 }
 ```
@@ -70,7 +70,7 @@ logger.error(error[, metadata])
 #### Usage Heuristics
 
 - Use `logger.error` for all exceptions, and always pass it a descriptive
-  `RainbowError`.
+  `PortalError`.
 - Use `logger.warn` for anything that might be an exception now or in the future,
   or something we _need_ to know about, but isn't critical at the moment.
 - Use `logger.info` for anything you think would be helpful when tracing errors in
@@ -188,10 +188,10 @@ The `error` level is for... well, errors. These are sent to our reporting
 services in production mode. The optional `metadata` parameter is here as well.
 
 In an effort to avoid leakage of private information, we force ourselves to pass
-our own `RainbowError` subclass here instead of whatever random `Error` was
+our own `PortalError` subclass here instead of whatever random `Error` was
 thrown.
 
-For example, this exception will be ignored and a separate `RainbowError` will
+For example, this exception will be ignored and a separate `PortalError` will
 be reported instead so that we can track down the incorrect usage.
 
 ```typescript
@@ -202,16 +202,16 @@ try {
 }
 ```
 
-The correct way to handle exceptions is to always create a new `RainbowError`
+The correct way to handle exceptions is to always create a new `PortalError`
 with a descriptive message of what happened. Be sure to avoid any PII.
 
 ```typescript
-import { RainbowError } from '@/logger';
+import { PortalError } from '@/logger';
 
 try {
   // some async code
 } catch (e) {
-  const error = new RainbowError('Descriptive error message');
+  const error = new PortalError('Descriptive error message');
   logger.error(error, { ...metadata });
 }
 ```

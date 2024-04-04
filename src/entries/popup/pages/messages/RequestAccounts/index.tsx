@@ -9,7 +9,7 @@ import { ProviderRequestPayload } from '~/core/transports/providerRequestTranspo
 import { ChainId } from '~/core/types/chains';
 import { getDappHostname } from '~/core/utils/connectedApps';
 import { Row, Rows, Separator } from '~/design-system';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { RequestAccountsActions } from './RequestAccountsActions';
 import { RequestAccountsInfo } from './RequestAccountsInfo';
@@ -61,7 +61,7 @@ export const RequestAccounts = ({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       logger.info('error connecting to dapp');
-      logger.error(new RainbowError(e.name), { message: e.message });
+      logger.error(new PortalError(e.name), { message: e.message });
     } finally {
       setLoading(false);
     }

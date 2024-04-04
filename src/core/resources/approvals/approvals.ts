@@ -13,7 +13,7 @@ import { SupportedCurrencyKey } from '~/core/references';
 import { AssetApiResponse } from '~/core/types/assets';
 import { ChainId } from '~/core/types/chains';
 import { TxHash } from '~/core/types/transactions';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 export const APPROVALS_TIMEOUT_DURATION = 10000;
 
@@ -91,7 +91,7 @@ export async function approvalsQueryFunction({
     const approvalsReponse = response.data as ApprovalsResponse;
     return approvalsReponse.payload;
   } catch (e) {
-    logger.error(new RainbowError('approvalsQueryFunction: '), {
+    logger.error(new PortalError('approvalsQueryFunction: '), {
       message: (e as Error)?.message,
     });
     return null;

@@ -2,7 +2,7 @@
 import ImgixClient from 'imgix-core-js';
 import LRUCache from 'mnemonist/lru-cache';
 
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 const domain = process.env.IMGIX_DOMAIN;
 const secureURLToken = process.env.IMGIX_TOKEN;
@@ -26,7 +26,7 @@ const shouldCreateImgixClient = (): ImgixClient | null => {
     });
   }
   logger.error(
-    new RainbowError(
+    new PortalError(
       '[Imgix] Image signing disabled. Please ensure you have specified both IMGIX_DOMAIN and IMGIX_TOKEN inside your .env.',
     ),
   );
@@ -91,7 +91,7 @@ const shouldSignUri = (
       );
     }
   } catch (e: any) {
-    logger.error(new RainbowError(`[Imgix]: Failed to sign`), {
+    logger.error(new PortalError(`[Imgix]: Failed to sign`), {
       externalImageUri,
       message: e.message,
     });
@@ -111,7 +111,7 @@ const isPossibleToSignUri = (externalImageUri: string | undefined): boolean => {
       const { host } = new URL(externalImageUri);
       return typeof host === 'string' && !!host.length;
     } catch (e: any) {
-      logger.error(new RainbowError(`[Imgix]: Failed to parse`), {
+      logger.error(new PortalError(`[Imgix]: Failed to parse`), {
         externalImageUri,
         message: e.message,
       });

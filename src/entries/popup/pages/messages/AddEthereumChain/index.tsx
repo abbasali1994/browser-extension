@@ -6,7 +6,7 @@ import { useRainbowChainsStore } from '~/core/state';
 import { useUserChainsStore } from '~/core/state/userChains';
 import { ProviderRequestPayload } from '~/core/transports/providerRequestTransport';
 import { Row, Rows, Separator } from '~/design-system';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { AddEthereumChainActions } from './AddEthereumChainActions';
 import { AddEthereumChainInfo } from './AddEthereumChainInfo';
@@ -78,7 +78,7 @@ export const AddEthereumChain = ({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       logger.info('error adding ethereum chain');
-      logger.error(new RainbowError(e.name), { message: e.message });
+      logger.error(new PortalError(e.name), { message: e.message });
     } finally {
       setLoading(false);
     }

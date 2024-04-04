@@ -1,4 +1,4 @@
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 export const LocalStorage = {
   async clear() {
@@ -63,7 +63,7 @@ export const SessionStorage = {
           (rateLimits && Object.keys(rateLimits).length) || 0,
         );
       }
-      logger.error(new RainbowError('SessionStorage write error'), {
+      logger.error(new PortalError('SessionStorage write error'), {
         message: (e as Error)?.message,
       });
     }

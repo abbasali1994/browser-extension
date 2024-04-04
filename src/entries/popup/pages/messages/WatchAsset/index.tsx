@@ -16,7 +16,7 @@ import {
 } from '~/core/utils/assets';
 import { getChain } from '~/core/utils/chains';
 import { Row, Rows, Separator } from '~/design-system';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { WatchAssetActions } from './WatchAssetActions';
 import { WatchAssetInfo } from './WatchAssetInfo';
@@ -168,7 +168,7 @@ export const WatchAsset = ({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       logger.info('error adding ethereum chain');
-      logger.error(new RainbowError(e.name), { message: e.message });
+      logger.error(new PortalError(e.name), { message: e.message });
     } finally {
       setLoading(false);
     }

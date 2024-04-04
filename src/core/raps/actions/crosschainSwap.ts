@@ -6,7 +6,7 @@ import { REFERRER, gasUnits } from '~/core/references';
 import { ChainId } from '~/core/types/chains';
 import { NewTransaction, TxHash } from '~/core/types/transactions';
 import { addNewTransaction } from '~/core/utils/transactions';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 import { gasStore } from '../../state';
 import {
@@ -131,7 +131,7 @@ export const crosschainSwap = async ({
     });
   } catch (e) {
     logger.error(
-      new RainbowError('crosschainSwap: error estimateCrosschainSwapGasLimit'),
+      new PortalError('crosschainSwap: error estimateCrosschainSwapGasLimit'),
       {
         message: (e as Error)?.message,
       },
@@ -155,14 +155,14 @@ export const crosschainSwap = async ({
     swap = await executeCrosschainSwap(swapParams);
   } catch (e) {
     logger.error(
-      new RainbowError('crosschainSwap: error executeCrosschainSwap'),
+      new PortalError('crosschainSwap: error executeCrosschainSwap'),
       { message: (e as Error)?.message },
     );
     throw e;
   }
 
   if (!swap)
-    throw new RainbowError('crosschainSwap: error executeCrosschainSwap');
+    throw new PortalError('crosschainSwap: error executeCrosschainSwap');
 
   const transaction = {
     data: parameters.quote.data,

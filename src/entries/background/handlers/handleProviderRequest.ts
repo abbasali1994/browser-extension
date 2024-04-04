@@ -25,7 +25,7 @@ import { getDappHost, isValidUrl } from '~/core/utils/connectedApps';
 import { POPUP_DIMENSIONS } from '~/core/utils/dimensions';
 import { WELCOME_URL, goToNewTab } from '~/core/utils/tabs';
 import { IN_DAPP_NOTIFICATION_STATUS } from '~/entries/iframe/notification';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 const MAX_REQUEST_PER_SECOND = 10;
 const MAX_REQUEST_PER_MINUTE = 90;
@@ -356,7 +356,7 @@ export const handleProviderRequest = ({
         extensionUrl,
         host,
       });
-      logger.error(new RainbowError('Chain Id not supported'), {
+      logger.error(new PortalError('Chain Id not supported'), {
         proposedChainId,
         host,
       });

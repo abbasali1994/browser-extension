@@ -28,7 +28,6 @@ import { useAvatar } from '../../hooks/useAvatar';
 import { useCurrentHomeSheet } from '../../hooks/useCurrentHomeSheet';
 import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { useHomeShortcuts } from '../../hooks/useHomeShortcuts';
-import { usePendingTransactionWatcher } from '../../hooks/usePendingTransactionWatcher';
 import usePrevious from '../../hooks/usePrevious';
 import useRestoreNavigation from '../../hooks/useRestoreNavigation';
 import { useScroll } from '../../hooks/useScroll';
@@ -155,7 +154,7 @@ export const Home = memo(function Home() {
     removeImportWalletSecrets();
   }, []);
 
-  usePendingTransactionWatcher({ address: currentAddress });
+  // usePendingTransactionWatcher({ address: currentAddress });
   useHomeShortcuts();
   useRestoreNavigation();
   useSwitchWalletShortcuts();

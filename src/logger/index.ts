@@ -15,7 +15,7 @@ export enum LogLevel {
 
 type Transport = (
   level: LogLevel,
-  message: string | RainbowError,
+  message: string | PortalError,
   metadata: Metadata,
 ) => void;
 
@@ -167,7 +167,7 @@ export const sentryTransport: Transport = (
   }
 };
 
-export class RainbowError extends Error {}
+export class PortalError extends Error {}
 
 /**
  * Main class. Defaults are provided in the constructor so that subclasses are
@@ -214,13 +214,13 @@ export class Logger {
     this.transport(LogLevel.Warn, message, metadata);
   }
 
-  error(error: RainbowError, metadata: Metadata = {}) {
-    if (error instanceof RainbowError) {
+  error(error: PortalError, metadata: Metadata = {}) {
+    if (error instanceof PortalError) {
       this.transport(LogLevel.Error, error, metadata);
     } else {
       this.transport(
         LogLevel.Error,
-        new RainbowError(`logger.error was not provided a RainbowError`),
+        new PortalError(`logger.error was not provided a PortalError`),
         metadata,
       );
     }
@@ -235,7 +235,7 @@ export class Logger {
 
   protected transport(
     level: LogLevel,
-    message: string | RainbowError,
+    message: string | PortalError,
     metadata: Metadata = {},
   ) {
     if (!this.enabled) return;

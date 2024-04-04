@@ -36,7 +36,7 @@ import {
 } from '~/core/utils/assets';
 import { getRainbowChains } from '~/core/utils/chains';
 import { convertDecimalFormatToRawAmount, isZero } from '~/core/utils/numbers';
-import { RainbowError, logger } from '~/logger';
+import { PortalError, logger } from '~/logger';
 
 
 const CUSTOM_NETWORK_ASSETS_REFETCH_INTERVAL = 60000;
@@ -331,7 +331,7 @@ async function customNetworkAssetsFunction({
       );
     return parsedAssetsDict;
   } catch (e) {
-    logger.error(new RainbowError('customNetworkAssetsFunction: '), {
+    logger.error(new PortalError('customNetworkAssetsFunction: '), {
       message: (e as Error)?.message,
     });
 
