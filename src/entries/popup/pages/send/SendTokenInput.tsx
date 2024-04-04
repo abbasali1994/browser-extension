@@ -12,6 +12,8 @@ import React, {
 } from 'react';
 
 import { i18n } from '~/core/languages';
+import { useTokens } from '~/core/resources/tokens/useTokens';
+import { useCurrentAddressStore } from '~/core/state';
 import { useTestnetModeStore } from '~/core/state/currentSettings/testnetMode';
 import { AddressOrEth, ParsedUserAsset } from '~/core/types/assets';
 import { ChainId } from '~/core/types/chains';
@@ -188,16 +190,8 @@ export const SendTokenInput = React.forwardRef<
     [setInputValue],
   );
 
-  const filteredAssets = useMemo(() => {
-    return inputValue
-      ? assets.filter(
-          ({ name, symbol, address }) =>
-            name.toLowerCase().startsWith(inputValue.toLowerCase()) ||
-            symbol.toLowerCase().startsWith(inputValue.toLowerCase()) ||
-            address.toLowerCase().startsWith(inputValue.toLowerCase()),
-        )
-      : assets;
-  }, [assets, inputValue]);
+  const { currentAddress } = useCurrentAddressStore();
+  const { tokens } = useTokens(currentAddress);
 
   const onCloseDropdown = useCallback(() => {
     onSelectAsset('', ChainId.mainnet);
@@ -315,7 +309,7 @@ export const SendTokenInput = React.forwardRef<
       }
       dropdownComponent={
         <Box>
-          {!!filteredAssets?.length && (
+          {!!tokens?.length && (
             <Stack space="8px">
               <Box paddingHorizontal="20px">
                 <Inline alignHorizontal="justify">
@@ -340,7 +334,7 @@ export const SendTokenInput = React.forwardRef<
                 </Inline>
               </Box>
               <Box>
-                {filteredAssets?.map((asset, i) => (
+                {assets?.map((asset, i) => (
                   <Box
                     paddingHorizontal="8px"
                     key={`${asset?.uniqueId}-${i}`}
@@ -359,7 +353,7 @@ export const SendTokenInput = React.forwardRef<
           )}
           <Box>
            
-            {!filteredAssets.length && (
+            {!tokens.length && (
               <Box alignItems="center" style={{ paddingTop: 119 }}>
                 <Box paddingHorizontal="44px">
                   <Stack space="16px">

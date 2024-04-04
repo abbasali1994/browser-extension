@@ -16,7 +16,7 @@ import { Address } from 'wagmi';
 import { config } from '~/core/config';
 import { i18n } from '~/core/languages';
 import { shortcuts } from '~/core/references/shortcuts';
-import { useFlashbotsEnabledStore, useGasStore } from '~/core/state';
+import { useFlashbotsEnabledStore, useGasStore, useCurrentAddressStore } from '~/core/state';
 import { useContactsStore } from '~/core/state/contacts';
 import { useConnectedToHardhatStore } from '~/core/state/currentSettings/connectedToHardhat';
 import {
@@ -25,6 +25,7 @@ import {
 } from '~/core/state/hiddenAssets/hiddenAssets';
 import { usePopupInstanceStore } from '~/core/state/popupInstances';
 import { useSelectedTokenStore } from '~/core/state/selectedToken';
+import { useTokens } from '~/core/resources/tokens/useTokens';
 import { AddressOrEth, ParsedUserAsset } from '~/core/types/assets';
 import { ChainId } from '~/core/types/chains';
 import {
@@ -447,6 +448,9 @@ export function Send() {
 
   const assetAccentColor = asset?.colors?.primary || asset?.colors?.fallback;
 
+  const { currentAddress } = useCurrentAddressStore();
+  const { tokens } = useTokens(currentAddress);
+
   return (
     <>
       <ExplainerSheet
@@ -540,7 +544,7 @@ export function Send() {
                 >
                   <SendTokenInput
                     asset={asset}
-                    assets={unhiddenAssets}
+                    assets={tokens}
                     selectAssetAddressAndChain={selectAsset}
                     dropdownClosed={toAddressDropdownOpen}
                     setSortMethod={setSortMethod}

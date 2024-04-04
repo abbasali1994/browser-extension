@@ -614,7 +614,7 @@
   },
   "send": {
     "title": "Send",
-    "input_to_address_placeholder": "Name, ENS or address",
+    "input_to_address_placeholder": "Address",
     "input_token_placeholder": "Token",
     "max": "Max",
     "switch_to": "Switch to %{currency}",

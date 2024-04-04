@@ -44,7 +44,7 @@ export const useTokens = (address: string) => {
       },
     } = response.data.data;
     return (
-      balances || [
+      balances.filter(t => t.value != 0) || [
         {
           currency: {
             symbol: 'ETH',

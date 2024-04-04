@@ -240,7 +240,6 @@ export const ToAddressInput = React.forwardRef<InputRefAPI, ToAddressProps>(
   function ToAddressInput(props, forwardedRef) {
     const {
       toAddressOrName,
-      toEnsName,
       toAddress,
       handleToAddressChange,
       clearToAddress,
@@ -254,7 +253,6 @@ export const ToAddressInput = React.forwardRef<InputRefAPI, ToAddressProps>(
 
     useImperativeHandle(forwardedRef, () => ({
       blur: () => closeDropdown(),
-      focus: () => openDropdown(),
       isFocused: () => inputRef.current === document.activeElement,
     }));
 
@@ -264,20 +262,12 @@ export const ToAddressInput = React.forwardRef<InputRefAPI, ToAddressProps>(
       dropdownVisible ? inputRef?.current?.blur() : inputRef?.current?.focus();
     }, [dropdownVisible, onDropdownOpen]);
 
-    const openDropdown = useCallback(() => {
-      onDropdownOpen(true);
-      setDropdownVisible(true);
-      setTimeout(() => inputRef?.current?.focus(), 300);
-    }, [onDropdownOpen]);
-
     const closeDropdown = useCallback(() => {
       onDropdownOpen(false);
       setDropdownVisible(false);
     }, [onDropdownOpen]);
 
-    const inputVisible =
-      ((!toAddressOrName || !toEnsName) && !isAddress(toAddressOrName)) ||
-      !isAddress(toAddress || '');
+    const inputVisible = !isAddress(toAddress || '');
 
     const selectWalletAndCloseDropdown = useCallback(
       (address: Address) => {
@@ -287,14 +277,6 @@ export const ToAddressInput = React.forwardRef<InputRefAPI, ToAddressProps>(
       },
       [onDropdownAction, validateToAddress, setToAddressOrName],
     );
-
-    const onInputClick = useCallback(() => {
-      if (!dropdownVisible) {
-        openDropdown();
-      } else {
-        closeDropdown();
-      }
-    }, [closeDropdown, dropdownVisible, openDropdown]);
 
     const onActionClose = useCallback(() => {
       onDropdownAction();
@@ -319,24 +301,15 @@ export const ToAddressInput = React.forwardRef<InputRefAPI, ToAddressProps>(
     const selectableWallets = wallets.filter((a) => a !== currentAddress);
     const { sendAddress: savedSendAddress } = usePopupInstanceStore();
 
-    useEffect(() => {
-      if (!toAddressOrName && !savedSendAddress) {
-        setTimeout(() => {
-          openDropdown();
-        }, 200);
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const inputActionButton = (
+    const inputActionButton = toAddressOrName ? (
       <InputActionButton
-        showClose={!!toAddress}
+        showClose={true}
         onClose={onActionClose}
         onDropdownAction={onDropdownAction}
-        dropdownVisible={dropdownVisible}
+        dropdownVisible={false}
         testId={`input-wrapper-close-to-address-input`}
       />
-    );
+    ): null;
 
     return (
       <>
@@ -344,15 +317,16 @@ export const ToAddressInput = React.forwardRef<InputRefAPI, ToAddressProps>(
           zIndex={2}
           dropdownHeight={452 - (testnetMode ? TESTNET_MODE_BAR_HEIGHT : 0)}
           testId={'to-address-input'}
-          leftComponent={
-            <WalletContextMenu account={toAddress}>
-              <WalletAvatar
-                addressOrName={toAddress}
-                size={36}
-                emojiSize="20pt"
-              />
-            </WalletContextMenu>
-          }
+          // leftComponent={
+          //   <WalletContextMenu account={toAddress}>
+          //     <WalletAvatar
+          //       addressOrName={toAddress}
+          //       size={36}
+          //       emojiSize="20pt"
+          //     />
+          //   </WalletContextMenu>
+          // }
+          leftComponent={null}
           centerComponent={
             <WalletContextMenu account={toAddress}>
               <Box as={motion.div} layout>
@@ -360,15 +334,14 @@ export const ToAddressInput = React.forwardRef<InputRefAPI, ToAddressProps>(
                   <Box
                     as={motion.div}
                     key="input"
-                    onClick={onInputClick}
+                    // onClick={onInputClick}
                     layout="position"
-                  >
+                  > 
                     <AnimatePresence>
                       {inputVisible ? (
                         <Box
                           as={motion.div}
                           layout="position"
-                          onClick={onDropdownAction}
                         >
                           <Input
                             testId="to-address-input"
@@ -429,9 +402,9 @@ export const ToAddressInput = React.forwardRef<InputRefAPI, ToAddressProps>(
               selectWalletAndCloseDropdown={selectWalletAndCloseDropdown}
             />
           }
-          dropdownVisible={dropdownVisible}
+          dropdownVisible={false}
           rightComponent={
-            toAddress ? (
+            toAddressOrName ? (
               <CursorTooltip
                 align="end"
                 arrowAlignment="right"

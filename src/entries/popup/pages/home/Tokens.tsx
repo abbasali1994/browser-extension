@@ -81,7 +81,7 @@ export function Tokens() {
         }}
       >
         <Box style={{ overflow: 'auto' }}>
-          {tokens?.filter(t => t.value != 0).map((token: any, index: any) => {
+          {tokens?.map((token: any, index: any) => {
             console.log(token);
             return (
               <Box
