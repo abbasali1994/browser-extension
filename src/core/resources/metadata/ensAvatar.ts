@@ -2,7 +2,6 @@ import { isAddress } from '@ethersproject/address';
 import { useQuery } from '@tanstack/react-query';
 import { Address } from 'viem';
 
-import { metadataClient } from '~/core/graphql';
 import { QueryFunctionArgs, createQueryKey } from '~/core/react-query';
 
 // ///////////////////////////////////////////////
@@ -29,11 +28,7 @@ type ResolveEnsProfileQueryKey = ReturnType<typeof ResolveEnsProfileQueryKey>;
 
 export async function reverseResolve(address: Address) {
   try {
-    const response = await metadataClient.reverseResolveENSProfile({
-      chainId: 1,
-      address,
-      fields: ['avatar'],
-    });
+    const response = { address } as any;
 
     if (response?.reverseResolveENSProfile?.fields?.length) {
       return response.reverseResolveENSProfile.fields[0].value;
@@ -46,12 +41,7 @@ export async function reverseResolve(address: Address) {
 
 export async function resolve(name: string) {
   try {
-    const response = await metadataClient.resolveENSProfile({
-      chainId: 1,
-      name,
-      fields: ['avatar'],
-    });
-
+    const response = {name} as any;
     if (response?.resolveENSProfile?.fields?.length) {
       return response.resolveENSProfile.fields[0].value;
     }

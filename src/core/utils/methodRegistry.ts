@@ -2,7 +2,7 @@
 import { Contract, ContractInterface } from '@ethersproject/contracts';
 import { Address, getProvider } from '@wagmi/core';
 
-import { metadataClient } from '~/core/graphql';
+import { GetContractFunctionQuery } from '../config';
 
 import { fetchJsonLocally } from './localJson';
 
@@ -30,11 +30,7 @@ export const methodRegistryLookupAndParse = async (
 ) => {
   let signature = '';
 
-  const response = await metadataClient.getContractFunction({
-    chainID: 1,
-    hex: methodSignatureBytes,
-    address: contractAddress,
-  });
+  const response = { contractAddress } as GetContractFunctionQuery;
 
   if (response?.contractFunction?.text) {
     signature = response.contractFunction.text;

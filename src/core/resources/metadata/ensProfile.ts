@@ -1,8 +1,8 @@
 import { isAddress } from '@ethersproject/address';
 import { useQuery } from '@tanstack/react-query';
 import { Address } from 'viem';
+import { ResolveEnsProfileQuery, ReverseResolveEnsProfileQuery } from '~/core/config';
 
-import { metadataClient } from '~/core/graphql';
 import {
   QueryConfig,
   QueryFunctionArgs,
@@ -22,7 +22,7 @@ type EnsProfileResponseFieldsValue =
       value: string;
     }[]
   | undefined;
-const ensProfileFields: EnsProfileField[] = [
+export const ensProfileFields: EnsProfileField[] = [
   'avatar',
   'com.twitter',
   'description',
@@ -50,11 +50,7 @@ type EnsProfileQueryKey = ReturnType<typeof EnsProfileQueryKey>;
 
 export async function reverseResolveEnsProfile(address: Address) {
   try {
-    const response = await metadataClient.reverseResolveENSProfile({
-      chainId: 1,
-      address,
-      fields: ensProfileFields,
-    });
+    const response = { address } as ReverseResolveEnsProfileQuery;
     const fields: EnsProfileResponseFieldsValue =
       response?.reverseResolveENSProfile?.fields;
 
@@ -78,11 +74,7 @@ export async function reverseResolveEnsProfile(address: Address) {
 
 export async function resolveEnsProfile(name: string) {
   try {
-    const response = await metadataClient.resolveENSProfile({
-      chainId: 1,
-      name,
-      fields: ensProfileFields,
-    });
+    const response = { name } as ResolveEnsProfileQuery;
     const fields = response.resolveENSProfile?.fields;
 
     // keys that are not set in the profile will be returned as empty strings

@@ -10,12 +10,10 @@ import {
   queryClient,
 } from '~/core/react-query';
 import { SupportedCurrencyKey } from '~/core/references';
-import { useTestnetModeStore } from '~/core/state/currentSettings/testnetMode';
 import { ParsedAssetsDictByChain, ParsedUserAsset } from '~/core/types/assets';
 import { ChainId } from '~/core/types/chains';
 import { AddressAssetsReceivedMessage } from '~/core/types/refraction';
 import { getBackendSupportedChains } from '~/core/utils/chains';
-import { RainbowError, logger } from '~/logger';
 
 import { parseUserAssets } from './common';
 
@@ -74,10 +72,9 @@ type UserAssetsQueryKey = ReturnType<typeof userAssetsQueryKey>;
 export const userAssetsFetchQuery = ({
   address,
   currency,
-  testnetMode,
 }: FetchUserAssetsArgs) => {
   queryClient.fetchQuery(
-    userAssetsQueryKey({ address, currency, testnetMode }),
+    userAssetsQueryKey({ address, currency }),
     userAssetsQueryFunction,
   );
 };
@@ -109,16 +106,14 @@ export const userAssetsSetQueryData = ({
 };
 
 async function userAssetsQueryFunction({
-  queryKey: [{ address, currency, testnetMode }],
+  queryKey: [{ address, currency }],
 }: QueryFunctionArgs<typeof userAssetsQueryKey>) {
   const cache = queryClient.getQueryCache();
   const cachedUserAssets = (cache.find(
-    userAssetsQueryKey({ address, currency, testnetMode }),
+    userAssetsQueryKey({ address, currency }),
   )?.state?.data || {}) as ParsedAssetsDictByChain;
   try {
-    const supportedChainIds = getBackendSupportedChains({ testnetMode }).map(
-      ({ id }) => id,
-    );
+    const supportedChainIds = getBackendSupportedChains({}).map(({ id }) => id);
     const url = `/${supportedChainIds.join(',')}/${address}/assets`;
     const res = await addysHttp.get<AddressAssetsReceivedMessage>(url, {
       params: {
@@ -135,7 +130,6 @@ async function userAssetsQueryFunction({
         address,
         chainIds: chainIdsWithErrorsInResponse,
         currency,
-        testnetMode,
       });
       if (assets.length && chainIdsInResponse.length) {
         const parsedAssetsDict = await parseUserAssets({
@@ -155,9 +149,7 @@ async function userAssetsQueryFunction({
     }
     return cachedUserAssets;
   } catch (e) {
-    logger.error(new RainbowError('userAssetsQueryFunction: '), {
-      message: (e as Error)?.message,
-    });
+    console.log(e);
     return cachedUserAssets;
   }
 }
@@ -205,9 +197,7 @@ async function userAssetsQueryFunctionRetryByChain({
       cachedUserAssets,
     );
   } catch (e) {
-    logger.error(new RainbowError('userAssetsQueryFunctionRetryByChain: '), {
-      message: (e as Error)?.message,
-    });
+    console.log(e);
   }
 }
 
@@ -223,14 +213,13 @@ export function useUserAssets<TSelectResult = UserAssetsResult>(
     UserAssetsQueryKey
   > = {},
 ) {
-  const { testnetMode } = useTestnetModeStore();
   return useQuery(
-    userAssetsQueryKey({ address, currency, testnetMode }),
+    userAssetsQueryKey({ address, currency }),
     userAssetsQueryFunction,
     {
       ...config,
       refetchInterval: USER_ASSETS_REFETCH_INTERVAL,
-      staleTime: process.env.IS_TESTING === 'true' ? 0 : 1000,
+      staleTime: 1000,
     },
   );
 }
@@ -316,14 +305,7 @@ export async function userAssetsByChainQueryFunction({
       return cachedDataForChain;
     }
   } catch (e) {
-    logger.error(
-      new RainbowError(
-        `userAssetsByChainQueryFunction - chainId = ${chainId}:`,
-      ),
-      {
-        message: (e as Error)?.message,
-      },
-    );
+    console.log(e);
     return cachedDataForChain;
   }
 }

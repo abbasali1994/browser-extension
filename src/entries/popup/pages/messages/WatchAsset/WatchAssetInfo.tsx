@@ -1,4 +1,4 @@
-import { DAppStatus } from '~/core/graphql/__generated__/metadata';
+import { DAppStatus } from '~/core/config';
 import { i18n } from '~/core/languages';
 import { ParsedUserAsset } from '~/core/types/assets';
 import { ChainId } from '~/core/types/chains';

@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { memo, useReducer, useState } from 'react';
 
-import { metadataClient } from '~/core/graphql';
 import { i18n } from '~/core/languages';
 import { createQueryKey } from '~/core/react-query';
 import { AddressOrEth, ParsedUserAsset } from '~/core/types/assets';
@@ -96,7 +95,7 @@ const TokenPrice = memo(function TokenPrice({
 
 const chartTimes = ['hour', 'day', 'week', 'month', 'year'] as const;
 type ChartTime = (typeof chartTimes)[number];
-const getChartTimeArg = (selected: ChartTime) =>
+export const getChartTimeArg = (selected: ChartTime) =>
   chartTimes.reduce(
     (args, time) => ({ ...args, [time]: time === selected }),
     {} as Record<ChartTime, boolean>,
@@ -108,9 +107,16 @@ const fetchPriceChart = async (
   chainId: ChainId,
   address: AddressOrEth,
 ) => {
-  const priceChart = await metadataClient
-    .priceChart({ address, chainId, ...getChartTimeArg(time) })
-    .then((d) => d.token?.priceCharts[time] as PriceChartTimeData);
+  console.log('fetchPriceChart', { time, chainId, address })
+  const priceChart = {
+    points: [
+      [1628611200, 1.0],
+      [1628697600, 1.1],
+      [1628784000, 1.2],
+      [1628870400, 1.3],
+      [1628956800, 1.4],
+    ],
+  } as PriceChartTimeData;
   return priceChart?.points?.reduce((result, point) => {
     result.push({ timestamp: point[0], price: point[1] });
     return result;

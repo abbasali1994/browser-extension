@@ -1,31 +1,26 @@
 /* eslint-disable no-nested-ternary */
-import { useVirtualizer } from '@tanstack/react-virtual';
 import { motion } from 'framer-motion';
 import { memo, useMemo } from 'react';
 
-import { keychainManager } from '~/core/keychain/KeychainManager';
 import { supportedCurrencies } from '~/core/references';
+import { useTokens } from '~/core/resources/tokens/useTokens';
 import { useCurrentAddressStore, useCurrentCurrencyStore } from '~/core/state';
 import { useHideAssetBalancesStore } from '~/core/state/currentSettings/hideAssetBalances';
-import { usePinnedAssetStore } from '~/core/state/pinnedAssets';
 import { ParsedUserAsset } from '~/core/types/assets';
 import { truncateAddress } from '~/core/utils/address';
 import { isCustomChain } from '~/core/utils/chains';
 import { Box, Column, Columns, Inline, Text } from '~/design-system';
-import { useContainerRef } from '~/design-system/components/AnimatedRoute/AnimatedRoute';
 import { TextOverflow } from '~/design-system/components/TextOverflow/TextOverflow';
 import { CoinRow } from '~/entries/popup/components/CoinRow/CoinRow';
 
 import { Asterisks } from '../../components/Asterisks/Asterisks';
 import { useExtensionNavigate } from '../../hooks/useExtensionNavigate';
 import { useTokenPressMouseEvents } from '../../hooks/useTokenPressMouseEvents';
-import { useTokensShortcuts } from '../../hooks/useTokensShortcuts';
 import { ROUTES } from '../../urls';
 
 import { TokenContextMenu } from './TokenDetails/TokenContextMenu';
-import { TokenMarkedHighlighter } from './TokenMarkedHighlighter';
 
-const TokenRow = memo(function TokenRow({
+export const TokenRow = memo(function TokenRow({
   token,
   testId,
 }: {
@@ -66,25 +61,7 @@ const TokenRow = memo(function TokenRow({
 
 export function Tokens() {
   const { currentAddress } = useCurrentAddressStore();
-  const { pinnedAssets } = usePinnedAssetStore();
-
-  keychainManager.getSigner(currentAddress).then((signer) => {
-    signer.getBalance().then((balance) => {
-      console.log(balance.toString());
-    });
-  });
-
-  const filteredAssets: any[] = [];
-
-  const containerRef = useContainerRef();
-  const assetsRowVirtualizer = useVirtualizer({
-    count: filteredAssets?.length || 0,
-    getScrollElement: () => containerRef.current,
-    estimateSize: () => 52,
-    overscan: 20,
-  });
-
-  useTokensShortcuts();
+  const { tokens } = useTokens(currentAddress);
 
   return (
     <Box
@@ -100,29 +77,20 @@ export function Tokens() {
       <Box
         width="full"
         style={{
-          height: assetsRowVirtualizer.getTotalSize(),
           position: 'relative',
         }}
       >
         <Box style={{ overflow: 'auto' }}>
-          {assetsRowVirtualizer.getVirtualItems().map((virtualItem) => {
-            const { key, size, start, index } = virtualItem;
-            const token = filteredAssets[index];
-            const pinned = pinnedAssets.some(
-              ({ uniqueId }) => uniqueId === token.uniqueId,
-            );
-
+          {tokens?.map((token: any, index: any) => {
+            console.log(token);
             return (
               <Box
-                key={`${token.uniqueId}-${key}`}
-                layoutId={`list-${index}`}
+                key={`${index}`}
                 as={motion.div}
                 position="absolute"
                 width="full"
-                style={{ height: size, y: start }}
               >
-                {pinned && <TokenMarkedHighlighter />}
-                <TokenRow token={token} testId={`coin-row-item-${index}`} />
+                {/* <TokenRow token={token} testId={`coin-row-item-${index}`} /> */}
               </Box>
             );
           })}

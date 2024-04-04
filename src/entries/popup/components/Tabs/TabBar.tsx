@@ -25,8 +25,6 @@ export const isValidTab = (value: unknown): value is Tab => {
 };
 
 const TABS = ['tokens', 'activity', 'points'];
-
-const TAB_HEIGHT = 32;
 const TAB_WIDTH = 42;
 
 type TabConfigType = {
@@ -48,7 +46,7 @@ const tabConfig: TabConfigType[] = [
     Icon: HomeIcon,
     SelectedIcon: HomeSelected,
     name: 'tokens',
-    label: 'Assests',
+    label: 'Assets',
     isDisabled: false,
   },
   {

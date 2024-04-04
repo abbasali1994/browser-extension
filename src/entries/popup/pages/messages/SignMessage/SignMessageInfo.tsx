@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 
-import { DAppStatus } from '~/core/graphql/__generated__/metadata';
+import { DAppStatus } from '~/core/config';
 import { i18n } from '~/core/languages';
 import { useDappMetadata } from '~/core/resources/metadata/dapp';
 import { ProviderRequestPayload } from '~/core/transports/providerRequestTransport';

@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 import { getProvider } from '@wagmi/core';
 import { Address } from 'wagmi';
 
-import { requestMetadata } from '~/core/graphql';
 import {
   QueryConfig,
   QueryFunctionArgs,
@@ -29,18 +28,16 @@ import {
 } from '~/core/types/assets';
 import { ChainId, ChainName } from '~/core/types/chains';
 import {
-  createAssetQuery,
   extractFulfilledValue,
   getAssetBalance,
   getCustomChainIconUrl,
   parseAssetMetadata,
-  parseUserAssetBalances,
+  parseUserAssetBalances
 } from '~/core/utils/assets';
 import { getRainbowChains } from '~/core/utils/chains';
 import { convertDecimalFormatToRawAmount, isZero } from '~/core/utils/numbers';
 import { RainbowError, logger } from '~/logger';
 
-import { ASSETS_TIMEOUT_DURATION } from './assets';
 
 const CUSTOM_NETWORK_ASSETS_REFETCH_INTERVAL = 60000;
 export const CUSTOM_NETWORK_ASSETS_STALE_INTERVAL = 30000;
@@ -267,16 +264,18 @@ async function customNetworkAssetsFunction({
           : chainParsedAssets;
 
         // Now we'll try to fetch the prices for all the assets in this network
-        const batchedQuery = allCustomNetworkAssets.map(
-          ({ address }) => address,
-        );
-        const results: Record<string, AssetMetadata>[] = (await requestMetadata(
-          createAssetQuery(batchedQuery, chain.id, currency, true),
-          {
-            timeout: ASSETS_TIMEOUT_DURATION,
-          },
-        )) as Record<string, AssetMetadata>[];
-
+        
+        // Removed cause of graphql
+        // const batchedQuery = allCustomNetworkAssets.map(
+        //   ({ address }) => address,
+        // );
+        // const results: Record<string, AssetMetadata>[] = (await requestMetadata(
+        //   createAssetQuery(batchedQuery, chain.id, currency, true),
+        //   {
+        //     timeout: ASSETS_TIMEOUT_DURATION,
+        //   },
+        // )) as Record<string, AssetMetadata>[];
+        const results = [] as Record<string, AssetMetadata>[];
         const assets = Object.values(results).flat();
         assets.forEach((asset, i) => {
           const a = asset as unknown as AssetMetadata;

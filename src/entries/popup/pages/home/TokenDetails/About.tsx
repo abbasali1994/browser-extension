@@ -31,8 +31,6 @@ import { ExplainerSheet } from '~/entries/popup/components/ExplainerSheet/Explai
 import { triggerToast } from '~/entries/popup/components/Toast/Toast';
 import chunkLinks from '~/entries/popup/utils/chunkLinks';
 
-import { useTokenInfo } from './useTokenInfo';
-
 export const CopyableValue = ({
   value,
   title,
@@ -232,7 +230,18 @@ function Description({ text = '' }: { text?: string | null }) {
 
 const placeholder = <Skeleton width="40px" height="12px" />;
 export function About({ token }: { token: ParsedUserAsset }) {
-  const { data } = useTokenInfo(token);
+  const { data } = {
+    data: {
+      volume1d: placeholder,
+      allTime: { high: placeholder, low: placeholder },
+      fullyDilutedValuation: placeholder,
+      marketCap: placeholder,
+      networks: [token],
+      totalSupply: placeholder,
+      description: '',
+      links: { homepage: { url: 'https://www.google.com' }},
+    },
+  }; // useTokenInfo({ address: token.address, chainId: token.chainId });
 
   const {
     volume1d = placeholder,
@@ -242,7 +251,7 @@ export function About({ token }: { token: ParsedUserAsset }) {
     networks = [token],
     totalSupply = placeholder,
     description = '',
-    links = {},
+    links = { homepage: null},
   } = data || {};
 
   const explorer = getTokenBlockExplorer(token);

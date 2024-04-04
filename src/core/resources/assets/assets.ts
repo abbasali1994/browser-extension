@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { requestMetadata } from '~/core/graphql';
 import {
   QueryConfig,
   QueryFunctionArgs,
@@ -16,11 +15,7 @@ import {
   UniqueId,
 } from '~/core/types/assets';
 import { ChainId } from '~/core/types/chains';
-import {
-  chunkArray,
-  createAssetQuery,
-  parseAssetMetadata,
-} from '~/core/utils/assets';
+import { chunkArray, parseAssetMetadata } from '~/core/utils/assets';
 import { RainbowError, logger } from '~/logger';
 
 export const ASSETS_TIMEOUT_DURATION = 10000;
@@ -62,11 +57,9 @@ export async function assetsQueryFunction({
   try {
     if (!assetAddresses || !assetAddresses.length) return {};
     const batches = chunkArray([...assetAddresses], 10); // chunking because a full batch would throw 413
-    const batchResults = batches.map((batchedQuery) =>
-      requestMetadata(createAssetQuery(batchedQuery, chainId, currency, true), {
-        timeout: ASSETS_TIMEOUT_DURATION,
-      }),
-    ) as Promise<Record<string, AssetMetadata>[]>[];
+    const batchResults = batches.map(() => ({})) as Promise<
+      Record<string, AssetMetadata>[]
+    >[];
     const results = (await Promise.all(batchResults))
       .flat()
       .map((r) => Object.values(r))

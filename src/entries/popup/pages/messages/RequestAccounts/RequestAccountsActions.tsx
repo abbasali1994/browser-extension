@@ -1,6 +1,6 @@
 import { Address } from 'wagmi';
 
-import { DAppStatus } from '~/core/graphql/__generated__/metadata';
+import { DAppStatus } from '~/core/config';
 import { i18n } from '~/core/languages';
 import { ChainId } from '~/core/types/chains';
 import { Box, Column, Columns, Stack } from '~/design-system';

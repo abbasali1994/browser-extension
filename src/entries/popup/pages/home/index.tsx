@@ -9,22 +9,18 @@ import {
 } from 'react';
 
 import { config } from '~/core/config';
-import { i18n } from '~/core/languages';
 import { useCurrentAddressStore, usePendingRequestStore } from '~/core/state';
 import { useTabNavigation } from '~/core/state/currentSettings/tabNavigation';
 import { useErrorStore } from '~/core/state/error';
-import { goToNewTab } from '~/core/utils/tabs';
 import { AccentColorProvider, Box, Inset } from '~/design-system';
-import { triggerAlert } from '~/design-system/components/Alert/Alert';
 import { useContainerRef } from '~/design-system/components/AnimatedRoute/AnimatedRoute';
 import { globalColors } from '~/design-system/styles/designTokens';
-import { RainbowError, logger } from '~/logger';
 
 import { AccountName } from '../../components/AccountName/AccountName';
 import { AppConnectionWalletSwitcher } from '../../components/AppConnection/AppConnectionWalletSwitcher';
 import { BackupReminder } from '../../components/BackupReminder/BackupReminder';
 import { Navbar } from '../../components/Navbar/Navbar';
-import { TabBar, Tab } from '../../components/Tabs/TabBar';
+import { Tab, TabBar } from '../../components/Tabs/TabBar';
 import { WalletAvatar } from '../../components/WalletAvatar/WalletAvatar';
 import { WalletContextMenu } from '../../components/WalletContextMenu';
 import { removeImportWalletSecrets } from '../../handlers/importWalletSecrets';
@@ -41,6 +37,7 @@ import { useVisibleTokenCount } from '../../hooks/useVisibleTokenCount';
 import { useWallets } from '../../hooks/useWallets';
 import { StickyHeader } from '../../layouts/StickyHeader';
 import { ROUTES } from '../../urls';
+
 import { Activities } from './Activity/ActivitiesList';
 import { RevokeApproval } from './Approvals/RevokeApproval';
 import { Header } from './Header';
@@ -140,18 +137,7 @@ export const Home = memo(function Home() {
 
   useEffect(() => {
     if (error) {
-      triggerAlert({
-        action: () =>
-          goToNewTab({
-            url: 'https://rainbow.me/extension/support?report=true',
-          }),
-        actionText: i18n.t('errors.report_error'),
-        text: i18n.t('errors.error_encountered'),
-      });
-      logger.error(new RainbowError('Error Boundary Did Catch: '), {
-        message: error.message,
-        stack: error.stack,
-      });
+    
       setError(null);
     }
   }, [error, setError]);

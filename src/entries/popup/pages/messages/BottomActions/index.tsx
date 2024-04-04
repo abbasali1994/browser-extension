@@ -1,7 +1,7 @@
 import React, { useCallback, useImperativeHandle, useRef } from 'react';
 import { Address, useBalance } from 'wagmi';
 
-import { DAppStatus } from '~/core/graphql/__generated__/metadata';
+import { DAppStatus } from '~/core/config';
 import { i18n } from '~/core/languages';
 import { shortcuts } from '~/core/references/shortcuts';
 import { useCurrentAddressStore } from '~/core/state';

@@ -3,15 +3,12 @@ import { toUtf8Bytes } from '@ethersproject/strings';
 import { useQuery } from '@tanstack/react-query';
 import uts46 from 'idna-uts46-hx';
 
-import { ensClient } from '~/core/graphql';
 import {
   QueryConfig,
   QueryFunctionArgs,
   QueryFunctionResult,
   createQueryKey,
 } from '~/core/react-query';
-
-const ENS_DOMAIN = '.eth';
 
 function normalizeENS(name: string) {
   try {
@@ -39,7 +36,7 @@ function isEncodedLabelhash(hash: string) {
   return hash.startsWith('[') && hash.endsWith(']') && hash.length === 66;
 }
 
-function labelhash(unnormalisedLabelOrLabelhash: string) {
+export function labelhash(unnormalisedLabelOrLabelhash: string) {
   if (unnormalisedLabelOrLabelhash === '[root]') {
     return '';
   }
@@ -49,9 +46,13 @@ function labelhash(unnormalisedLabelOrLabelhash: string) {
 }
 
 const fetchRegistration = async (ensName: string) => {
-  const response = await ensClient.getRegistration({
-    id: labelhash(ensName.replace(ENS_DOMAIN, '')),
-  });
+  const response = {
+    registration: {
+      ensName: ensName,
+      expiryDate: '2023-08-21T00:00:00Z',
+      registrationDate: '2020-08-21T00:00:00Z',
+    },
+  };
   const data = response.registration;
 
   return {

@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { metadataClient } from '~/core/graphql';
-import { DAppStatus } from '~/core/graphql/__generated__/metadata';
+import { DAppQuery, DAppStatus } from '~/core/config';
 import {
   QueryFunctionArgs,
   createQueryKey,
@@ -58,11 +57,11 @@ async function fetchDappMetadata({
       ? getHardcodedDappInformation(appHostName)?.name || ''
       : '';
 
-  const response = await metadataClient.dApp({
-    shortName: hardcodedAppName,
-    url,
-    status,
-  });
+  const response = {
+    dApp: {
+      status: status ? DAppStatus.Verified : undefined,
+    },
+  } as DAppQuery;
 
   const appHost = url && isValidUrl(url) ? getDappHost(url) : '';
   const appName = response?.dApp?.name

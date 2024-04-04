@@ -16,7 +16,6 @@ import {
 } from '@rainbow-me/swaps';
 import { Address, getProvider } from '@wagmi/core';
 
-import { metadataPostClient } from '~/core/graphql';
 import { ChainId } from '~/core/types/chains';
 import { NewTransaction, TxHash } from '~/core/types/transactions';
 import { add } from '~/core/utils/numbers';
@@ -194,11 +193,8 @@ export const estimateUnlockAndSwapFromMetadata = async ({
               value: swapTransaction?.value?.toString() || '0x0',
             },
           ];
-
-      const response = (await metadataPostClient.simulateTransactions({
-        chainId,
-        transactions,
-      })) as TransactionSimulationResponse;
+      console.log('transactions', transactions);
+      const response = {} as TransactionSimulationResponse;
       const gasLimit = response.simulateTransactions
         .map((res) => res.gas.estimate)
         .reduce((acc, limit) => add(acc, limit), '0');

@@ -16,7 +16,6 @@ import {
 } from '~/core/types/assets';
 import { ChainId, ChainName } from '~/core/types/chains';
 
-import { requestMetadata } from '../graphql';
 import { i18n } from '../languages';
 import { SearchAsset } from '../types/search';
 
@@ -417,17 +416,7 @@ export const fetchAssetWithPrice = async ({
   parsedAsset: ParsedUserAsset;
   currency: SupportedCurrencyKey;
 }): Promise<ParsedUserAsset | null> => {
-  const results: Record<string, AssetMetadata>[] = (await requestMetadata(
-    createAssetQuery(
-      [parsedAsset.address],
-      parsedAsset.chainId,
-      currency,
-      true,
-    ),
-    {
-      timeout: 10000,
-    },
-  )) as Record<string, AssetMetadata>[];
+  const results: Record<string, AssetMetadata>[] = [] as Record<string, AssetMetadata>[];
 
   const assets = Object.values(results).flat();
   const asset = assets[0];

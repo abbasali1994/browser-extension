@@ -1,4 +1,4 @@
-import { DAppStatus } from '~/core/graphql/__generated__/metadata';
+import { DAppStatus } from '~/core/config';
 import { i18n } from '~/core/languages';
 import { shortcuts } from '~/core/references/shortcuts';
 import { ActiveSession } from '~/core/state/appSessions';

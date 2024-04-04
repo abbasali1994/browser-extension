@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { motion } from 'framer-motion';
 
-import { DAppStatus } from '~/core/graphql/__generated__/metadata';
+import { DAppStatus } from '~/core/config';
 import { i18n } from '~/core/languages';
 import { Box, Inline, Stack, Symbol, Text } from '~/design-system';
 import { SymbolName } from '~/design-system/styles/designTokens';

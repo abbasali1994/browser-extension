@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Address } from 'wagmi';
 
-import { metadataPostClient } from '~/core/graphql';
-import { Message, Transaction } from '~/core/graphql/__generated__/metadata';
+import { Message, Transaction } from '~/core/config';
 import { i18n } from '~/core/languages';
 import { createQueryKey } from '~/core/react-query';
 import { currentCurrencyStore } from '~/core/state';
@@ -120,11 +119,7 @@ export const useSimulateTransaction = ({
       !!transaction.to &&
       (!!transaction.value || !!transaction.data),
     queryFn: async () => {
-      const response = (await metadataPostClient.simulateTransactions({
-        chainId,
-        transactions: [transaction],
-        domain,
-      })) as TransactionSimulationResponse;
+      const response = {} as TransactionSimulationResponse;
       return parseSimulation(response.simulateTransactions[0], chainId);
     },
     staleTime: 60 * 1000, // 1 min
@@ -153,12 +148,7 @@ export const useSimulateMessage = ({
     queryFn: async () => {
       if (!address) throw new Error('useSimulateMessage: Missing `address`');
 
-      const response = (await metadataPostClient.simulateMessage({
-        chainId,
-        address,
-        message,
-        domain,
-      })) as MessageSimulationResponse;
+      const response = {} as MessageSimulationResponse;
 
       return parseSimulation(response.simulateMessage, chainId);
     },

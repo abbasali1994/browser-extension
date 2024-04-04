@@ -81,7 +81,6 @@ export function createWagmiClient({
     rainbowChains,
     useProxy,
   );
-  console.log('connectors', connectors ? connectors({ chains }) : "nothing");
   return createClient({
     autoConnect,
     connectors: connectors
